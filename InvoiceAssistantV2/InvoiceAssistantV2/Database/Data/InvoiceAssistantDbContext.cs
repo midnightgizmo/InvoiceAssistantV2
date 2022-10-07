@@ -1,6 +1,7 @@
 ﻿using InvoiceAssistantV2.Shared.Models.Database.Company;
 using InvoiceAssistantV2.Shared.Models.Database.Invoice;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,10 @@ namespace Database.Data
 {
     public class InvoiceAssistantDbContext : DbContext
     {
-        private readonly string _DatabaseLocation;
-
-        /// <summary>
-        /// The location of the mysql database file
-        /// </summary>
-        /// <param name="DatabaseLocation"></param>
-        public InvoiceAssistantDbContext(string DatabaseLocation)
+       
+        public InvoiceAssistantDbContext() : base()
         {
-            this._DatabaseLocation = DatabaseLocation;
+            
             
         }
 
@@ -36,7 +32,34 @@ namespace Database.Data
         protected override void OnConfiguring(DbContextOptionsBuilder OptionsBuilder)
         {
             // set the location of the MySqlite database file
-            OptionsBuilder.UseSqlite($"Data Source={this._DatabaseLocation}");
+            OptionsBuilder.UseSqlite($"Data Source={this.GetConnectionURL()}");
+            
+
+            
+        }
+
+        protected string GetConnectionURL()
+        {
+            // The following code gets the connection string for the database connection.
+
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            // requires packages
+            // Microsoft.Extensions.Configuration;
+            // Microsoft.Extensions.Configuration.FileExtension
+            // Microsoft.Extensions.Configuration.Json
+            // Microsoft.Extensions.Configuration.EnvironmentVariable
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{environmentName}.json", true)
+                .AddEnvironmentVariables();
+
+            var config = builder.Build();
+            
+            string ConnectionString = config["AppSettings:DataBaseLocation"];
+
+            return ConnectionString;
         }
     }
 }
