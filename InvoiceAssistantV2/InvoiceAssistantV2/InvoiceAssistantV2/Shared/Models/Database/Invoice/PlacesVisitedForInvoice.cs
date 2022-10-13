@@ -1,10 +1,12 @@
 ﻿using InvoiceAssistantV2.Shared.Models.Database.Company;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceAssistantV2.Shared.Models.Database.Invoice
 {
     /// <summary>
     /// This is a One to many to many to one relasionship: <see cref="CompanyAddress"/> to <see cref="PlacesVisitedForInvoice"/> to <see cref="Invoice"/>
     /// </summary>
+    [Keyless]
     public class PlacesVisitedForInvoice
     {
         /// <summary>

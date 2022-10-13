@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceAssistantV2.Shared.Models.Database.Company
 {
@@ -12,7 +13,8 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Company
         /// <summary>
         /// Foreign key link to <see cref="CompanyDetails"/>
         /// </summary>
-        public int CompanyAddressId { get; set; }
+        public int CompanyDetailsID { get; set; }
+        public CompanyDetails CompanyDetails { get; set; } = null!;
         /// <summary>
         /// FriendlyName given to the address we can use to display in the UI
         /// </summary>
@@ -26,5 +28,10 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Company
         public string? PostCode { get; set; }
         // The driving distance from where we start to the companies address (used for cauclating milage cost)
         public int DrivingDistanceToAddress { get; set; } = 0;
+
+        /// <summary>
+        /// Needed for the One to many to many to one relationship with Invoices
+        /// </summary>
+        public IEnumerable<PlacesVisitedForInvoice> PlacesVisitedForInvoice { get; set; } = null!;
     }
 }

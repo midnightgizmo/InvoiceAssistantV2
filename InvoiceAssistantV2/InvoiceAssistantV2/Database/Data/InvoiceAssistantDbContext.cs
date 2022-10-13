@@ -20,7 +20,7 @@ namespace Database.Data
         }
 
         public DbSet<CompanyDetails> CompanyDetails { get; set; } = null!;
-        public DbSet<CompanyAddress> CompnayAddress { get; set; } = null!;
+        public DbSet<CompanyAddress> CompanyAddress { get; set; } = null!;
 
 
         public DbSet<Invoice> Invoices { get; set; } = null!;
@@ -60,6 +60,26 @@ namespace Database.Data
             string ConnectionString = config["AppSettings:DataBaseLocation"];
 
             return ConnectionString;
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // In the PlacesVisitedForInvoice class use the foreign keys to
+            // create a primary key (InvoiceID & CompanyAddressID)
+            modelBuilder.Entity<PlacesVisitedForInvoice>()
+                .HasKey(PV => new { PV.InvoiceId, PV.CompanyAddressId });
+
+            // Tell EF for about the one to many from Invoice to PlacesVisitedForInvoice
+            modelBuilder.Entity<PlacesVisitedForInvoice>()
+                .HasOne(PV => PV.Invoice)
+                .WithMany(I => I.PlacesVisitedForInvoice)
+                .HasForeignKey(PV => PV.InvoiceId);
+
+            // Tell EF Core about the one to many from CompanyAddress to PlacesVisitedForInvoice
+            modelBuilder.Entity<PlacesVisitedForInvoice>()
+                .HasOne(PV => PV.CompanyAddress)
+                .WithMany(CA => CA.PlacesVisitedForInvoice)
+                .HasForeignKey(PV => PV.CompanyAddressId);
         }
     }
 }

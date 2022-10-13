@@ -13,6 +13,6 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Invoice
         /// The name given to this payment type (e.g. Cheque, Bank transfer etc)
         /// </summary>
         [Required]
-        private string Name { get; set; } = null!;
+        public string Name { get; set; } = null!;
     }
 }
