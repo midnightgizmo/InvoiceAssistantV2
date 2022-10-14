@@ -80,6 +80,25 @@ namespace Database.Data
                 .HasOne(PV => PV.CompanyAddress)
                 .WithMany(CA => CA.PlacesVisitedForInvoice)
                 .HasForeignKey(PV => PV.CompanyAddressId);
+
+            modelBuilder.Entity<PaymentType>().HasData(
+                new PaymentType() 
+                {
+                    Id = 1,
+                    Name = "Cheque"
+                });
+            modelBuilder.Entity<PaymentType>().HasData(
+                new PaymentType()
+                {
+                    Id = 2,
+                    Name = "Cash"
+                });
+            modelBuilder.Entity<PaymentType>().HasData(
+                new PaymentType()
+                {
+                    Id = 3,
+                    Name = "Bank Transfer"
+                });
         }
     }
 }
