@@ -33,5 +33,12 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Company
         /// Needed for the One to many to many to one relationship with Invoices
         /// </summary>
         public IEnumerable<PlacesVisitedForInvoice> PlacesVisitedForInvoice { get; set; } = null!;
+
+        /// <summary>
+        /// When a user deletes a compnay address but it exists in one or more inoices. We won't be able
+        /// to delete the addreess, so instead we hide it and set this bool value to true to indicate it has been
+        /// deleted by the user
+        /// </summary>
+        public bool HasBeenDeleted { get; set; }
     }
 }
