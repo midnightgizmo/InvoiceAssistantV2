@@ -10,6 +10,11 @@
   font-size: 10vh;
   color: white;
 }
+@media only screen and (max-width: 800px) {
+  .page-container header > h1 {
+    font-size: 5vh;
+  }
+}
 .page-container > .menu-container {
   position: fixed;
   bottom: 0;
@@ -18,6 +23,12 @@
   top: 15vh;
   background-color: blue;
   background: linear-gradient(180deg, #065c9e 0%, #ffffff 100%);
+  overflow-x: auto;
+}
+@media only screen and (max-width: 800px) {
+  .page-container > .menu-container {
+    overflow-y: auto;
+  }
 }
 .page-container > .menu-container > .menu-inner-container {
   width: 70vw;
@@ -29,6 +40,11 @@
   row-gap: 5vw;
   padding-top: 10vh;
 }
+@media only screen and (max-width: 800px) {
+  .page-container > .menu-container > .menu-inner-container {
+    grid-template-columns: 1fr;
+  }
+}
 .page-container > .menu-container > .menu-inner-container > .menu-item > button {
   width: 100%;
   height: 25vh;
@@ -37,6 +53,11 @@
   border: 2px solid white;
   border-radius: 5px;
   cursor: pointer;
+}
+@media only screen and (max-width: 800px) {
+  .page-container > .menu-container > .menu-inner-container > .menu-item > button {
+    height: 15vh;
+  }
 }
 .page-container > .menu-container > .menu-inner-container > .menu-item > button > img {
   height: 100%;

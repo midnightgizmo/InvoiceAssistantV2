@@ -12,10 +12,16 @@
 
 
 
+
         > h1
         {
             font-size: 10vh;
             color: white;
+
+            @media only screen and (max-width: 800px)
+            {
+                font-size:5vh;
+            }
         }
     }
 
@@ -28,6 +34,12 @@
         top: 15vh;
         background-color: blue;
         background: linear-gradient(180deg, rgba(6,92,158,1) 0%, rgba(255,255,255,1) 100%);
+        overflow-x: auto;
+
+        @media only screen and (max-width: 800px)
+        {
+            overflow-y: auto;
+        }
 
         > .menu-inner-container
         {
@@ -42,6 +54,11 @@
             row-gap: 5vw;
             padding-top: 10vh;
 
+            @media only screen and (max-width: 800px)
+            {
+                grid-template-columns: 1fr;
+            }
+
 
             > .menu-item
             {
@@ -53,8 +70,12 @@
                     background-color: #1f3e5a;
                     border: 2px solid white;
                     border-radius: 5px;
+                    cursor: pointer;
 
-                    cursor:pointer;
+                    @media only screen and (max-width: 800px)
+                    {
+                        height: 15vh;
+                    }
 
 
                     > img
@@ -79,4 +100,4 @@
     }
     // end of .menu-inner-container
 }
-// end of .page-container
+    // end of .page-container
