@@ -50,8 +50,8 @@ namespace Database.DbInteractions
             if (DateRecievedMoneyEnd != null)
                 query = query.Where(I => I.DateRecievedMoney <= DateRecievedMoneyEnd);
 
-            if(ReferenceNumber != null)
-                query = query.Where(I => I.ReferenceNumber.Contains(ReferenceNumber, StringComparison.OrdinalIgnoreCase));
+            if (ReferenceNumber != null)
+                query = query.Where(I => I.ReferenceNumber.Contains(ReferenceNumber));
 
             if (TypeOfPaymentId != null)
                 query = query.Where(I => I.PaymentTypeID == TypeOfPaymentId);

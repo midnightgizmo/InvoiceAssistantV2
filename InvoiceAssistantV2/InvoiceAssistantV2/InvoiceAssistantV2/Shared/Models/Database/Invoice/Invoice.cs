@@ -35,10 +35,10 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Invoice
         /// </summary>
         public decimal TotalInvoiceAmmount { get; set; }
 
-        public int PaymentTypeID { get; set; }
+        public int? PaymentTypeID { get; set; }
         public PaymentType? PaymentType { get; set; }
 
-        public int AddressToMakeInvoiceOutToId { get; set; }
+        public int? AddressToMakeInvoiceOutToId { get; set; }
         /// <summary>
         /// The Address to make the Invoice out too.
         /// </summary>

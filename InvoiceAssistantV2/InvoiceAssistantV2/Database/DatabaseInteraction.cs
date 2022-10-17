@@ -1,4 +1,5 @@
 ﻿using Database.DbInteractions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Database
         {
             _DbContext = new Data.InvoiceAssistantDbContext();
         }
+
+        public Data.InvoiceAssistantDbContext DbContext { get => this._DbContext; }
 
         private InvoiceDb _Invoices = null!;
         public InvoiceDb Invoices

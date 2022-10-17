@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceAssistantV2.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceAssistantV2.Shared", "InvoiceAssistantV2\Shared\InvoiceAssistantV2.Shared.csproj", "{321ECC0C-C104-4C6F-A4DB-3578808AE9AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{90428E23-7FEF-423E-8E55-99F2DC98C8CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{90428E23-7FEF-423E-8E55-99F2DC98C8CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{6910EF5B-3C18-4C6C-B063-D2438EE6051D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{90428E23-7FEF-423E-8E55-99F2DC98C8CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90428E23-7FEF-423E-8E55-99F2DC98C8CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90428E23-7FEF-423E-8E55-99F2DC98C8CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6910EF5B-3C18-4C6C-B063-D2438EE6051D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6910EF5B-3C18-4C6C-B063-D2438EE6051D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6910EF5B-3C18-4C6C-B063-D2438EE6051D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6910EF5B-3C18-4C6C-B063-D2438EE6051D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

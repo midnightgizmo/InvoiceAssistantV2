@@ -3,6 +3,7 @@ using System;
 using Database.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(InvoiceAssistantDbContext))]
-    partial class InvoiceAssistantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221014120825_InoiceTable-Update")]
+    partial class InoiceTableUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
@@ -86,7 +88,7 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AddressToMakeInvoiceOutToId")
+                    b.Property<int>("AddressToMakeInvoiceOutToId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("DateOfInvoice")
@@ -99,7 +101,7 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PaymentTypeID")
+                    b.Property<int>("PaymentTypeID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ReferenceNumber")
@@ -206,11 +208,15 @@ namespace Database.Migrations
                 {
                     b.HasOne("InvoiceAssistantV2.Shared.Models.Database.Company.CompanyAddress", "AddressToMakeInvoiceOutTo")
                         .WithMany()
-                        .HasForeignKey("AddressToMakeInvoiceOutToId");
+                        .HasForeignKey("AddressToMakeInvoiceOutToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("InvoiceAssistantV2.Shared.Models.Database.Invoice.PaymentType", "PaymentType")
                         .WithMany()
-                        .HasForeignKey("PaymentTypeID");
+                        .HasForeignKey("PaymentTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AddressToMakeInvoiceOutTo");
 
