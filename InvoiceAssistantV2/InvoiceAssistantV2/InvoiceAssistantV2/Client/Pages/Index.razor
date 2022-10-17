@@ -1,9 +1,48 @@
 ﻿@page "/"
 
+@inject NavigationManager NavManager;
+
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<section class="page-container">
+	<header>
+		<h1>Invoice Assistant</h1>
+	</header>
+	<div class="menu-container">
+		<div class="menu-inner-container">
+			<div class="menu-item">
+				<button @onclick='() => NavigateTo("/Invoice/Search/")'>
+					<img src="/images/svg/ViewInvoices.svg"/>
+				</button>
+			</div>
 
-Welcome to your new app.
+			<div class="menu-item">
+				<button @onclick='() => NavigateTo("/Invoice/Add/")'>
+					<img src="/images/svg/AddInvoice.svg" />
+				</button>
+			</div>
 
+			<div class="menu-item">
+				<button @onclick='() => NavigateTo("/Reports/")'>
+					<img src="/images/svg/EndOfYearReports.svg" />
+				</button>
+			</div>
+
+			<div class="menu-item">
+				<button @onclick='() => NavigateTo("/Company/")'>
+					<img src="/images/svg/InvoiceAddresses.svg" />
+				</button>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+@code
+{
+	public void NavigateTo(string Location)
+	{
+		this.NavManager.NavigateTo(Location);
+	}
+}
 
