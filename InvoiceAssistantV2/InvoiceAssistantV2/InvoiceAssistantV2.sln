@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceAssistantV2.Shared",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{90428E23-7FEF-423E-8E55-99F2DC98C8CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{6910EF5B-3C18-4C6C-B063-D2438EE6051D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{6910EF5B-3C18-4C6C-B063-D2438EE6051D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,5 +2,9 @@
   {
     "outputFile": "Pages/Index.razor.css",
     "inputFile": "Pages/Index.razor.less"
+  },
+  {
+    "outputFile": "Pages/Invoices/SearchInvoice.razor.css",
+    "inputFile": "Pages/Invoices/SearchInvoice.razor.less"
   }
 ]
