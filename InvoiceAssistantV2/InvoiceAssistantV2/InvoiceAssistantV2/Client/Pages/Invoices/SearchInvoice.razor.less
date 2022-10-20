@@ -183,7 +183,7 @@
 
             @media only screen and (max-width: 900px)
             {
-                grid-column-start:unset;
+                grid-column-start: unset;
                 grid-column-end: unset;
             }
         }
@@ -208,6 +208,29 @@
             grid-template-columns: 1fr;
             grid-column-start: unset;
             justify-self: unset;
+        }
+    }
+
+    > .errormessage-container
+    {
+        grid-column-end: span 2;
+
+
+        @media only screen and (max-width: 900px)
+        {
+            grid-template-columns: 1fr;
+            grid-column-end: unset;
+            justify-self: unset;
+        }
+
+        > div
+        {
+            text-align: center;
+            font-size: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 400px;
+            color: #a90000;
         }
     }
 
@@ -259,3 +282,5 @@
         }
     }
 }
+
+

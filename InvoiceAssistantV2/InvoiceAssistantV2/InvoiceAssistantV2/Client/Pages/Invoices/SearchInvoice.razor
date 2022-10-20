@@ -1,8 +1,13 @@
 ﻿@page "/Invoice/Search/"
+@using InvoiceAssistantV2.Client.Models
+@using InvoiceAssistantV2.Client.Models.Server.ResponseData
 @using InvoiceAssistantV2.Client.ViewModels.Invoices
 @using InvoiceAssistantV2.Shared.Models
 
 @inject NavigationManager NavManger;
+@inject HttpClient httpClient;
+@inject AppSettings appSettings;
+@inject ApplicationSharedData SharedData;
 
 <section class="invoice-search-container">
 	<header>
@@ -29,7 +34,7 @@
 	</header>
 
 	<div class="search-outer-container">
-		<EditForm Model="ViewModel.FormModel" class="search-container" OnValidSubmit="Form_ValidSubmit">
+		<EditForm Model="ViewModel.FormModel" class="search-container" OnValidSubmit="async () => await Form_ValidSubmit()">
 
 			<!-- Date -->
 			<div class="date-container">
@@ -105,6 +110,12 @@
 				</div>
 			</div>
 
+			<section class="errormessage-container">
+				<div>
+					@ViewModel.PageErrorText
+				</div>
+			</section>
+
 			<div class="submit-container">
 				<button type="submit">
 					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.27 19.02">
@@ -126,14 +137,26 @@
 			</div>
 
 		</EditForm>
+
+		
 	</div>
 </section>
 
 @code {
 
 	public SearchInvoiceVM ViewModel { get; set; } = new SearchInvoiceVM();
-	public void Form_ValidSubmit()
+
+	public async Task Form_ValidSubmit()
 	{
+		ServerResponseListOfInvoices response = await ViewModel.SendSearchRquestToServer(httpClient, appSettings);
+
+		if (ViewModel.AreThereErrorsInResponseData(response) == false)
+		{
+			// pass the list of invoices returned from the server to the shared data object we pass around the application
+			SharedData.InvoicesFromSearchResults = response.ReturnValue;
+			// navigate to Invoices page and display all the invoices by accessing the SharedData.InvoicesFromSearchResults property.
+			NavManger.NavigateTo("/Invoice/");
+		}
 
 	}
 }

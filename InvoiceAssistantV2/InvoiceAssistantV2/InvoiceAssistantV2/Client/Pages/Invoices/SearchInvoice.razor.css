@@ -192,6 +192,24 @@
     justify-self: unset;
   }
 }
+::deep .search-container > .errormessage-container {
+  grid-column-end: span 2;
+}
+@media only screen and (max-width: 900px) {
+  ::deep .search-container > .errormessage-container {
+    grid-template-columns: 1fr;
+    grid-column-end: unset;
+    justify-self: unset;
+  }
+}
+::deep .search-container > .errormessage-container > div {
+  text-align: center;
+  font-size: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+  color: #a90000;
+}
 ::deep .search-container > .submit-container {
   width: 100%;
   display: flex;
