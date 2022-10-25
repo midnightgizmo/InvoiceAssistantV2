@@ -117,7 +117,7 @@
         width: 100%;
     }
 
-    > .date-container, > .ammount-container, > .recievedon-container, > .refnumber-container, > .paymenttype-container, > .description-container
+    > .date-container, > .ammount-container, > .recievedon-container, > .refnumber-container, > .paymenttype-container, > .description-container, > .company-container
     {
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -136,14 +136,14 @@
             grid-column-start: 2;
             color: #FF7D00;
             font-weight: bold;
-            font-size: 2rem;
+            font-size: 1.5rem;
             text-align: center;
         }
 
         > label
         {
             text-align: right;
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: white;
         }
 
@@ -151,7 +151,7 @@
         {
             > input, > select
             {
-                font-size: 2rem;
+                font-size: 1.5rem;
                 border-radius: 5px;
                 width: 100%;
                 border: none;
@@ -172,7 +172,7 @@
         }
     }
 
-    > .description-container
+    > .description-container, > .company-container
     {
         grid-column-start: span 2;
         grid-template-columns: 1fr 2fr 1fr 2fr;

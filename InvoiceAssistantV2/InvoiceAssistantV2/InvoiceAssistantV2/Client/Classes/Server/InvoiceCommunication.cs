@@ -107,5 +107,19 @@ namespace InvoiceAssistantV2.Client.Classes.Server
             return responseData;
 
         }
+
+        public async Task<ServerResponsePaymentTypes> GetPaymentTypes()
+        {
+            ServerResponse responseMessage;
+            ServerResponsePaymentTypes responseData;
+
+
+            // request all candidates that match the search criteria
+            responseMessage = await this._ServerCommunication.SendGetRequestToServer("Invoice/Payment");
+
+            responseData = ServerCommunication.ParseServerResponse<ServerResponsePaymentTypes>(responseMessage);
+
+            return responseData;
+        }
     }
 }

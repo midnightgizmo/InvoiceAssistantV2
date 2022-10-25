@@ -90,7 +90,8 @@
 ::deep .search-container > .recievedon-container,
 ::deep .search-container > .refnumber-container,
 ::deep .search-container > .paymenttype-container,
-::deep .search-container > .description-container {
+::deep .search-container > .description-container,
+::deep .search-container > .company-container {
   display: grid;
   grid-template-columns: 1fr 2fr;
   column-gap: 15px;
@@ -102,7 +103,8 @@
   ::deep .search-container > .recievedon-container,
   ::deep .search-container > .refnumber-container,
   ::deep .search-container > .paymenttype-container,
-  ::deep .search-container > .description-container {
+  ::deep .search-container > .description-container,
+  ::deep .search-container > .company-container {
     grid-template-columns: auto 1fr;
     margin-right: 15px;
     margin-left: 15px;
@@ -113,11 +115,12 @@
 ::deep .search-container > .recievedon-container > header,
 ::deep .search-container > .refnumber-container > header,
 ::deep .search-container > .paymenttype-container > header,
-::deep .search-container > .description-container > header {
+::deep .search-container > .description-container > header,
+::deep .search-container > .company-container > header {
   grid-column-start: 2;
   color: #FF7D00;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 ::deep .search-container > .date-container > label,
@@ -125,9 +128,10 @@
 ::deep .search-container > .recievedon-container > label,
 ::deep .search-container > .refnumber-container > label,
 ::deep .search-container > .paymenttype-container > label,
-::deep .search-container > .description-container > label {
+::deep .search-container > .description-container > label,
+::deep .search-container > .company-container > label {
   text-align: right;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
 }
 ::deep .search-container > .date-container > div > input,
@@ -136,13 +140,15 @@
 ::deep .search-container > .refnumber-container > div > input,
 ::deep .search-container > .paymenttype-container > div > input,
 ::deep .search-container > .description-container > div > input,
+::deep .search-container > .company-container > div > input,
 ::deep .search-container > .date-container > div > select,
 ::deep .search-container > .ammount-container > div > select,
 ::deep .search-container > .recievedon-container > div > select,
 ::deep .search-container > .refnumber-container > div > select,
 ::deep .search-container > .paymenttype-container > div > select,
-::deep .search-container > .description-container > div > select {
-  font-size: 2rem;
+::deep .search-container > .description-container > div > select,
+::deep .search-container > .company-container > div > select {
+  font-size: 1.5rem;
   border-radius: 5px;
   width: 100%;
   border: none;
@@ -160,33 +166,39 @@
     justify-self: unset;
   }
 }
-::deep .search-container > .description-container {
+::deep .search-container > .description-container,
+::deep .search-container > .company-container {
   grid-column-start: span 2;
   grid-template-columns: 1fr 2fr 1fr 2fr;
 }
-::deep .search-container > .description-container > header {
+::deep .search-container > .description-container > header,
+::deep .search-container > .company-container > header {
   grid-column-end: span 3;
 }
 @media only screen and (max-width: 900px) {
-  ::deep .search-container > .description-container > header {
+  ::deep .search-container > .description-container > header,
+  ::deep .search-container > .company-container > header {
     grid-column-start: unset;
     grid-column-end: unset;
   }
 }
-::deep .search-container > .description-container > div {
+::deep .search-container > .description-container > div,
+::deep .search-container > .company-container > div {
   grid-row-start: 2;
   grid-column-start: 2;
   grid-column-end: 5;
 }
 @media only screen and (max-width: 900px) {
-  ::deep .search-container > .description-container > div {
+  ::deep .search-container > .description-container > div,
+  ::deep .search-container > .company-container > div {
     grid-row-start: unset;
     grid-column-start: unset;
     grid-column-end: unset;
   }
 }
 @media only screen and (max-width: 900px) {
-  ::deep .search-container > .description-container {
+  ::deep .search-container > .description-container,
+  ::deep .search-container > .company-container {
     grid-template-columns: 1fr;
     grid-column-start: unset;
     justify-self: unset;

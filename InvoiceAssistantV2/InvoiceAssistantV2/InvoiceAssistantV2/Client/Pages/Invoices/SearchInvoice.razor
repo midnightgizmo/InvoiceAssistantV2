@@ -3,6 +3,7 @@
 @using InvoiceAssistantV2.Client.Models.Server.ResponseData
 @using InvoiceAssistantV2.Client.ViewModels.Invoices
 @using InvoiceAssistantV2.Shared.Models
+@using InvoiceAssistantV2.Shared.Models.Database.Company
 
 @inject NavigationManager NavManger;
 @inject HttpClient httpClient;
@@ -38,7 +39,7 @@
 
 			<!-- Date -->
 			<div class="date-container">
-				<header>Date</header>
+				<header>Date of Invoice</header>
 				<label for="InvoiceStartDate">From</label>
 				<div>
 					<input id="InvoiceStartDate" name="InvoiceStartDate" type="date" @bind-value="ViewModel.FormModel.StartDate" />
@@ -90,6 +91,8 @@
 				<div></div>
 				<div>
 					<select @bind="ViewModel.FormModel.TypeOfPaymentId">
+						<!-- A blank option, which is used to indicate we dont' want to serach by payment type -->
+						<option value="-1"></option>
 						@if (ViewModel?.PaymentTypes != null)
 						{
 							@foreach (var aPayment in ViewModel?.PaymentTypes)
@@ -101,6 +104,24 @@
 				</div>
 			</div>
 
+
+			<!-- Company -->
+			<div class="company-container">
+				<header>Company</header>
+				<div>
+					<select>
+						<!-- A blank option, which is used to indicate we don't want to search by Company -->
+						<option value="-1"></option>
+						@if (ViewModel?.CompanyDetails != null)
+						{
+							@foreach (CompanyDetails aCompany in ViewModel?.CompanyDetails)
+							{
+								<option value="@aCompany.Id">@aCompany.CompanyName</option>
+							}
+						}
+					</select>
+				</div>
+			</div>
 
 			<!-- Description -->
 			<div class="description-container">
@@ -144,11 +165,21 @@
 
 @code {
 
-	public SearchInvoiceVM ViewModel { get; set; } = new SearchInvoiceVM();
+	public SearchInvoiceVM ViewModel { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		this.ViewModel = new SearchInvoiceVM(httpClient, appSettings);
+		this.ViewModel.FormModel.TypeOfPaymentId = -1;
+		// load all the payment types and list of companys from the server.
+		// and when we have them call state change to make them show up in the UI
+		this.ViewModel.LoadPaymentAndCompanyDetailsFromServer().ContinueWith((t) => {this.StateHasChanged(); });
+	
+	}
 
 	public async Task Form_ValidSubmit()
 	{
-		ServerResponseListOfInvoices response = await ViewModel.SendSearchRquestToServer(httpClient, appSettings);
+		ServerResponseListOfInvoices response = await ViewModel.SendSearchRquestToServer();
 
 		if (ViewModel.AreThereErrorsInResponseData(response) == false)
 		{
