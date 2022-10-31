@@ -1,0 +1,103 @@
+﻿.delete-component-container
+{
+	height: 100%;
+
+	> div
+	{
+		height: 100%;
+
+
+		> button
+		{
+			width: 100%;
+			height: 100%;
+			background-color: transparent;
+			outline: none;
+			border: none;
+			cursor: pointer;
+
+			> svg
+			{
+				width: 100%;
+				height: 80%;
+			}
+		}
+	}
+}
+
+.delete-bin-container
+{
+	> button
+	{
+		> svg
+		{
+			color: #afafae;
+		}
+
+		&:hover
+		{
+			svg
+			{
+				color: lighten(#afafae,15%);
+			}
+		}
+
+		&:active
+		{
+			> svg
+			{
+				color: darken(#afafae,5%);
+			}
+		}
+	}
+}
+
+.delete-confirm-container
+{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 5px;
+	grid-template-rows: 100%;
+
+
+	> button
+	{
+		> svg#tick-icon
+		{
+			color: #55D94D;
+			height: 50%;
+		}
+
+		> svg#cross-icon
+		{
+			color: #D94D4D;
+			height: 50%;
+		}
+
+		&:hover
+		{
+			> svg#tick-icon
+			{
+				color: lighten(#55D94D,5%);
+			}
+
+			> svg#cross-icon
+			{
+				color: lighten(#D94D4D,5);
+			}
+		}
+
+		&:active
+		{
+			> svg#tick-icon
+			{
+				color: darken(#55D94D,5%);
+			}
+
+			> svg#cross-icon
+			{
+				color: darken(#D94D4D,5);
+			}
+		}
+	}
+}

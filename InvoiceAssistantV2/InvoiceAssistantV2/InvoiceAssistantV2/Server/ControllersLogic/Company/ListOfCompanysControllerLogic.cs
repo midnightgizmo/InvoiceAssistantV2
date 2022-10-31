@@ -9,11 +9,12 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.Company
         {
             ControllerLogicReturnValue DataToReturn = new ControllerLogicReturnValue();
 
-            InvoiceAssistantDbContext dbContext = new InvoiceAssistantDbContext();
-            CompanyDb paymentTypeDb = new CompanyDb(dbContext);
+            using (InvoiceAssistantDbContext dbContext = new InvoiceAssistantDbContext())
+            {
+                CompanyDb paymentTypeDb = new CompanyDb(dbContext);
 
-            DataToReturn.ReturnValue = paymentTypeDb.SelectAllCompanies();
-
+                DataToReturn.ReturnValue = paymentTypeDb.SelectAllCompanies(false);
+            }
             return DataToReturn;
         }
     }

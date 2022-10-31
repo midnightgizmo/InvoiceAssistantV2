@@ -27,5 +27,14 @@ namespace InvoiceAssistantV2.Server.Controllers
             ListOfCompanysControllerLogic ControllerLogic = new ListOfCompanysControllerLogic();
             return ControllerLogic.Process();
         }
+
+        [HttpPost]
+        [Route("Remove")]
+        [Produces("application/json")]
+        public ControllerLogicReturnValue RemoveCompany([FromForm]int CompanyId)
+        {
+            RemoveCompanyControllerLogic ControllerLogic = new RemoveCompanyControllerLogic();
+            return ControllerLogic.Process(CompanyId);
+        }
     }
 }

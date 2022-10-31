@@ -33,7 +33,7 @@ namespace Database.Data
         {
             // set the location of the MySqlite database file
             OptionsBuilder.UseSqlite($"Data Source={this.GetConnectionURL()}");
-            
+            OptionsBuilder.LogTo(Console.WriteLine);
 
             
         }

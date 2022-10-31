@@ -27,5 +27,22 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
             return responseData;
         }
+
+        public async Task<ServerResponseBool> DeleteCompany(int CompanyID)
+        {
+            ServerResponse responseMessage;
+            ServerResponseBool responseData;
+
+            Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add("CompanyId", CompanyID.ToString());
+
+            // remove the company from the server
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Company/Remove", DataToSend);
+
+            responseData = ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
+
+            return responseData;
+        }
     }
 }

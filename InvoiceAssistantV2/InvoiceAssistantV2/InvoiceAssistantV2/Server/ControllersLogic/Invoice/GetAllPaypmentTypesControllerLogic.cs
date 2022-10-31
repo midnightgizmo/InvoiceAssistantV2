@@ -10,11 +10,12 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.Invoice
         {
             ControllerLogicReturnValue DataToReturn = new ControllerLogicReturnValue();
 
-            InvoiceAssistantDbContext dbContext = new InvoiceAssistantDbContext();
-            PaymentTypeDb paymentTypeDb = new PaymentTypeDb(dbContext);
+            using (InvoiceAssistantDbContext dbContext = new InvoiceAssistantDbContext())
+            {
+                PaymentTypeDb paymentTypeDb = new PaymentTypeDb(dbContext);
 
-            DataToReturn.ReturnValue = paymentTypeDb.SelectAll();
-
+                DataToReturn.ReturnValue = paymentTypeDb.SelectAll();
+            }
             return DataToReturn;
         }
 

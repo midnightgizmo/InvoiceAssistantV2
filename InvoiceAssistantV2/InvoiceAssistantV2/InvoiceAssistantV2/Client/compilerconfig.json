@@ -6,5 +6,13 @@
   {
     "outputFile": "Pages/Invoices/SearchInvoice.razor.css",
     "inputFile": "Pages/Invoices/SearchInvoice.razor.less"
+  },
+  {
+    "outputFile": "Pages/Company/CompanyDetailsList.razor.css",
+    "inputFile": "Pages/Company/CompanyDetailsList.razor.less"
+  },
+  {
+    "outputFile": "Components/ConfirmDeleteComponent.razor.css",
+    "inputFile": "Components/ConfirmDeleteComponent.razor.less"
   }
 ]

@@ -1,0 +1,123 @@
+﻿@using InvoiceAssistantV2.Shared.Models.Database.Company
+
+
+<section class="delete-component-container">
+	@if (HasDeleteButtonBeenClicked == false)
+	{// show all the following when this.HasDeleteButtonBeenClicked == to false
+		<div class="delete-bin-container">
+			<!-- bin icon-->
+			<button @onclick="cmdBinButton_Click">
+				<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.33 20.35">
+					<defs>
+						<style>
+							.cls-4 {
+								fill: currentColor;
+							}</style>
+					</defs>
+					<polyline class="cls-4" points="0 4.38 14.33 4.38 14.33 5.68 0 5.68 0 4.38" />
+					<polyline class="cls-4" points="0 1.52 14.33 1.52 14.33 2.5 0 2.5 0 1.52" />
+					<polyline class="cls-4" points="1.86 20.35 12.99 20.35 12.99 19.2 1.86 19.2 1.86 20.35" />
+					<polyline class="cls-4" points="6.82 5.64 8.19 5.64 8.19 19.2 6.82 19.2 6.82 5.64" />
+					<polyline class="cls-4" points="0 5.65 1.4 5.65 2.81 19.21 1.87 19.21 0 5.65" />
+					<polyline class="cls-4" points="3.43 5.62 4.54 5.62 5.51 19.2 4.54 19.2 3.43 5.62" />
+					<polyline class="cls-4" points="11.17 5.66 10.34 5.66 9.44 19.23 10.34 19.23 11.17 5.66" />
+					<polyline class="cls-4" points="14.32 5.67 13.48 5.67 12.13 19.2 12.98 19.2 14.32 5.67" />
+					<polyline class="cls-4" points="5.68 0.64 9.08 0.64 9.08 0 5.68 0 5.68 0.64" />
+				</svg>
+			</button>
+		</div>
+	}
+	else
+	{// show all the following when this.HasDeleteButtonBeenClicked == to true
+		<div class="delete-confirm-container">
+		
+			<!-- tick icon -->
+			<button @onclick="cmdTickButton_Click">
+				<svg id="tick-icon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7.15 7.87">
+					<defs>
+						<style>
+							.cls-3 {
+							fill: currentColor;
+							}</style>
+					</defs>
+					<path class="cls-3" d="M1.38,4l1.46,2A30.61,30.61,0,0,1,4.91,1.85,6.17,6.17,0,0,1,6.82,0l.33,1.65A14.27,14.27,0,0,0,5.63,3.58c-.72,1-1.75,2.66-2.78,4.29A13.42,13.42,0,0,0,1.57,6.42,15.11,15.11,0,0,0,0,5.17L1.38,4" />
+				</svg>
+			</button>
+		
+			<!-- Cross icon -->
+			<button @onclick="cmdCrossButton_Click">
+				<svg id="cross-icon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.03 8.03">
+					<defs>
+						<style>
+							.cls-2 {
+							fill: currentColor;
+							}</style>
+					</defs>
+					<path class="cls-2" d="M5.25,4,7.08,5.84c.26.26.52.53.79.79a.46.46,0,0,1,0,.69c-.17.17-.35.33-.51.51a.47.47,0,0,1-.76,0L4.1,5.33,4,5.24a.27.27,0,0,1-.07.08L1.41,7.86a.45.45,0,0,1-.7,0L.16,7.31a.44.44,0,0,1,0-.68L2.72,4.08s0-.08,0-.13L.17,1.41a.46.46,0,0,1,0-.72L.71.16a.46.46,0,0,1,.69,0L4,2.72c0,.06.08,0,.12,0C4.93,1.87,5.78,1,6.62.17A.52.52,0,0,1,7.06,0a.49.49,0,0,1,.27.15L7.87.7a.47.47,0,0,1,0,.7L5.62,3.65,5.25,4" />
+				</svg>
+			</button>
+		
+		</div>
+	}
+	
+</section>
+
+@code 
+{
+	/// <summary>
+	/// The model data the parent component wants us to keep track of and inform them off when the delete confirmation has been clicked
+	/// </summary>
+	[Parameter]
+	public object Tag { get; set; }
+
+	/// <summary>
+	/// The event we will call to let the parent component know the Tick button has been clicked
+	/// </summary>
+	[Parameter]
+	public EventCallback<object> OnConfirmDelete { get; set; }
+
+	/// <summary>
+	/// keeps track of when the Bin svg button has been clicked.
+	/// Used to toggle which buttons to show
+	/// </summary>
+	private bool HasDeleteButtonBeenClicked { get; set; } = false;
+
+
+	/// <summary>
+	/// This can be used by the parent component for when waiting for a result back from the server.
+	/// It will stop multiple clicks of the button while waiting for a response.
+	/// </summary>
+	public bool ShouldDisableAllButtons { get; set; } = false;
+
+	/// <summary>
+	/// When the use clicks the bin button
+	/// </summary>
+	public void cmdBinButton_Click()
+	{
+		if (ShouldDisableAllButtons == false)
+			this.HasDeleteButtonBeenClicked = true;
+	}
+
+	/// <summary>
+	/// When the user clicks the Tick button
+	/// </summary>
+	public void cmdTickButton_Click()
+	{
+		if (ShouldDisableAllButtons == false)
+		{
+			this.HasDeleteButtonBeenClicked = false;
+			
+			//this.OnConfirmDelete.InvokeAsync((this, this.Tag));
+			this.OnConfirmDelete.InvokeAsync(Tuple.Create(this, this.Tag));
+			
+		}
+	}
+	/// <summary>
+	/// When the user clicks the cross button
+	/// </summary>
+	public void cmdCrossButton_Click()
+	{
+		if (ShouldDisableAllButtons == false)
+			this.HasDeleteButtonBeenClicked = false;
+	}
+}

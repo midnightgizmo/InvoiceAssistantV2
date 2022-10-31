@@ -13,15 +13,16 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.Invoice
 
             this.CheckInputValues(invoiceSearchParameters);
 
-            InvoiceAssistantDbContext dbContext = new InvoiceAssistantDbContext();
-            InvoiceDb invoiceDb = new InvoiceDb(dbContext);
-            DataToReturn.ReturnValue = invoiceDb.Select_CustomQuery(invoiceSearchParameters.StartDate, invoiceSearchParameters.EndDate,
-                                         invoiceSearchParameters.StartAmmount, invoiceSearchParameters.EndAmmount,
-                                         invoiceSearchParameters.DateRecievedMoneyStart, invoiceSearchParameters.DateRecievedMoneyEnd,
-                                         invoiceSearchParameters.ReferenceNumber, invoiceSearchParameters.TypeOfPaymentId,
-                                         invoiceSearchParameters.AddressToMakePaymentOutToId, invoiceSearchParameters.Description);
+            using (InvoiceAssistantDbContext dbContext = new InvoiceAssistantDbContext())
+            {
+                InvoiceDb invoiceDb = new InvoiceDb(dbContext);
+                DataToReturn.ReturnValue = invoiceDb.Select_CustomQuery(invoiceSearchParameters.StartDate, invoiceSearchParameters.EndDate,
+                                             invoiceSearchParameters.StartAmmount, invoiceSearchParameters.EndAmmount,
+                                             invoiceSearchParameters.DateRecievedMoneyStart, invoiceSearchParameters.DateRecievedMoneyEnd,
+                                             invoiceSearchParameters.ReferenceNumber, invoiceSearchParameters.TypeOfPaymentId,
+                                             invoiceSearchParameters.AddressToMakePaymentOutToId, invoiceSearchParameters.Description);
 
-            
+            }
             return DataToReturn;
         }
 
