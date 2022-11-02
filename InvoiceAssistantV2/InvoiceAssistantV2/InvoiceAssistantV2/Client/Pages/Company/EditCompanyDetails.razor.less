@@ -1,0 +1,181 @@
+﻿.page-header
+{
+    width: 100%;
+    height: 100px;
+    background-color: #C06F00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media only screen and (max-width: 900px)
+    {
+        height: 70px;
+    }
+
+    > div
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100%;
+        height: 100%;
+
+
+
+        > div
+        {
+            //align-self: center;
+            //text-align: center;
+            display: flex;
+            color: white;
+            font-weight: bold;
+            font-size: 5vh;
+
+            @media only screen and (max-width: 900px)
+            {
+                font-size: 3vh;
+            }
+
+            > button
+            {
+                align-self: center;
+                background-color: transparent;
+                border: none;
+                color: white;
+                height: 10vh;
+                width: 10vh;
+                margin-left: 10px;
+
+                &:hover
+                {
+                    //filter: brightness(95%);
+                    color: yellow;
+                }
+
+                &:active
+                {
+                    color: darken(yellow,5%);
+                }
+
+                > img
+                {
+                    height: 9vh;
+                }
+            }
+
+            > span
+            {
+                align-self: center;
+                text-align: center;
+                width: 100%;
+            }
+
+            > img
+            {
+                height: 8vh;
+                margin-right: 10px;
+            }
+        }
+
+        > div.glasses-container
+        {
+            justify-content: flex-end;
+            align-items: center;
+        }
+    }
+}
+
+
+.background-wallpaper
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: rgb(6,92,158);
+    background: linear-gradient(180deg, rgba(6,92,158,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+
+.edit-container
+{
+    max-width:400px;
+    margin-left:auto;
+    margin-right:auto;
+
+    margin-top:50px;
+}
+
+.confirm-edit-container
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+
+    > div
+    {
+        width: 100%;
+        height: 100%;
+
+        > button
+        {
+            width: 100%;
+            height: 100%;
+
+            background-color:transparent;
+            outline:none;
+            border:none;
+
+            cursor:pointer;
+
+            > svg
+            {
+                height: 100%;
+            }
+
+
+            > svg#tick-icon
+            {
+                color: #55D94D;
+                
+            }
+
+            > svg#cross-icon
+            {
+                color: #D94D4D;
+                
+            }
+
+            &:hover
+            {
+                > svg#tick-icon
+                {
+                    color: lighten(#55D94D,5%);
+                }
+
+                > svg#cross-icon
+                {
+                    color: lighten(#D94D4D,5);
+                }
+            }
+
+            &:active
+            {
+                > svg#tick-icon
+                {
+                    color: darken(#55D94D,5%);
+                }
+
+                > svg#cross-icon
+                {
+                    color: darken(#D94D4D,5);
+                }
+            }
+        }
+    }
+}

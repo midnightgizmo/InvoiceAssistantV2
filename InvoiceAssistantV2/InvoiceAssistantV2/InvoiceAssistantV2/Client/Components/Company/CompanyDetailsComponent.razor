@@ -1,0 +1,52 @@
+﻿@using InvoiceAssistantV2.Shared.Models.Database.Company
+
+<section class="compnay-details-container">
+
+	<div>
+		<label for="txtFriendlyName">Friendly Name</label>
+	</div>
+	<div>
+		<input name="txtFriendlyName" type="text" @bind-value="CompanyDetails.FriendlyName"/>
+	</div>
+	<div class='@(this.DoesFriendlyNameHaveErrors == true ? "show" : "hide")'>
+		<span>@FriendlyNameErrorMessage</span>
+	</div>
+
+
+	<div>
+		<label for="txtCompanyName">Company Name</label>
+	</div>
+	<div>
+		<input name="txtCompanyName" type="text" @bind-value="CompanyDetails.CompanyName" />
+	</div>
+	<div class='@(this.DoesCompanyNameHaveErrors == true ? "show" : "hide")'>
+		<span>@CompanyNameErrorMessage</span>
+	</div>
+
+
+</section>
+
+@code {
+
+	[Parameter]
+	public CompanyDetails CompanyDetails { get; set; } = null;
+
+	[Parameter]
+	public bool DoesFriendlyNameHaveErrors { get; set; } = false;
+	[Parameter]
+	public bool DoesCompanyNameHaveErrors { get; set; } = false;
+
+	[Parameter]
+	public string FriendlyNameErrorMessage { get; set; } = string.Empty;
+	[Parameter]
+	public string CompanyNameErrorMessage { get; set; } = string.Empty;
+
+	protected override void OnParametersSet()
+	{
+		// If this component is being used to add a new Company, the this.CompanyDetails will be null
+		// so we need to inishalize it. If it is being used as an exit, the this.CompanyDetails should have
+		// allready been inshalized by the page that created this component.
+		if (this.CompanyDetails == null)
+			this.CompanyDetails = new CompanyDetails();
+	}
+}

@@ -32,6 +32,17 @@ namespace Database.DbInteractions
 
 
         /// <summary>
+        /// Returns a single <see cref="CompanyDetails"/> or null if not found
+        /// </summary>
+        /// <param name="CompanyId">The Id used to find the record in the database</param>
+        /// <returns><see cref="CompanyDetails"/> or null</returns>
+        public CompanyDetails? Select(int CompanyId)
+        {
+            return this._DbContext.CompanyDetails.Where(c => c.Id == CompanyId).FirstOrDefault();
+        }
+
+
+        /// <summary>
         /// Checks if the CompanyId passed in is linked to an invoices.
         /// </summary>
         /// <param name="CompanyId"></param>
@@ -62,6 +73,21 @@ namespace Database.DbInteractions
 
             // return true if effected rows is greater than zero, else false
             return EffectedRows > 0 ? true : false;
+        }
+
+        public CompanyDetails? EditCompanyDetails(CompanyDetails companyDetails)
+        {
+            CompanyDetails? company = this.Select(companyDetails.Id);
+            if (company == null)
+                return null;
+
+            company.FriendlyName = companyDetails.FriendlyName;
+            company.CompanyName = companyDetails.CompanyName;
+            company.HasBeenDeleted = companyDetails.HasBeenDeleted;
+
+            this._DbContext.SaveChanges();
+
+            return company;
         }
 
         /// <summary>

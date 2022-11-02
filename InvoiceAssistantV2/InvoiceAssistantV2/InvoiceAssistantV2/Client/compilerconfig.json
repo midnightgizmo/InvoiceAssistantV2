@@ -14,5 +14,13 @@
   {
     "outputFile": "Components/ConfirmDeleteComponent.razor.css",
     "inputFile": "Components/ConfirmDeleteComponent.razor.less"
+  },
+  {
+    "outputFile": "Pages/Company/EditCompanyDetails.razor.css",
+    "inputFile": "Pages/Company/EditCompanyDetails.razor.less"
+  },
+  {
+    "outputFile": "Components/Company/CompanyDetailsComponent.razor.css",
+    "inputFile": "Components/Company/CompanyDetailsComponent.razor.less"
   }
 ]
