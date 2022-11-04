@@ -1,8 +1,10 @@
 ﻿using InvoiceAssistantV2.Client.Classes.Server;
 using InvoiceAssistantV2.Client.Models;
+using InvoiceAssistantV2.Client.Models.Server;
 using InvoiceAssistantV2.Client.Models.Server.ResponseData;
 using InvoiceAssistantV2.Shared.Models.Database.Company;
 using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 
 namespace InvoiceAssistantV2.Client.ViewModels.Company
@@ -92,6 +94,33 @@ namespace InvoiceAssistantV2.Client.ViewModels.Company
         {
             this.CompanyDetails.Remove(company);
             this.FilterdCompanyDetails.Remove(company);
+        }
+
+        public void RemoveCompanyAddressFromCompany(int CompanyDetailsId, CompanyAddress companyAddress)
+        {
+            // find the company we want to remove the address from
+            CompanyDetails? company = this.CompanyDetails.Where(c => c.Id == CompanyDetailsId).FirstOrDefault();
+
+            // if we did not find the company, we can not remove it
+            if (company == null)
+                return;
+
+            company.Venues.Remove(companyAddress);
+        }
+
+
+
+        public async Task LoadCompanyAddressess(CompanyDetails aCompany)
+        {
+            CompanyAddressCommunication addressComunication = new CompanyAddressCommunication(this._HttpClient, this._AppSettings);
+            ServerResponseListOfCompanyAddresses serverResponse;
+
+            serverResponse = await addressComunication.GetListOfAddressesForCompany(aCompany.Id);
+
+            if(serverResponse.HasErrors == false)
+            {
+                aCompany.Venues = serverResponse.ReturnValue;
+            }
         }
     }
 }

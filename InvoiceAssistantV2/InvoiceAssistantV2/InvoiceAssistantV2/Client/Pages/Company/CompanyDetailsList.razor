@@ -18,7 +18,6 @@
 		<div>
 			<div>
 				<button @onclick='() => NavManger.NavigateTo("/")'>
-					<!--<img src="/images/svg/Back-Arrow.svg" />-->
 					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.48 37.48">
 						<defs>
 							<style>
@@ -96,6 +95,10 @@
 			<span>Delete</span>
 		</div>
 
+		<div class="header-cell">
+			<span></span>
+		</div>
+
 		@if (ViewModel?.FilterdCompanyDetails != null)
 		{
 			@foreach (CompanyDetails aCompany in ViewModel.FilterdCompanyDetails)
@@ -132,6 +135,71 @@
 				<!-- Delete-->
 				<div class="row">
 					<ConfirmDeleteComponent  Tag="aCompany" OnConfirmDelete="(args) => ConfirmDelete_Click(args)" />
+				</div>
+				
+				<!-- add address cell -->
+				<div class="row">
+					<button class="link-button" @onclick="() => cmdAddCompanyAddress_Click(aCompany)" >Add Address</button>
+				</div>
+
+				<!-- addresss asoshiated with company-->
+				<div class="address-row">
+					@if (aCompany.Venues == null)
+					{
+						<button class="link-button-dark" @onclick="async () => await LoadAddresses_Click(aCompany)">Load Addresses</button>
+					}
+					else if (aCompany.Venues.Count() == 0)
+					{
+						<div>
+							No addresses asoshiated with company</div>
+					}
+					else
+					{
+						<div class="address-container">
+						@foreach (CompanyAddress anAddress in aCompany.Venues)
+						{
+							<div>
+								<button @onclick="()=>cmdAddressRowEdit_Click(anAddress)">
+									<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.61 12.6">
+										<defs>
+											<style>
+												.cls-9, .cls-7 {
+													fill: #727475;
+												}
+
+												.cls-8 {
+													fill: #e9e9e9;
+												}
+
+												.cls-7 {
+													fill-rule: evenodd;
+												}</style>
+										</defs>
+										<polyline class="cls-9" points="0.7 8.97 0 12.6 3.7 11.94 0.7 8.97" />
+										<path class="cls-8" d="M1.75,8.59c0-.26.3-.53.58-.81l4.5-4.51c.21-.2.41-.41.61-.42s.39.19.59.38L9.35,4.56c.17.17.34.33.34.5s-.16.32-.33.49l-4.89,4.9c-.2.19-.39.38-.56.39s-.34-.15-.51-.32L2.19,9.32c-.23-.24-.47-.47-.44-.73" />
+										<path class="cls-8" d="M8.74,1.6c0-.26.3-.53.58-.81l0,0C9.5.6,9.71.4,9.91.39s.39.19.58.38L11.82,2.1c.16.16.33.33.33.49s-.16.33-.32.49l-.37.38c-.2.19-.39.38-.56.39s-.34-.15-.51-.32L9.18,2.33c-.23-.24-.47-.47-.44-.73" />
+										<polyline class="cls-8" points="0.88 9.49 0.34 12.27 3.18 11.76 0.88 9.49" />
+										<path class="cls-7" d="M1.75,8.53c0-.25.3-.53.58-.81l4.5-4.5C7,3,7.24,2.8,7.44,2.8s.4.18.59.38L9.36,4.51c.16.16.33.33.33.49s-.16.33-.32.49l-4.9,4.9c-.19.19-.38.38-.56.39s-.34-.15-.51-.31L2.2,9.26C2,9,1.73,8.79,1.75,8.53m-.55,0c0-.32.38-.67.73-1L6.7,2.72c.26-.25.52-.51.77-.52s.49.23.73.47L9.88,4.35c.21.21.42.42.42.62s-.2.42-.41.62L4.62,10.86c-.24.24-.48.48-.7.5s-.43-.2-.64-.4L1.76,9.44C1.47,9.14,1.17,8.85,1.2,8.52Z" />
+										<path class="cls-7" d="M8.75,1.6c0-.26.3-.54.58-.82l0,0c.21-.2.41-.41.61-.41s.39.18.58.37l1.33,1.33c.17.17.34.34.34.5s-.16.33-.33.49l-.37.37c-.19.19-.38.38-.56.4s-.34-.15-.51-.32L9.2,2.32c-.24-.23-.47-.47-.45-.72m-.37,0c0-.34.4-.71.78-1.08l0,0C9.4.28,9.68,0,9.94,0s.52.25.78.5L12.17,2c.22.22.44.44.44.66s-.21.44-.43.65l-.5.5c-.25.26-.51.51-.74.53s-.46-.21-.68-.43L9,2.58C8.67,2.27,8.35,2,8.38,1.61Z" />
+									</svg>
+								</button>
+							</div>
+
+
+
+							<div>
+								<span>
+									@anAddress.FriendlyName
+								</span>
+							</div>
+
+							<div>
+									<ConfirmDeleteComponent Tag="anAddress" OnConfirmDelete="(args) => CompanyAddressConfirmDelete_Click(args)" />
+							</div>
+						}
+						</div>
+					}
+
 				</div>
 			}
 		}
@@ -281,11 +349,75 @@
 		}
 		else
 		{// the row has not been deleted
-			
+
 			// do somthing to indicate the row was not able to be deleted.
 		}
 
 		rowData.Item1.ShouldDisableAllButtons = false;
 
+	}
+
+	/// <summary>
+	/// When the user clicks the Add button to be able to add a new Company address for the selected Company
+	/// </summary>
+	public void cmdAddCompanyAddress_Click(CompanyDetails aCompany)
+	{
+		NavManger.NavigateTo("/Company/Address/New/" + aCompany.Id.ToString());
+	}
+
+
+
+
+
+
+
+
+	public async Task LoadAddresses_Click(CompanyDetails aCompany)
+	{
+		await this.ViewModel.LoadCompanyAddressess(aCompany);
+	}
+
+	public void cmdAddressRowEdit_Click(CompanyAddress anAddress)
+	{
+		NavManger.NavigateTo("/Company/Address/Edit/" + anAddress.Id.ToString());
+	}
+
+	public async void CompanyAddressConfirmDelete_Click(object args)
+	{
+		// the passed in object is a Tuple
+		Tuple<ConfirmDeleteComponent, object> rowData;
+		// the second item in the tuple is set as an object but we know its a CompanyAddress
+		CompanyAddress companyAddress;
+
+
+		// cast the object to a tuple
+		rowData = (Tuple<ConfirmDeleteComponent, object>)args;
+
+		// cast the second item in the tuple to a CompnayDetails object
+		companyAddress = rowData.Item2 as CompanyAddress;
+
+		// disable all buttons on the ConfirmDeleteComponent while we wait back for a response from the server.
+		rowData.Item1.ShouldDisableAllButtons = true;
+
+		// used to send information to the server
+		CompanyAddressCommunication server = new CompanyAddressCommunication(httpClient, appSettings);
+		ServerResponseBool responseData;
+		responseData = await server.DeleteCompanyAddress(companyAddress.Id);
+
+		// check if the row has been deleted
+		if (responseData.HasErrors == false &&
+			responseData.ReturnValue == true)
+		{// the row has been deleted
+			this.ViewModel.RemoveCompanyAddressFromCompany(companyAddress.CompanyDetailsID, companyAddress);
+			this.StateHasChanged();
+		}
+		else
+		{// the row has not been deleted
+
+			// do somthing to indicate the row was not able to be deleted.
+		}
+
+
+		rowData.Item1.ShouldDisableAllButtons = false;
 	}
 }

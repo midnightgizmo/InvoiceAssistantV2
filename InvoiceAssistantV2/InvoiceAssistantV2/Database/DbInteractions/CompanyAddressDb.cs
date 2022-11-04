@@ -17,6 +17,47 @@ namespace Database.DbInteractions
             _DbContext = dbContext;
         }
 
+        /// <summary>
+        /// Selects all address that belong to the company that have not been hidden
+        /// </summary>
+        /// <param name="CompanyId"></param>
+        /// <returns></returns>
+        public List<CompanyAddress> SelectAllAddressForCompany(int CompanyId)
+        {
+            return this._DbContext.CompanyAddress.Where(a => a.CompanyDetailsID == CompanyId && a.HasBeenDeleted == false)
+                                                 .OrderBy(o => o.FriendlyName)
+                                                 .ToList();
+        }
+
+        /// <summary>
+        /// Find the Compandy Address Details for the specifed ID.
+        /// </summary>
+        /// <param name="companyAddressId"></param>
+        /// <returns>null if could not be found</returns>
+        public CompanyAddress? Select(int companyAddressId)
+        {
+            return this._DbContext.CompanyAddress.Where(a => a.Id == companyAddressId).FirstOrDefault();
+        }
+
+        public CompanyAddress? EditCompanyAddressDetails(CompanyAddress companyAddressDetails)
+        {
+            CompanyAddress? address = this.Select(companyAddressDetails.Id);
+            if (address == null)
+                return null;
+
+            address.FriendlyName = companyAddressDetails.FriendlyName;
+            address.DrivingDistanceToAddress = companyAddressDetails.DrivingDistanceToAddress;
+            address.AddressLine1 = companyAddressDetails.AddressLine1;
+            address.AddressLine2 = companyAddressDetails.AddressLine2;
+            address.AddressLine3 = companyAddressDetails.AddressLine3;
+            address.AddressLine4 = companyAddressDetails.AddressLine4;
+            address.AddressLine5 = companyAddressDetails.AddressLine5;
+            address.PostCode = companyAddressDetails.PostCode;
+
+            this._DbContext.SaveChanges();
+            
+            return address;
+        }
 
         public int HideAllAddressesLinkedToCompany(int CompanyId)
 		{
@@ -25,5 +66,54 @@ namespace Database.DbInteractions
 
             return EffectedRows;
         }
-	}
+
+        /// <summary>
+        /// Checks if the CompanyAddressId passed in is linked to an invoices.
+        /// </summary>
+        /// <param name="CompanyAddressId"></param>
+        /// <returns>true if Company Address linked to one or more invoices, else false</returns>
+        public bool IsCompanyAddressLinkedToAnyInvoices(int CompanyAddressId)
+        {
+            return this._DbContext.Invoices.Where(i => i.AddressToMakeInvoiceOutToId == CompanyAddressId).Any();
+        }
+
+        /// <summary>
+        /// Hide the Company Address so the user can't see it anymore
+        /// </summary>
+        /// <param name="CompanyAddressId"></param>
+        /// <returns>true if sucsefull, else false</returns>
+        public bool HideCompanyAddress(int CompanyAddressId)
+        {
+
+            int EffectedRows = _DbContext.Database.ExecuteSqlRaw($"UPDATE {nameof(CompanyAddress)} SET {nameof(CompanyAddress.HasBeenDeleted)} = 1 WHERE id = {CompanyAddressId}");
+
+            // return true if effected rows is greater than zero, else false
+            return EffectedRows > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// Deletes the Company Address, from the database.
+        /// </summary>
+        /// <param name="CompanyId"></param>
+        /// <returns>true if delete sucsefull, else false</returns>
+        public bool DeleteCompanyAddress(int CompanyAddressId)
+        {
+            // find the company address we want to delete
+            var companyAddressToDelete = _DbContext.CompanyAddress.Where(a => a.Id == CompanyAddressId).FirstOrDefault();
+            // make sure we found it
+            if (companyAddressToDelete != null)
+            {
+                // delete it from the database
+                _DbContext.CompanyAddress.Remove(companyAddressToDelete);
+                _DbContext.SaveChanges();
+                return true;
+            }
+            // we could not find the company so could not remove it
+            else
+                return false;
+
+        }
+
+        
+    }
 }

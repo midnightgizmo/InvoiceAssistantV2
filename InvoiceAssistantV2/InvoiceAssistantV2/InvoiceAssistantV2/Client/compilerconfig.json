@@ -22,5 +22,13 @@
   {
     "outputFile": "Components/Company/CompanyDetailsComponent.razor.css",
     "inputFile": "Components/Company/CompanyDetailsComponent.razor.less"
+  },
+  {
+    "outputFile": "Components/Company/CompanyAddressComponent.razor.css",
+    "inputFile": "Components/Company/CompanyAddressComponent.razor.less"
+  },
+  {
+    "outputFile": "Pages/Company/EditCompanyAddress.razor.css",
+    "inputFile": "Pages/Company/EditCompanyAddress.razor.less"
   }
 ]

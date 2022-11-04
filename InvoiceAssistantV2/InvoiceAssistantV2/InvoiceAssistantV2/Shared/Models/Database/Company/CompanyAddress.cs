@@ -1,5 +1,6 @@
 ﻿using InvoiceAssistantV2.Shared.Models.Database.Invoice;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace InvoiceAssistantV2.Shared.Models.Database.Company
 {

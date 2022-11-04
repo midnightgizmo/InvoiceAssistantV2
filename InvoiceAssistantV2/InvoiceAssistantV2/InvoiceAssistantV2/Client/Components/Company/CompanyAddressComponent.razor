@@ -1,0 +1,92 @@
+﻿@using InvoiceAssistantV2.Shared.Models.Database.Company
+
+<section class="company-address-outer-container">
+	<div class="company-address-inputs-container">
+		<!-- FriendlyName -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.FriendlyName" />
+			<!-- Place holder Text -->
+			<span>Friendly Name</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<!-- AddressLine1 -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.AddressLine1" />
+			<!-- Place holder Text -->
+			<span>Address Line 1</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<!-- AddressLine2 -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.AddressLine2" />
+			<!-- Place holder Text -->
+			<span>Address Line 2</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<!-- AddressLine3 -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.AddressLine3" />
+			<!-- Place holder Text -->
+			<span>Address Line 3</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<!-- AddressLine4 -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.AddressLine4" />
+			<!-- Place holder Text -->
+			<span>Address Line 4</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<!-- AddressLine5 -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.AddressLine5" />
+			<!-- Place holder Text -->
+			<span>Address Line 5</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+
+		<!-- Post Code -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="companyAddress.PostCode" />
+			<!-- Place holder Text -->
+			<span>Post Code</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<!-- DrivingDistanceToAddress -->
+		<div class="row">
+			<input id="input-username" type="number" required @bind-value="companyAddress.DrivingDistanceToAddress" />
+			<!-- Place holder Text -->
+			<span>Driving DistanceTo Address (in miles)</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+
+	</div>
+</section>
+
+@code 
+{
+	[Parameter]
+	public CompanyAddress companyAddress { get; set; } = null;
+
+	protected override void OnParametersSet()
+	{
+		if (this.companyAddress == null)
+			this.companyAddress = new CompanyAddress();
+	}
+}

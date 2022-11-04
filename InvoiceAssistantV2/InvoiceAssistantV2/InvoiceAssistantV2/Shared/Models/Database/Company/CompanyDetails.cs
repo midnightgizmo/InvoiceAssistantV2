@@ -37,7 +37,7 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Company
         [Required]
         public bool HasBeenDeleted { get; set; } = false;
 
-        public IEnumerable<CompanyAddress> Venues = null!;
+        public List<CompanyAddress> Venues = null!;
 
     }
 }
