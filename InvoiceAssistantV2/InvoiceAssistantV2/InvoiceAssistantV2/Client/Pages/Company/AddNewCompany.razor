@@ -1,15 +1,17 @@
-﻿@page "/Company/Edit/{CompanyDetailsId:int}";
+﻿@page "/Company/New"
 @using InvoiceAssistantV2.Client.Classes.Server
 @using InvoiceAssistantV2.Client.Components.Company
 @using InvoiceAssistantV2.Client.Models
 @using InvoiceAssistantV2.Client.Models.Server.ResponseData
 @using InvoiceAssistantV2.Shared.Models.Database.Company
 
+
+@inject NavigationManager NavManager;
 @inject HttpClient httpClient;
 @inject AppSettings appSettings;
-@inject NavigationManager NavManager;
 
-<section class="edit-company-container">
+<section class="add-company-container">
+
 	<header class="page-header">
 		<div>
 			<div>
@@ -35,7 +37,7 @@
 				</button>
 			</div>
 
-			<div><span>Edit Company Details</span></div>
+			<div><span>Add new Company</span></div>
 
 			<div class="glasses-container">
 				<img src="/images/svg/House.svg" />
@@ -48,12 +50,13 @@
 	<div class="background-wallpaper"></div>
 
 
-
-	<div class="edit-container">
-		<CompanyDetailsComponent @ref="companyDetailsComponet" CompanyDetails="CompanyDetailsToEdit" />
+	<div class="add-container">
+		<CompanyDetailsComponent @ref="companyDetailsComponet" />
 	</div>
 
-	<div class="confirm-edit-container">
+
+
+	<div class="confirm-add-container">
 		<div>
 			<button @onclick="() => cmdTick_OnClick()">
 				<svg id="tick-icon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7.15 7.87">
@@ -81,79 +84,46 @@
 			</button>
 		</div>
 	</div>
+
 </section>
 
-@code 
-{
-	private CompanyDetailsComponent companyDetailsComponet{ get; set; }
+@code {
 
-	[Parameter]
-	public int CompanyDetailsId { get; set; }
+	public CompanyDetailsComponent companyDetailsComponet { get; set; }
 
-	private CompanyDetails? CompanyDetailsToEdit { get; set; }
-
-
-
-	/// <summary>
-	/// When all parameters have been set on the page
-	/// </summary>
-	protected async override void OnParametersSet()
+	protected override void OnParametersSet()
 	{
-		// check if we have been sent a CompanyDetails ID
-		if (this.CompanyDetailsId < 1)
-		{
-			//this.CompanyDetailsToEdit = new CompanyDetails();
-			NavManager.NavigateTo("/Company/");
-		}
-		else
-		{// company id has been sent so let see if we can find the company deatails from the server
-
-			// get Company details by using the passed in CompanyDetailsId
-			CompanyCommunication server = new CompanyCommunication(httpClient, appSettings);
-			ServerResponseSingleCompanyDetails ServerResponse;
-			ServerResponse = await server.GetSingleCompanyDetails(this.CompanyDetailsId);
-
-			// if we have recieved the company details
-			if(ServerResponse.HasErrors == false)
-			{
-				this.CompanyDetailsToEdit = ServerResponse.ReturnValue;
-				this.StateHasChanged();
-			}
-			// we have not receieved the company deatils
-			else
-			{
-				NavManager.NavigateTo("/Company");
-			}
-
-
-		}
-
-
-
 	}
+
 
 	private bool HasTickButtonBeenClicked = false;
 	public async void cmdTick_OnClick()
 	{
+		// what we will store the new company details into
+		CompanyDetails companyDetails = null;
+
+
 		// If the user clicks the tick button multiple times
 		if (this.HasTickButtonBeenClicked == true)
 			return;
 
-		if (this.CompanyDetailsToEdit == null)
+		// check there is a CompanyDetails object, that will hold the new company details we want to create
+		if (this.companyDetailsComponet.CompanyDetails == null)
 			return;
 
+		companyDetails = this.companyDetailsComponet.CompanyDetails;
 
 		// check for errors on the inputs
 		bool AreThereErrors = false;
 
-		if(this.CompanyDetailsToEdit.CompanyName.Trim().Length == 0)
+		if (companyDetails.CompanyName.Trim().Length == 0)
 		{
 			this.companyDetailsComponet.CompanyNameErrorMessage = "Company Name required";
 			this.companyDetailsComponet.DoesCompanyNameHaveErrors = true;
 			AreThereErrors = true;
 		}
 
-		if (this.CompanyDetailsToEdit.FriendlyName.Trim().Length == 0)
+		if (companyDetails.FriendlyName.Trim().Length == 0)
 		{
 			this.companyDetailsComponet.FriendlyNameErrorMessage = "Friendly Name required";
 			this.companyDetailsComponet.DoesFriendlyNameHaveErrors = true;
@@ -170,10 +140,10 @@
 		// if we get this far we have valid inputs to update.
 		CompanyCommunication server = new CompanyCommunication(httpClient, appSettings);
 		ServerResponseSingleCompanyDetails response;
-		response = await server.EditCompanyDetails(this.CompanyDetailsToEdit);
+		response = await server.AddNewCompany(companyDetails);
 
 		// if we recieved some errors from the server
-		if(response.HasErrors == true)
+		if (response.HasErrors == true)
 		{
 			// allows this function to run again if user clicks the tick button again
 			this.HasTickButtonBeenClicked = false;

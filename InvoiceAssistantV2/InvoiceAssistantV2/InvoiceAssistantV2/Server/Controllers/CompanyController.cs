@@ -40,6 +40,15 @@ namespace InvoiceAssistantV2.Server.Controllers
         }
 
         [HttpPost]
+        [Route("Insert")]
+        [Produces("application/json")]
+        public ControllerLogicReturnValue InsertCompany([FromForm]string FriendlyName, [FromForm]string CompanyName)
+        {
+            InsertCompanyControllerLogic ControllerLogic = new InsertCompanyControllerLogic();
+            return ControllerLogic.Process(FriendlyName, CompanyName);
+        }
+
+        [HttpPost]
         [Route("Edit")]
         [Produces("application/json")]
         public ControllerLogicReturnValue EditCompanyDetails([FromForm]CompanyDetails companyDetails)

@@ -25,9 +25,9 @@ namespace Database.DbInteractions
         public List<CompanyDetails> SelectAllCompanies(bool IncludeHiddenOnes)
         {
             if (IncludeHiddenOnes)
-                return this._DbContext.CompanyDetails.ToList();
+                return this._DbContext.CompanyDetails.OrderBy(c => c.FriendlyName.ToLower()).ToList();
             else
-                return this._DbContext.CompanyDetails.Where(c => c.HasBeenDeleted == false).ToList();
+                return this._DbContext.CompanyDetails.Where(c => c.HasBeenDeleted == false).OrderBy(c => c.FriendlyName.ToLower()).ToList();
         }
 
 
@@ -74,6 +74,19 @@ namespace Database.DbInteractions
             // return true if effected rows is greater than zero, else false
             return EffectedRows > 0 ? true : false;
         }
+
+        public CompanyDetails? AddNewCompany(string FriendlyName, string CompanyName)
+        {
+            CompanyDetails companyDetails = new CompanyDetails();
+            companyDetails.FriendlyName = FriendlyName;
+            companyDetails.CompanyName = CompanyName;
+
+            this._DbContext.CompanyDetails.Add(companyDetails);
+            this._DbContext.SaveChanges();
+
+            return companyDetails.Id > 0 ? companyDetails : null;
+        }
+
 
         public CompanyDetails? EditCompanyDetails(CompanyDetails companyDetails)
         {

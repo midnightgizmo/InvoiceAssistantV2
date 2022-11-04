@@ -45,6 +45,23 @@ namespace InvoiceAssistantV2.Client.Classes.Server
             return responseData;
         }
 
+        public async Task<ServerResponseSingleCompanyDetails> AddNewCompany(CompanyDetails companyDetails)
+        {
+            ServerResponse responseMessage;
+            ServerResponseSingleCompanyDetails responseData;
+
+            Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add(nameof(companyDetails.FriendlyName), companyDetails.FriendlyName);
+            DataToSend.Add(nameof(companyDetails.CompanyName), companyDetails.CompanyName);
+
+            // ask the server to update the company deatils and get the new edited details back
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Company/Insert", DataToSend);
+            responseData = ServerCommunication.ParseServerResponse<ServerResponseSingleCompanyDetails>(responseMessage);
+
+            return responseData;
+        }
+
         public async Task<ServerResponseSingleCompanyDetails> EditCompanyDetails(CompanyDetails companyDetails)
         {
             ServerResponse responseMessage;
