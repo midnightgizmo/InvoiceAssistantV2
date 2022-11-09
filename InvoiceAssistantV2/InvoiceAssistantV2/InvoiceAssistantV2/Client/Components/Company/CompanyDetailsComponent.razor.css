@@ -1,24 +1,124 @@
-﻿.compnay-details-container {
-  width: 100%;
+﻿/*
+.compnay-details-container
+{
+	width:100%;
+
+	display:grid;
+
+	grid-template-columns: 1fr;
+	column-gap:20px;
+	//row-gap:20px;
+	//grid-auto-rows:50px;
+
+	> div
+	{
+		&:nth-child(odd)
+		{
+			margin-top:10px;
+		}
+		> label
+		{
+			color:white;
+			font-size:1.5rem;
+			text-align:center;
+		}
+
+		> input
+		{
+			border:none;
+			outline:none;
+			//border-bottom: 1px solid black;
+			font-size:1.5rem;
+			padding:5px;
+			border-radius:5px;
+			width:100%;
+		}
+	}
+
+}
+
+.show
+{
+	display: block;
+
+
+	> span
+	{
+		color: darkred;
+	}
+}
+
+.hide
+{
+	display:none;
+
+}
+*/
+.company-inputs-container {
   display: grid;
   grid-template-columns: 1fr;
-  column-gap: 20px;
+  grid-auto-rows: 50px;
+  row-gap: 20px;
+  margin-top: 50px;
 }
-.compnay-details-container > div:nth-child(odd) {
-  margin-top: 10px;
+.company-inputs-container .row {
+  position: relative;
 }
-.compnay-details-container > div > label {
+.company-inputs-container .row > input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 2;
+  outline: none;
+  border: none;
   color: white;
   font-size: 1.5rem;
-  text-align: center;
 }
-.compnay-details-container > div > input {
-  border: none;
-  outline: none;
-  font-size: 1.5rem;
-  padding: 5px;
-  border-radius: 5px;
-  width: 100%;
+.company-inputs-container .row > input:focus + span {
+  font-size: 12pt;
+  top: -63px;
+  transition: all 0.2s ease;
+}
+.company-inputs-container .row > input:not(:focus):valid + span {
+  font-size: 12pt;
+  top: -63px;
+  transition: all 0.2s ease;
+}
+.company-inputs-container .row > input:not(:focus):not(:valid) + span {
+  font-size: 12pt;
+  top: 0;
+  transition: all 0.2s ease;
+}
+.company-inputs-container .row > span {
+  position: absolute;
+  left: 3px;
+  right: 0;
+  bottom: 0;
+  color: #e3c9ff;
+  background-color: transparent;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  z-index: 3;
+}
+.company-inputs-container .row > div.selected-border {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.company-inputs-container .row > input:not(:focus) ~ .selected-border {
+  background-color: transparent;
+}
+.company-inputs-container .row > input:focus ~ .selected-border {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .show {
   display: block;

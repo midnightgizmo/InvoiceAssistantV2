@@ -1,5 +1,5 @@
 ﻿@using InvoiceAssistantV2.Shared.Models.Database.Company
-
+<!--
 <section class="compnay-details-container">
 
 	<div>
@@ -25,6 +25,40 @@
 
 
 </section>
+-->
+
+<section class="company-details-container">
+
+	<div class="company-inputs-container">
+		<!-- Friendly Name -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="CompanyDetails.FriendlyName" />
+			<!-- Place holder Text -->
+			<span>Friendly Name</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<div class='@(this.DoesFriendlyNameHaveErrors == true ? "show" : "hide")'>
+			<span>@FriendlyNameErrorMessage</span>
+		</div>
+
+		<!-- Company Name -->
+		<div class="row">
+			<input id="input-username" type="text" required @bind-value="CompanyDetails.CompanyName" />
+			<!-- Place holder Text -->
+			<span>Company Name</span>
+			<!-- outline border for when the control is selected -->
+			<div class="selected-border"></div>
+		</div>
+
+		<div class='@(this.DoesCompanyNameHaveErrors == true ? "show" : "hide")'>
+			<span>@CompanyNameErrorMessage</span>
+		</div>
+
+	</div>
+
+</section>
 
 @code {
 
@@ -48,5 +82,10 @@
 		// allready been inshalized by the page that created this component.
 		if (this.CompanyDetails == null)
 			this.CompanyDetails = new CompanyDetails();
+	}
+
+	public void RaiseStateChange()
+	{
+		this.StateHasChanged();
 	}
 }

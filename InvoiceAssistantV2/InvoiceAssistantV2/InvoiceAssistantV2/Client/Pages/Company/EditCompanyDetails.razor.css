@@ -67,7 +67,6 @@
   bottom: 0;
   z-index: -1;
   background: #065c9e;
-  background: linear-gradient(180deg, #065c9e 0%, #ffffff 100%);
 }
 .edit-container {
   max-width: 400px;

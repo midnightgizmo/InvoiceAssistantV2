@@ -116,24 +116,30 @@
 		// check for errors on the inputs
 		bool AreThereErrors = false;
 
-		if (companyDetails.CompanyName.Trim().Length == 0)
+		if (companyDetails.CompanyName == null || companyDetails.CompanyName.Trim().Length == 0)
 		{
 			this.companyDetailsComponet.CompanyNameErrorMessage = "Company Name required";
 			this.companyDetailsComponet.DoesCompanyNameHaveErrors = true;
 			AreThereErrors = true;
 		}
+		else
+			this.companyDetailsComponet.DoesCompanyNameHaveErrors = false;
 
-		if (companyDetails.FriendlyName.Trim().Length == 0)
+		if (companyDetails.FriendlyName == null ||companyDetails.FriendlyName.Trim().Length == 0)
 		{
 			this.companyDetailsComponet.FriendlyNameErrorMessage = "Friendly Name required";
 			this.companyDetailsComponet.DoesFriendlyNameHaveErrors = true;
 			AreThereErrors = true;
 		}
+		else
+			this.companyDetailsComponet.DoesFriendlyNameHaveErrors = false;
 
 		if (AreThereErrors == true)
 		{
 			// allows this function to run again if user clicks the tick button again
 			this.HasTickButtonBeenClicked = false;
+			//this.StateHasChanged();
+			this.companyDetailsComponet.RaiseStateChange();
 			return;
 		}
 
