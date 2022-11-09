@@ -42,6 +42,26 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
             return ServerCommunication.ParseServerResponse<ServerResponseSingleCompanyAddress>(responseMessage);
         }
+        public async Task<ServerResponseSingleCompanyAddress> AddNewCompanyAddress(CompanyAddress company)
+        {
+            ServerResponse responseMessage;
+            Dictionary<string,string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add(nameof(CompanyAddress.FriendlyName), company.FriendlyName);
+            DataToSend.Add(nameof(CompanyAddress.CompanyDetailsID), company.CompanyDetailsID.ToString());
+            DataToSend.Add(nameof(CompanyAddress.DrivingDistanceToAddress),company.DrivingDistanceToAddress.ToString());
+            DataToSend.Add(nameof(CompanyAddress.AddressLine1), company.AddressLine1 ?? "");
+            DataToSend.Add(nameof(CompanyAddress.AddressLine2), company.AddressLine2 ?? "");
+            DataToSend.Add(nameof(CompanyAddress.AddressLine3), company.AddressLine3 ?? "");
+            DataToSend.Add(nameof(CompanyAddress.AddressLine4), company.AddressLine4 ?? "");
+            DataToSend.Add(nameof(CompanyAddress.AddressLine5), company.AddressLine5 ?? "");
+            DataToSend.Add(nameof(CompanyAddress.PostCode), company.PostCode ?? "");
+
+            // send the data to the server to be processed
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("CompanyAddress/Insert", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseSingleCompanyAddress>(responseMessage);
+        }
 
         public async Task<ServerResponseSingleCompanyAddress> EditCompanyAddressDetails(CompanyAddress CompanyAddressToEdit)
         {

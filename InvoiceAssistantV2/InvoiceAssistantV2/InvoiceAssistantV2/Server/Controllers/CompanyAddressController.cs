@@ -29,9 +29,35 @@ namespace InvoiceAssistantV2.Server.Controllers
         }
 
         [HttpPost]
+        [Route("Insert")]
+        [Produces("application/json")]
+        public ControllerLogicReturnValue InsertCompanyAddress([FromForm] string FriendlyName,
+                                                                [FromForm] int CompanyDetailsID, [FromForm] int DrivingDistanceToAddress,
+                                                                [FromForm] string? AddressLine1, [FromForm] string? AddressLine2,
+                                                                [FromForm] string? AddressLine3, [FromForm] string? AddressLine4,
+                                                                [FromForm] string? AddressLine5, [FromForm] string? PostCode
+                                                             )
+        {
+
+            InsertCompanyAddressControllerLogic ControllerLogic = new InsertCompanyAddressControllerLogic();
+            return ControllerLogic.Process( new CompanyAddress()
+            {
+                FriendlyName = FriendlyName,
+                CompanyDetailsID = CompanyDetailsID,
+                DrivingDistanceToAddress = DrivingDistanceToAddress,
+                AddressLine1 = AddressLine1,
+                AddressLine2 = AddressLine2,
+                AddressLine3 = AddressLine3,
+                AddressLine4 = AddressLine4,
+                AddressLine5 = AddressLine5,
+                PostCode = PostCode
+            });
+        }
+
+
+            [HttpPost]
         [Route("Edit")]
         [Produces("application/json")]
-        //public ControllerLogicReturnValue EditCompanyAddress([FromForm]CompanyAddress companyAddress)
         public ControllerLogicReturnValue EditCompanyAddress([FromForm]int Id, [FromForm]string FriendlyName, 
                                                              [FromForm]int CompanyDetailsID,[FromForm] int DrivingDistanceToAddress,
                                                              [FromForm]string? AddressLine1, [FromForm]string? AddressLine2, 

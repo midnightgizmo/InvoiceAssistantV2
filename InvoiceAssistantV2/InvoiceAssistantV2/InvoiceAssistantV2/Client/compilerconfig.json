@@ -34,5 +34,9 @@
   {
     "outputFile": "Pages/Company/AddNewCompany.razor.css",
     "inputFile": "Pages/Company/AddNewCompany.razor.less"
+  },
+  {
+    "outputFile": "Pages/Company/AddNewCompanyAddress.razor.css",
+    "inputFile": "Pages/Company/AddNewCompanyAddress.razor.less"
   }
 ]

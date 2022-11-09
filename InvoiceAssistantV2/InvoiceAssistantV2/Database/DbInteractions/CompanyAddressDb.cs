@@ -39,6 +39,36 @@ namespace Database.DbInteractions
             return this._DbContext.CompanyAddress.Where(a => a.Id == companyAddressId).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Adds a new Company address to the database
+        /// </summary>
+        /// <param name="AddressToAdd"></param>
+        /// <returns>null if adding fails</returns>
+        public CompanyAddress? AddNewCompanyAddress(CompanyAddress AddressToAdd)
+        {
+            // copy of the address details into a new object (so we don't effect the passed in object
+            CompanyAddress? newCompanyAddress = new CompanyAddress()
+            {
+                CompanyDetailsID = AddressToAdd.CompanyDetailsID,
+                HasBeenDeleted = AddressToAdd.HasBeenDeleted,
+                FriendlyName = AddressToAdd.FriendlyName,
+                AddressLine1 = AddressToAdd.AddressLine1,
+                AddressLine2 = AddressToAdd.AddressLine2,
+                AddressLine3 = AddressToAdd.AddressLine3,
+                AddressLine4 = AddressToAdd.AddressLine4,
+                AddressLine5 = AddressToAdd.AddressLine5,
+                PostCode = AddressToAdd.PostCode,
+                DrivingDistanceToAddress = AddressToAdd.DrivingDistanceToAddress,
+            };
+
+            this._DbContext.CompanyAddress.Add(newCompanyAddress);
+
+            // if the add was sucsefull, return the new address details, else return null
+            return newCompanyAddress.Id > 0? newCompanyAddress : null;
+
+
+        }
+
         public CompanyAddress? EditCompanyAddressDetails(CompanyAddress companyAddressDetails)
         {
             CompanyAddress? address = this.Select(companyAddressDetails.Id);
