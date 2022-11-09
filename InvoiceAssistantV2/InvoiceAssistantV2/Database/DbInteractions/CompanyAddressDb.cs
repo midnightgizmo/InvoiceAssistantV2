@@ -62,7 +62,7 @@ namespace Database.DbInteractions
             };
 
             this._DbContext.CompanyAddress.Add(newCompanyAddress);
-
+            this._DbContext.SaveChanges();
             // if the add was sucsefull, return the new address details, else return null
             return newCompanyAddress.Id > 0? newCompanyAddress : null;
 
