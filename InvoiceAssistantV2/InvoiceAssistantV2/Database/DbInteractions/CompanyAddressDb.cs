@@ -108,6 +108,29 @@ namespace Database.DbInteractions
         }
 
         /// <summary>
+        /// Checks if the passed in company address id belongs to the passed in company id
+        /// </summary>
+        /// <param name="CompanyAddressId"></param>
+        /// <param name="CompanyId"></param>
+        /// <returns></returns>
+        public bool DoesCompanyAddressBelongToCompany(int CompanyAddressId, int CompanyId)
+        {
+			// find the compay address details using the passed in CompanyAddressId
+			CompanyAddress? companyAddress = this._DbContext.CompanyAddress.Where(c => c.Id == CompanyAddressId).FirstOrDefault();
+
+            // if we could not find the company address details, return false
+            if (companyAddress == null)
+                return false;
+
+            // if the compay address does not belong to the passed in CompanyId, return false.
+            if (companyAddress.CompanyDetailsID != CompanyId)
+                return false;
+
+            // the passed in company address belongs to the passed in company details id.
+            return true;
+        }
+
+        /// <summary>
         /// Hide the Company Address so the user can't see it anymore
         /// </summary>
         /// <param name="CompanyAddressId"></param>

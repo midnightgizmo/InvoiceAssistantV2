@@ -15,7 +15,7 @@ namespace Database.DbInteractions
             _DbContext = dbContext;
         }
 
-        public List<PaymentType> SelectAll()
+		public List<PaymentType> SelectAll()
         {
             return this._DbContext.PaymentTypes.ToList();
         }

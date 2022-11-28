@@ -1,0 +1,309 @@
+﻿@page "/Invoice/Add/"
+@using InvoiceAssistantV2.Client.Models;
+@using InvoiceAssistantV2.Client.ViewModels.Invoices.Add;
+@using InvoiceAssistantV2.Shared.Models.Database.Company;
+@using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+
+@inject NavigationManager NavManager;
+@inject HttpClient httpClient;
+@inject AppSettings appSettings;
+
+<section class="add-invoice-outer-container">
+
+	<!-- background color -->
+	<div class="background-wallpaper"></div>
+
+	<header class="page-header">
+		<div>
+			<div>
+				<button @onclick='() => NavManager.NavigateTo("/")'>
+					<!--<img src="/images/svg/Back-Arrow.svg" />-->
+					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.48 37.48">
+						<defs>
+							<style>
+								.cls-1 {
+									fill: none;
+									stroke: currentColor;
+									stroke-linejoin: round;
+									stroke-width: 3px;
+								}
+
+								.cls-2 {
+									fill: currentColor;
+								}</style>
+						</defs>
+						<circle class="cls-1" cx="18.74" cy="18.74" r="17.24" />
+						<path class="cls-2" d="M17.77,30.73a3.11,3.11,0,0,0,2.17,0,4.78,4.78,0,0,0,1.68-1.79,2,2,0,0,0,.32-1.21,9.46,9.46,0,0,0,0-1.06,8,8,0,0,0-.2-1L18.32,22H30.09a2.86,2.86,0,0,0,1.39-.69,6.88,6.88,0,0,0,1-1.86l0-2.19a5.72,5.72,0,0,0-1-1.69,3.36,3.36,0,0,0-1.49-.7l-11.74,0,3.46-3.74a3.39,3.39,0,0,0,.16-2.5A6,6,0,0,0,19.76,6.1,1.74,1.74,0,0,0,18,6L6.41,17a3.25,3.25,0,0,0-.35,1.19,3.76,3.76,0,0,0,.29,1.27L17.77,30.73" />
+					</svg>
+				</button>
+			</div>
+
+			<div><span>Add Invoice</span></div>
+
+			<div class="glasses-container">
+				<img src="/images/svg/Plus.svg" />
+			</div>
+
+		</div>
+	</header>
+
+
+	<section class="invoice-main-details-container">
+		<header>
+			<div></div>
+			<span>Main Details</span>
+		</header>
+
+		<!-- main details input container-->
+		<div class="main-input-outer-container">
+			
+			<!-- new, delete & print buttons -->
+			<div class="new-delete-print-container">
+				<div>
+
+					<div class='new-button-container @(this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase == true ? "show": "hide")'>
+						<button>New</button>
+					</div>
+
+					<div class='delete-button-container @(this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase == true ? "show": "hide")'>
+						<button @onclick="this.ViewModel.DeleteInvoice">Delete</button>
+					</div>
+
+					<div class='print-button-container @(this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase == true ? "show": "hide")'>
+						<button>
+							<img src="/images/svg/Printer.svg" alt="Print Invoice" />
+						</button>
+					</div>
+
+				</div>
+			</div>
+
+			<fieldset class="main-input-inner-container" disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase">
+				<div class="row grid-two-rows">
+					<label for="txtInvoiceDate">Date</label>
+					<input id="txtInvoiceDate" type="date" @bind-value="this.ViewModel.MainDetails.InvoiceDate"
+							disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase"/>
+				</div>
+
+				<div class="row grid-two-rows">
+					<label for="txtReferenceNumber">Reference Number</label>
+					<input id="txtReferenceNumber" type="text" @bind="this.ViewModel.MainDetails.ReferenceNumber"
+							@bind:event="oninput"
+							disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase"/>
+				</div>
+
+				<div class="row grid-two-rows">
+					<label for="txtDescription">Description</label>
+					<input type="text" @bind="this.ViewModel.MainDetails.Description"
+						   @bind:event="oninput"
+						   disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase" />
+				</div>
+
+				<div class="row grid-two-rows">
+					<label for="ddlCompanyList">Company To Invoice</label>
+					<select id="ddlCompanyList" @bind="this.ViewModel.MainDetails.SelectedCompanyID"
+							disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase">
+						@foreach(CompanyDetails aCompany in this.ViewModel.MainDetails.ListOfCompanys)
+						{
+							<option value="@aCompany.Id">@aCompany.FriendlyName</option>
+						}
+					</select>
+				</div>
+
+				<div class="row grid-two-rows">
+					<label for="ddlCompanyAddressList">Address To Invoice</label>
+					<select id="ddlCompanyAddressList" @bind="this.ViewModel.MainDetails.SelectedCompanyAddressID"
+							disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase">
+						@foreach(CompanyAddress anAddress in this.ViewModel.MainDetails.ListOfCompanyAddressess)
+						{
+							<option value="@anAddress.Id">@anAddress.FriendlyName</option>
+						}
+					</select>
+				</div>
+
+				<div class="row grid-one-row">
+					<label for="cbIncludeMiles">Include Miles</label>
+					<div>
+						<input id="cbIncludeMiles" type="checkbox" @bind="this.ViewModel.MainDetails.IncludeMiles"
+							   disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase" />
+						<span></span>
+					</div>
+				</div>
+
+			
+				<div class='row grid-two-rows visited-addressess-row @(this.ViewModel.MainDetails.IncludeMiles == true ? "show-visited-addressess-row" : "hide-visited-addressess-row")'>
+					<label>Addresses Visited</label>
+					<div class="add-visited-address-container">
+						<div>
+							<label>Address</label>
+							<select @bind="this.ViewModel.MainDetails.VisitedAddress_SelectedId"
+									disabled='@(!this.ViewModel.MainDetails.IncludeMiles)'>
+								@foreach (CompanyAddress anAddress in this.ViewModel.MainDetails.ListOfCompanyAddressess_PlacesVisitedSelection)
+								{
+									<option value="@anAddress.Id">@anAddress.FriendlyName</option>
+								}
+							</select>
+						</div>
+						<div>
+							<label for="txtNoTimeVisited">Number Times visited</label>
+							<input id="txtNoTimeVisited" type="number" @bind-value="this.ViewModel.MainDetails.VisitedAddress_NoTimesVisited" 
+									disabled='@(!this.ViewModel.MainDetails.IncludeMiles)'/>
+						</div>						
+						<button @onclick="() => this.ViewModel.MainDetails.AddAddressUserVisited()"
+								disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase">Add</button>
+					</div>
+					<table class="list-visited-addressess-container">
+						
+						@if (this.ViewModel.MainDetails.CompanyAddressessVisited.Count > 0)
+						{
+							<thead>
+								<tr>
+									<td>Place Visited</td>
+									<td>No. Times visited</td>
+									<td></td>
+								</tr>
+							</thead>
+						}
+						@foreach (AddInvoicePlaceVisitedInInvoiceVM anAddress in this.ViewModel.MainDetails.CompanyAddressessVisited)
+						{
+							
+							<tr>
+								<td>@anAddress.PlaceVisited.FriendlyName</td>
+								<td>@anAddress.NumberOfTimesVisited.ToString()</td>
+								<td><button @onclick="async () => await this.ViewModel.MainDetails.RemoveAdressUserVisited(anAddress.PlaceVisited.Id)"
+									disabled="@this.ViewModel.MainDetails.HasMainDetailsBeenAddedToDataBase">Remove</button></td>
+							</tr>
+						}
+					</table>
+				</div>
+		
+			</fieldset>
+		</div>
+		
+		<footer>
+			<button disabled="@this.ViewModel.MainDetails.IsSubmitButtonDisabled" @onclick="async () => await cmdAddInvoiceMainDetails_Click()">Add Invoice</button>
+		</footer>
+	</section>
+
+	<section class='payment-breakdown-container @(this.ViewModel.PaymentBreakDown.IsVisable == true ? "" : "disabled")'>
+		<header>
+			<div></div>
+			<span>Payment Break Down</span>
+		</header>
+
+		<!-- Add New payment outer container-->
+		<div class="add-payment-outer-container">
+
+			<div class="add-payment-inner-container">
+				<div class="row grid-two-rows">
+					<label for="txtPaymentDescription">Description</label>
+					<input id="txtPaymentDescription" type="text" @bind-value="this.ViewModel.PaymentBreakDown.Description"
+						   disabled="@(!this.ViewModel.PaymentBreakDown.IsVisable)" />
+				</div>
+
+				<div class="row grid-two-rows payment-row">
+					<label for="txtPaymentDescription">Ammount</label>
+					<input id="txtPaymentDescription" type="number" @bind-value="this.ViewModel.PaymentBreakDown.Ammount"
+						   step=".01" disabled="@(!this.ViewModel.PaymentBreakDown.IsVisable)" onfocus="this.select();" />
+					<span>£</span>
+				</div>
+
+				<div class="row submit-container">
+					<button disabled="@(!this.ViewModel.PaymentBreakDown.IsVisable)"
+							@onclick="async () => await cmdAddNewPayment()">
+						Add
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- List all added payments container-->
+		<div class="list-payments-outer-container">
+			@if(this.ViewModel.PaymentBreakDown.ListOfPayments.Any() == true)
+			{
+				<div class="list-payment-inner-container">
+					<div class="header-cell">
+						<span>Description</span>
+					</div>
+					<div class="header-cell">
+						<span>Amount</span>
+					</div>
+					<div class="header-cell">
+						
+					</div>
+					@foreach(InvoicePaymentBreakDown aPayment in this.ViewModel.PaymentBreakDown.ListOfPayments)
+					{
+						<div class="body-cell">
+							<span>@aPayment.Description</span>
+						</div>
+						
+						<div class="body-cell">
+							<span>£@aPayment.Ammount.ToString("F2")</span>
+						</div>
+						
+						<div class="body-cell">
+							<button @onclick="async () => await this.ViewModel.PaymentBreakDown.RemovePayment(aPayment.Id)">Remove</button>
+						</div>
+					}
+
+						<div class="body-footer">
+						</div>
+
+						<div class="body-footer">
+							<span>£@this.ViewModel.PaymentBreakDown.Balance.ToString("F2")</span>
+						</div>
+
+						<div class="body-footer">
+						</div>
+
+				</div>
+
+				
+			}
+		</div>
+	</section>
+
+	
+
+
+
+</section>
+
+@code {
+
+	public AddInvoiceVM ViewModel;
+
+	public AddInvoice()
+	{
+		this.ViewModel = new AddInvoiceVM();
+		this.ViewModel.MainDetails.RequestStateChangeInUI += delegate ()
+		{
+
+			this.StateHasChanged();
+
+		};
+	}
+
+
+	protected override Task OnParametersSetAsync()
+	{
+		// inishzlie the view model with the http client to allow communication with the server
+		return this.ViewModel.Inishazlie(httpClient, appSettings);
+	}
+
+	public async Task cmdAddInvoiceMainDetails_Click()
+	{
+		await this.ViewModel.SubmitMainInvoiceDetailsToServer();
+	}
+
+	public async Task cmdAddNewPayment()
+	{
+		// if we have an invoice and we have not allready clicked the add payment and waiting for a response
+		if (this.ViewModel.MainDetails.CreatedInvoice != null && this.ViewModel.PaymentBreakDown.IsAddPaymentInProgress == false)
+			await this.ViewModel.PaymentBreakDown.AddPayment(this.ViewModel.MainDetails.CreatedInvoice.Id);
+
+		return;
+	}
+
+}

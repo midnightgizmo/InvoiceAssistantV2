@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +40,22 @@ namespace Database.DbInteractions
         public CompanyDetails? Select(int CompanyId)
         {
             return this._DbContext.CompanyDetails.Where(c => c.Id == CompanyId).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Find the company details using an assoshiated address id
+        /// </summary>
+        /// <param name="CompanyAddressId">The Id of an address that is asoshiated with the Company Details</param>
+        /// <returns><see cref="CompanyDetails"/> or null if not found</returns>
+        public CompanyDetails? Select_ByCompanyAddressId(int CompanyAddressId)
+        {
+            CompanyDetails? companyDetails = (from a in _DbContext.CompanyAddress
+                                             join c in _DbContext.CompanyDetails
+                                             on a.CompanyDetailsID equals c.Id
+                                             where a.Id == CompanyAddressId
+                                             select c).FirstOrDefault();
+
+            return companyDetails;
         }
 
 

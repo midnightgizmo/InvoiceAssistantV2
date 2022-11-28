@@ -47,11 +47,11 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Invoice
         /// <summary>
         /// List of company address we visited for this invoice (used to cacualte milage)
         /// </summary>
-        public IEnumerable<PlacesVisitedForInvoice> PlacesVisitedForInvoice { get; set; } = null!;
+        public List<PlacesVisitedForInvoice> PlacesVisitedForInvoice { get; set; } = null!;
 
         /// <summary>
         /// List of payments that belong to this invoice
         /// </summary>
-        public IEnumerable<InvoicePaymentBreakDown> InvoicePayments { get; set; } = null!;
+        public List<InvoicePaymentBreakDown> InvoicePayments { get; set; } = null!;
     }
 }

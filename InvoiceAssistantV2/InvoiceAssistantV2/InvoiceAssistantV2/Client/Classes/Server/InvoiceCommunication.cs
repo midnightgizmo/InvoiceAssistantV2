@@ -2,7 +2,9 @@
 using InvoiceAssistantV2.Client.Models.Server;
 using InvoiceAssistantV2.Client.Models.Server.ResponseData;
 using InvoiceAssistantV2.Shared.Models;
+using InvoiceAssistantV2.Shared.Models.Database.Invoice;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace InvoiceAssistantV2.Client.Classes.Server
 {
@@ -108,6 +110,77 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
         }
 
+        public async Task<ServerResponseSingleInvoice> AddNewInvoice(Invoice newInvoice)
+        {
+			ServerResponse responseMessage;
+			
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add(nameof(Invoice.DateOfInvoice), newInvoice.DateOfInvoice.ToString());
+            DataToSend.Add(nameof(Invoice.ReferenceNumber), newInvoice.ReferenceNumber);
+            DataToSend.Add(nameof(Invoice.Description), newInvoice.Description);
+            DataToSend.Add(nameof(Invoice.AddressToMakeInvoiceOutToId), newInvoice.AddressToMakeInvoiceOutToId.ToString());
+            
+            for(int index = 0; index < newInvoice.PlacesVisitedForInvoice.Count; index++)
+            {
+                var visitedAddress = newInvoice.PlacesVisitedForInvoice[index];
+                //DataToSend.Add($"IdsOfVisitedAddresses[{index}]", visitedAddress.CompanyAddressId.ToString());
+                DataToSend.Add($"PlacesVisited[{index}].{nameof(PlacesVisitedForInvoice.CompanyAddressId)}", visitedAddress.CompanyAddressId.ToString());
+                DataToSend.Add($"PlacesVisited[{index}].{nameof(PlacesVisitedForInvoice.NumberOfTimesVisited)}", visitedAddress.NumberOfTimesVisited.ToString());
+			}
+            
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/InsertNewInvoice", DataToSend);
+            
+            return ServerCommunication.ParseServerResponse<ServerResponseSingleInvoice>(responseMessage);
+            
+		}
+
+        /// <summary>
+        /// Asks the server to delete an invoice from the database
+        /// </summary>
+        /// <param name="InvoiceId">The Id of the invoice to look for and remove</param>
+        /// <returns>true if deleted, else false</returns>
+        public async Task<ServerResponseBool> DeleteInvoice(int InvoiceId)
+        {
+			ServerResponse responseMessage;
+
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+            DataToSend.Add("InvoiceId", InvoiceId.ToString());
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/Delete", DataToSend);
+            return ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
+		}
+
+        public async Task<ServerResponseSingleInvoicePayment> AddInvoicePayment(int InvoiceID, string Description, decimal Ammount)
+        {
+            ServerResponse responseMessage;
+
+            Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add("InvoiceID", InvoiceID.ToString());
+            DataToSend.Add("Description", Description);
+            DataToSend.Add("Ammount", Ammount.ToString());
+
+			responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/AddPayment", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseSingleInvoicePayment>(responseMessage);
+        }
+
+        public async Task<ServerResponseBool> RemovePaymentFromInvoice(int InvoicePaymentId)
+        {
+			ServerResponse responseMessage;
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+			DataToSend.Add("InvoicePaymentId", InvoicePaymentId.ToString());
+
+			responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/RemovePayment", DataToSend);
+
+			return ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
+		}
+
         public async Task<ServerResponsePaymentTypes> GetPaymentTypes()
         {
             ServerResponse responseMessage;
@@ -120,6 +193,24 @@ namespace InvoiceAssistantV2.Client.Classes.Server
             responseData = ServerCommunication.ParseServerResponse<ServerResponsePaymentTypes>(responseMessage);
 
             return responseData;
+        }
+
+        /// <summary>
+        /// Asks the server to generate a unique reference number for the given date
+        /// </summary>
+        /// <param name="DateOfInvoice">Date to use to generate reference number</param>
+        /// <returns></returns>
+        public async Task<ServerResponseString> GenerateInvoiceReferenceNumber(DateTime DateOfInvoice)
+        {
+            ServerResponse responseMessage;
+
+            Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+            
+            DataToSend.Add("InvoiceDate", DateOfInvoice.ToString());
+            
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/GenerateReferenceNumber", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseString>(responseMessage);
         }
     }
 }
