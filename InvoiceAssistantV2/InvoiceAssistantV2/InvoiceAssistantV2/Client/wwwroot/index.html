@@ -7,7 +7,34 @@
     <title>InvoiceAssistantV2</title>
     <base href="/" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="InvoiceAssistantV2.Client.styles.css" rel="stylesheet" />
+    <!--<link id="page-components-css" href="InvoiceAssistantV2.Client.styles.css" rel="stylesheet" />-->
+    <link id="page-components-css" rel="stylesheet" />
+
+    <script>
+        // Loading the css for the application via javascript
+        // Only for debug purpuses. It allows us
+        // to load a new css file each time the program is tested.
+        // That way, we are not using a cached css file.
+
+        // It generates a random number and adds to to the end of the
+        // location where the css file is to be loaded from.
+
+        // To stop this from occurring. Remove this script tag
+        // and uncomed the commented out link tag again and replace it with the
+        // one that has a <link with an id of "page-components-css""
+
+
+        // Generate a random number between 1 and 100
+        var randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        // Get the link element by its id
+        var link = document.getElementById("page-components-css");
+
+        // Set the href attribute of the link to the random number
+        link.href = "InvoiceAssistantV2.Client.styles.css?version=" + randomNumber;
+    </script>
+
+
 </head>
 
 <body>
@@ -18,6 +45,9 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+
+
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
 
