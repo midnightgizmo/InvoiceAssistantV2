@@ -19,5 +19,15 @@ namespace Database.DbInteractions
         {
             return this._DbContext.PaymentTypes.ToList();
         }
+
+        /// <summary>
+        /// Get the payment Type that corrisponds to the passed in payment type
+        /// </summary>
+        /// <param name="PaymentTypeId">The id to look up in the database</param>
+        /// <returns>PaymentType object or null if not found</returns>
+        public PaymentType? Select(int PaymentTypeId)
+        {
+            return this._DbContext.PaymentTypes.Where(i => i.Id == PaymentTypeId).FirstOrDefault();
+        }
     }
 }
