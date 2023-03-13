@@ -1,0 +1,196 @@
+.row
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 5px;
+
+    > header
+    {
+        color: #ffc800;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+
+    &.one-row
+    {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    &.border
+    {
+        background-color: #005185;
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #2d619f;
+    }
+
+    &.address-invoice-madeout-too-edit, &.invoice-madeout-too-read-only
+    {
+        background-color: #005185;
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #2d619f;
+    }
+
+    &.invoice-madeout-too-read-only
+    {
+        > .button-container
+        {
+
+            > button
+            {
+                background-color: transparent;
+                text-decoration: underline;
+                color: white;
+                cursor: pointer;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        > .text-container
+        {
+            > header
+            {
+                color: white;
+                font-weight: bold;
+                line-height: 1.2rem;
+            }
+
+            > div
+            {
+                color: white;
+                line-height: 1.2rem;
+            }
+        }
+    }
+
+    &.show-visited-addressess-row
+    {
+        opacity: 1;
+    }
+
+    &.hide-visited-addressess-row
+    {
+        opacity: 0.2;
+    }
+
+
+    > label
+    {
+        color: white;
+        font-size: 14pt;
+    }
+
+    input, select
+    {
+        font-size: 1.2rem;
+    }
+
+
+
+    > .add-visited-address-container
+    {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 5px;
+
+        > div
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 5px;
+
+
+
+            > label, > input, > select
+            {
+                font-size: 1.2rem;
+            }
+
+            > input, > select
+            {
+                width: 100%;
+                border: 0;
+                border-radius: 5px;
+            }
+
+            > input, select
+            {
+                color: black;
+            }
+
+            > label
+            {
+                justify-self: end;
+                color: #c6edd4;
+            }
+        }
+
+        > button
+        {
+            width: 50%;
+            justify-self: end;
+            background-color: #0e3a6c;
+            border: 1px solid #506c97;
+            padding: 5px;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        > button[disabled]
+        {
+            opacity: 0.5;
+        }
+    }
+
+
+
+    > .list-visited-addressess-container
+    {
+        border-spacing: 0;
+        margin-left: 60px;
+
+        > thead
+        {
+            > tr
+            {
+                > td
+                {
+                    color: #e8e5c4;
+                    border-bottom: 1px solid #5184b9;
+                    font-weight: bold;
+                    padding: 5px;
+                }
+            }
+        }
+
+        > tr
+        {
+            > td
+            {
+                color: white;
+                padding-top: 5px;
+                padding-bottom: 5px;
+
+                > button
+                {
+                    background-color: transparent;
+                    text-decoration: underline;
+                    color: white;
+                    cursor: pointer;
+                    border: none;
+                }
+
+                > button[disabled]
+                {
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+}

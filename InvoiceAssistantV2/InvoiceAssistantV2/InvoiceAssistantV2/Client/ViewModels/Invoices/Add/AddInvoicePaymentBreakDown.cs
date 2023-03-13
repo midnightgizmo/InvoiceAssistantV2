@@ -8,8 +8,8 @@ namespace InvoiceAssistantV2.Client.ViewModels.Invoices.Add
 {
 	public class AddInvoicePaymentBreakDown
 	{
-		private HttpClient _HttpClient;
-		private AppSettings _AppSettings;
+		protected HttpClient _HttpClient;
+		protected AppSettings _AppSettings;
 
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace InvoiceAssistantV2.Client.ViewModels.Invoices.Add
 		/// <summary>
 		/// The sum of all payments held in <see cref="ListOfPayments"/>
 		/// </summary>
-		public decimal Balance { get; private set; } = 0;
+		public decimal Balance { get; protected set; } = 0;
 
 		public List<InvoicePaymentBreakDown> ListOfPayments { get; set; } = new List<InvoicePaymentBreakDown>();
 
@@ -122,7 +122,7 @@ namespace InvoiceAssistantV2.Client.ViewModels.Invoices.Add
 			return true;
 		}
 
-		private decimal CaculateSumOfAllPayments()
+		protected decimal CaculateSumOfAllPayments()
 		{
 			if (this.ListOfPayments == null)
 				return 0;

@@ -1,0 +1,212 @@
+.payment-breakdown-container.disabled
+{
+    opacity: 0.5;
+}
+
+.payment-breakdown-container
+{
+    //max-width: 600px;
+
+    //min-width: 500px;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    > header
+    {
+        position: relative;
+        text-align: center;
+        display: flex;
+        
+        > div
+        {
+            background-color: #339AA8;
+            filter: blur(10px);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+        > span
+        {
+            font-size: 2rem;
+            color: #ffc800;
+            display: block;
+            align-self: center;
+            width: 100%;
+        }
+    }
+}
+
+
+
+
+
+
+.add-payment-outer-container
+{
+    background-color: #005185;
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 1px;
+    border: 1px solid #2d619f;
+
+    > .add-payment-inner-container
+    {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 30px;
+        margin: 40px;
+
+
+        > .row
+        {
+            > label
+            {
+                color: white;
+                font-size: 1.5rem;
+            }
+        }
+
+
+        > .grid-two-rows
+        {
+            display: grid;
+            grid-template-columns: 1fr;
+            row-gap: 5px;
+
+            > input
+            {
+                width: 100%;
+                border: 0;
+                border-radius: 5px;
+                font-size: 1.5rem;
+            }
+        }
+
+        > .payment-row
+        {
+            position: relative;
+
+            > input
+            {
+                padding-left: 30px;
+                grid-column-start: 1;
+                grid-row-start: 2;
+            }
+
+            > input:invalid
+            {
+                border: 2px solid red;
+            }
+
+            > span
+            {
+                grid-column-start: 1;
+                grid-row-start: 2;
+                align-self: center;
+                margin-left: 10px;
+                font-size: 1.5rem;
+                pointer-events: none;
+            }
+        }
+
+
+
+        > .submit-container
+        {
+            grid-column: 1 / 2;
+
+            > button
+            {
+                background-color: #c0461f;
+                border: 2px solid white;
+                border-radius: 5px;
+                text-align: center;
+                font-size: 1.5rem;
+                color: white;
+                width: 100%;
+                height: 50px;
+                cursor: pointer;
+            }
+
+            > button[disabled]
+            {
+                opacity: 0.5;
+                cursor: default;
+            }
+        }
+    }
+}
+
+
+.list-payments-outer-container
+{
+    background-color: #005185;
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 1px;
+    border: 1px solid #2d619f;
+
+    > .list-payment-inner-container
+    {
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr;
+        margin: 30px;
+
+        > .header-cell
+        {
+            border-bottom: 1px solid #5184b9;
+            padding: 5px;
+
+            > span
+            {
+                font-weight: bold;
+                color: #e8e5c4;
+            }
+        }
+
+        > .body-cell
+        {
+            padding: 5px;
+
+            > span
+            {
+                color: white;
+            }
+
+            > button
+            {
+                background-color: transparent;
+                cursor: pointer;
+                border: none;
+                text-decoration: underline;
+                color: white;
+            }
+        }
+
+        > .body-footer
+        {
+            position: relative;
+            padding: 5px;
+            margin-top: 20px;
+
+            > span
+            {
+                color: #00bbbb;
+                text-decoration: underline;
+
+                &:before
+                {
+                    content: 'Sum';
+                    position: absolute;
+                    left: -36px;
+                }
+            }
+        }
+    }
+    // end > .list-payment-inner-container
+}
+// end .list-payments-outer-container

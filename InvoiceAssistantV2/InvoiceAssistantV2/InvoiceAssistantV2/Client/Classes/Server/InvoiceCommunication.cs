@@ -136,12 +136,54 @@ namespace InvoiceAssistantV2.Client.Classes.Server
             
 		}
 
+        public async Task<ServerResponseSingleInvoice> UpdateInvoice(int InvoiceId, DateTime DateOfInvoice, string ReferenceNumber,
+                                                                     string Description, int? PaymentTypeID, int? AddressToMakeInvoiceOutToId,
+                                                                     DateTime? DateRecievedMoney)
+        {
+			ServerResponse responseMessage;
+
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+			DataToSend.Add(nameof(Invoice.Id), InvoiceId.ToString());
+			DataToSend.Add(nameof(Invoice.DateOfInvoice), DateOfInvoice.ToString());
+			DataToSend.Add(nameof(Invoice.ReferenceNumber), ReferenceNumber);
+			DataToSend.Add(nameof(Invoice.Description), Description);
+            DataToSend.Add(nameof(Invoice.PaymentTypeID), PaymentTypeID != null ? PaymentTypeID.ToString() : "0");
+			DataToSend.Add(nameof(Invoice.AddressToMakeInvoiceOutToId), AddressToMakeInvoiceOutToId != null ? AddressToMakeInvoiceOutToId.ToString() : "0");
+            DataToSend.Add(nameof(Invoice.DateRecievedMoney),DateRecievedMoney == null ? "" : DateRecievedMoney.ToString());
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/UpdateMainDetails", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseSingleInvoice>(responseMessage);
+		}
+
         /// <summary>
-        /// Asks the server to delete an invoice from the database
+        /// Updates the address to make invoice out to on the server
         /// </summary>
-        /// <param name="InvoiceId">The Id of the invoice to look for and remove</param>
-        /// <returns>true if deleted, else false</returns>
-        public async Task<ServerResponseBool> DeleteInvoice(int InvoiceId)
+        /// <param name="InvoiceId">The invoice id to look for to apply address to</param>
+        /// <param name="AddressToMakeInvoiceOutToId">the new address id to apply to invoice, passing null is allowed</param>
+        /// <returns>true if sucsefull, else false</returns>
+		public async Task<ServerResponseBool> UpdateAddressInvoiceMadeOutTo(int InvoiceId, int? AddressToMakeInvoiceOutToId)
+		{
+            ServerResponse responseMessage;
+
+            Dictionary<string,string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add(nameof(InvoiceId), InvoiceId.ToString());
+            DataToSend.Add(nameof(Invoice.AddressToMakeInvoiceOutToId), AddressToMakeInvoiceOutToId != null ? AddressToMakeInvoiceOutToId.ToString() : "");
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/UpdateAddressInvoiceMadeOutTo", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
+		}
+
+		/// <summary>
+		/// Asks the server to delete an invoice from the database
+		/// </summary>
+		/// <param name="InvoiceId">The Id of the invoice to look for and remove</param>
+		/// <returns>true if deleted, else false</returns>
+		public async Task<ServerResponseBool> DeleteInvoice(int InvoiceId)
         {
 			ServerResponse responseMessage;
 
@@ -181,6 +223,23 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 			return ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
 		}
 
+        public async Task<ServerResponseListOfInvoicePayments> ListAllPaymentsForInvoice(int InvoiceId)
+        {
+            ServerResponse responseMessage;
+
+            Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add("InvoiceId", InvoiceId.ToString());
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/ListAllPaymentsForInvoice", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseListOfInvoicePayments>(responseMessage);
+        }
+
+        /// <summary>
+        /// Gets a lit of all possible payment types from server
+        /// </summary>
+        /// <returns></returns>
         public async Task<ServerResponsePaymentTypes> GetPaymentTypes()
         {
             ServerResponse responseMessage;
@@ -194,6 +253,23 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
             return responseData;
         }
+
+        public async Task<ServerResponseListOfPlacesVisitedForInvoice> GetPlacesVisitedForInvoice(int InvoiceId)
+        {
+            ServerResponse responseMessage;
+            ServerResponseListOfPlacesVisitedForInvoice responseData;
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+			DataToSend.Add("InvoiceId", InvoiceId.ToString());
+
+            // request all places visited for passed in invoice id
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/ListPlacesVisited", DataToSend);
+
+            responseData = ServerCommunication.ParseServerResponse<ServerResponseListOfPlacesVisitedForInvoice>(responseMessage);
+
+            return responseData;
+		}
 
         /// <summary>
         /// Asks the server to generate a unique reference number for the given date
@@ -212,5 +288,51 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
             return ServerCommunication.ParseServerResponse<ServerResponseString>(responseMessage);
         }
-    }
+
+		public async Task<ServerResponseSinglePlaceVisitedForInvoice> AddPlaceVisited(int InvoiceId, int AddressID, int NoTimesVisited)
+		{
+            ServerResponse responseMessage;
+
+            Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add("InvoiceId", InvoiceId.ToString());
+            DataToSend.Add("AddressId", AddressID.ToString());
+            DataToSend.Add("NoTimesVisited", NoTimesVisited.ToString());
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/AddPlaceVisited", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseSinglePlaceVisitedForInvoice>(responseMessage);
+		}
+
+		public async Task<ServerResponseBool> RemoveAllVisitedAddressFromInvoice(int InvoiceId)
+		{
+			ServerResponse responseMessage;
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+			DataToSend.Add("InvoiceId", InvoiceId.ToString());
+
+
+			responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/RemoveAllPlacesVisited", DataToSend);
+
+			return ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
+		}
+
+        public async Task<ServerResponseBool> RemoveVisitedAddressFromInvoice(int InvoiceId, int AddressId)
+        {
+            ServerResponse responseMessage;
+
+            Dictionary<string,string> DataToSend = new Dictionary<string, string>();
+
+            DataToSend.Add("InvoiceId", InvoiceId.ToString());
+            DataToSend.Add("AddressId", AddressId.ToString());
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/RemoveVisitedAddressFromInvoice",DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseBool>(responseMessage);
+
+        }
+
+		
+	}
 }

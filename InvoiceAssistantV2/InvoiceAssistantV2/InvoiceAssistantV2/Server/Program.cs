@@ -26,8 +26,14 @@ namespace InvoiceAssistantV2
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+			app.Use(async (context, next) =>
+			{
+				string url = context.Request.Path;
+                await next.Invoke();
+			});
 
-            app.UseHttpsRedirection();
+			app.UseHttpsRedirection();
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

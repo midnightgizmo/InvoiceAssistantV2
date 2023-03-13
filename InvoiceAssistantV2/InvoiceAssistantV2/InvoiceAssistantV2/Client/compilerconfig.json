@@ -42,5 +42,25 @@
   {
     "outputFile": "Pages/Invoices/AddInvoice.razor.css",
     "inputFile": "Pages/Invoices/AddInvoice.razor.less"
+  },
+  {
+    "outputFile": "Pages/Invoices/ListInvoices.razor.css",
+    "inputFile": "Pages/Invoices/ListInvoices.razor.less"
+  },
+  {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "wwwroot/css/app.less"
+  },
+  {
+    "outputFile": "Pages/Invoices/SearchResults/InvoiceAdditionalInfoComponent.razor.css",
+    "inputFile": "Pages/Invoices/SearchResults/InvoiceAdditionalInfoComponent.razor.less"
+  },
+  {
+    "outputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_LeftColumnComponent.razor.css",
+    "inputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_LeftColumnComponent.razor.less"
+  },
+  {
+    "outputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_RightColumnComponent.razor.css",
+    "inputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_RightColumnComponent.razor.less"
   }
 ]

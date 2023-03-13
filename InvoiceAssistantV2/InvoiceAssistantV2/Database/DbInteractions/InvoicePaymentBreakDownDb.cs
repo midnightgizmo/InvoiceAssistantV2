@@ -25,6 +25,16 @@ namespace Database.DbInteractions
 		}
 
 		/// <summary>
+		/// Selects all the payments that have been allocated to the passed in InvoiceId
+		/// </summary>
+		/// <param name="InvoiceId"></param>
+		/// <returns></returns>
+		public List<InvoicePaymentBreakDown> GetAllPaymentsForInvoice(int InvoiceId)
+		{
+			return this._DbContext.InvoicesPaymentBreakDown.Where(i => i.InvoiceId == InvoiceId).ToList();
+		}
+
+		/// <summary>
 		/// Adds a new Payment to the specified Invoice
 		/// </summary>
 		/// <param name="invoiceId">Invoice to add payment too</param>

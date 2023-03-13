@@ -1,0 +1,88 @@
+﻿@using InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults;
+@using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+
+@if (this.ViewModel != null)
+{
+	<section class='payment-breakdown-container @(this.ViewModel.IsVisable == true ? "" : "disabled")'>
+		<header>
+			<div></div>
+			<span>Payment Break Down</span>
+		</header>
+
+		<!-- Add New payment outer container-->
+		<div class="add-payment-outer-container">
+
+			<div class="add-payment-inner-container">
+				<div class="row grid-two-rows">
+					<label for="txtPaymentDescription">Description</label>
+					<input id="txtPaymentDescription" type="text" @bind-value="this.ViewModel.Description"
+							disabled="@(!this.ViewModel.IsVisable)" />
+				</div>
+
+				<div class="row grid-two-rows payment-row">
+					<label for="txtPaymentDescription">Ammount</label>
+					<input id="txtPaymentDescription" type="number" @bind-value="this.ViewModel.Ammount"
+	step=".01" disabled="@(!this.ViewModel.IsVisable)" onfocus="this.select();" />
+					<span>£</span>
+				</div>
+
+				<div class="row submit-container">
+					<button disabled="@(!this.ViewModel.IsVisable)"
+						@onclick="async () => await this.ViewModel.AddPayment(this.ViewModel.Parent.Parent.InvoiceData.Id)">
+						Add
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- List all added payments container-->
+		<div class="list-payments-outer-container">
+			@if (this.ViewModel.ListOfPayments.Any() == true)
+			{
+				<div class="list-payment-inner-container">
+					<div class="header-cell">
+						<span>Description</span>
+					</div>
+					<div class="header-cell">
+						<span>Amount</span>
+					</div>
+					<div class="header-cell">
+					</div>
+					@foreach (InvoicePaymentBreakDown aPayment in this.ViewModel.ListOfPayments)
+					{
+						<div class="body-cell">
+							<span>@aPayment.Description</span>
+						</div>
+
+						<div class="body-cell">
+							<span>£@aPayment.Ammount.ToString("F2")</span>
+						</div>
+
+						<div class="body-cell">
+							<button @onclick="async () => await this.ViewModel.RemovePayment(aPayment.Id)">Remove</button>
+						</div>
+					}
+
+					<div class="body-footer">
+					</div>
+
+					<div class="body-footer">
+						<span>£@this.ViewModel.Balance.ToString("F2")</span>
+					</div>
+
+					<div class="body-footer">
+					</div>
+
+				</div>
+
+
+			}
+		</div>
+	</section>
+}
+
+@code {
+	[Parameter]
+	public ListInvoiceRowAdditionalInfo_RightColumnViewModel? ViewModel { get; set; }
+}

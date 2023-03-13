@@ -1,0 +1,555 @@
+﻿.invoice-list-page
+{
+
+	.background-wallpaper
+	{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: -1;
+		background: rgb(6,92,158);
+		//background: linear-gradient(180deg, rgba(6,92,158,1) 0%, rgba(255,255,255,1) 100%);
+	}
+
+	.page-header
+	{
+		width: 100%;
+		height: 100px;
+		background-color: #C06F00;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		@media only screen and (max-width: 900px)
+		{
+			height: 70px;
+		}
+
+		> div
+		{
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			width: 100%;
+			height: 100%;
+
+
+
+			> div
+			{
+				//align-self: center;
+				//text-align: center;
+				display: flex;
+				color: white;
+				font-weight: bold;
+				font-size: 30pt;
+
+				@media only screen and (max-width: 900px)
+				{
+					font-size: 20pt;
+				}
+
+				> button
+				{
+					align-self: center;
+					background-color: transparent;
+					border: none;
+					color: white;
+					height: 80px;
+					aspect-ratio: 1/1;
+					margin-left: 10px;
+
+					@media only screen and (max-width: 900px)
+					{
+						height: 60px;
+					}
+
+					&:hover
+					{
+						//filter: brightness(95%);
+						color: yellow;
+					}
+
+					&:active
+					{
+						color: darken(yellow,5%);
+					}
+
+					> img
+					{
+						height: 9vh;
+					}
+				}
+
+				> span
+				{
+					align-self: center;
+					text-align: center;
+					width: 100%;
+				}
+
+				> img
+				{
+					height: 80px;
+					aspect-ratio: 2/1;
+					margin-right: 10px;
+
+					@media only screen and (max-width: 900px)
+					{
+						height: 60px;
+					}
+				}
+			}
+
+			> div.glasses-container
+			{
+				justify-content: flex-end;
+				align-items: center;
+			}
+		}
+	}
+}
+
+
+.list-invoices-outer-container
+{
+	> div
+	{
+		display: grid;
+		grid-template-columns: 1fr;
+
+		> .row.edit-mode
+		{
+			//height: 60px;
+		}
+
+		> .row.read-only-mode
+		{
+			//height: 30px;
+		}
+
+		> header
+		{
+			display: grid;
+			grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 120px;
+			grid-template-rows: 30px;
+			text-align: center;
+			align-items: center;
+			background-color: #b62c2c;
+
+
+
+			> div
+			{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #b62c2c;
+				color: white;
+				border-right: 1px solid black;
+				height: 30px;
+				//&:last-child
+				//{
+				//	border-right: none;
+				//}
+
+				> span
+				{
+					display: block;
+					font-size: 12pt;
+
+
+					@media only screen and (max-width: 900px)
+					{
+						font-size: 10pt;
+					}
+
+					@media only screen and (max-width: 760px)
+					{
+						font-size: 8pt;
+					}
+				}
+			}
+		}
+
+		> .row
+		{
+			display: grid;
+			grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 120px;
+
+			&:nth-child(odd)
+			{
+				background-color: white;
+			}
+
+			&:nth-child(even)
+			{
+				background-color: #b6dfe7;
+			}
+
+			> .invoice-main-details
+			{
+				border-right: 1px solid black;
+				overflow: hidden;
+				//height: 30px;
+
+				&:last-child
+				{
+					border-right: none;
+				}
+				// when the cell is in read only mode
+				> .read-only
+				{
+					align-items: center;
+					justify-content: center;
+					//height: 100%;
+					height: 30px;
+					//height: auto;
+
+					&.show
+					{
+						display: flex;
+
+						@media only screen and (max-width: 900px)
+						{
+							font-size: 10pt;
+						}
+
+						@media only screen and (max-width: 760px)
+						{
+							font-size: 8pt;
+						}
+					}
+
+					&.hide
+					{
+						display: none;
+					}
+
+					&:hover
+					{
+						color: #6fb006;
+					}
+					// holds the readonly text
+					> div
+					{
+						text-overflow: ellipsis;
+					}
+
+					> .print-info-delete-container, > .confirm-delete-container
+					{
+						display: flex;
+						height: 100%;
+						align-items: center;
+
+						> button
+						{
+							height: 80%;
+							width: 30px;
+							cursor: pointer;
+							background-color: transparent;
+							border: none;
+							margin: 0;
+							padding: 0;
+
+							> svg
+							{
+								height: 100%;
+								width: 100%;
+								cursor: pointer;
+
+								&:hover
+								{
+									filter: brightness(120%);
+								}
+
+								&:active
+								{
+									filter: brightness(90%);
+								}
+							}
+						}
+					}
+
+					> .confirm-delete-container
+					{
+						width: 80%;
+						justify-content: space-between;
+
+						> button
+						{
+
+							&:nth-child(1) > svg
+							{
+								color: #69dd62;
+							}
+
+							&:nth-child(2) > svg
+							{
+								color: #D94D4D;
+							}
+						}
+					}
+				}
+				// When the cell is in edit mode
+				> .edit
+				{
+					&.show
+					{
+						display: block;
+					}
+
+					&.hide
+					{
+						display: none;
+					}
+
+					> input, select
+					{
+						width: 100%;
+						font-size: 12pt;
+					}
+
+					> select
+					{
+						padding-top: 1px;
+						padding-bottom: 1px;
+					}
+
+					> .confirm-or-cancel-container
+					{
+						display: flex;
+
+						> button
+						{
+							width: 30px;
+							height: 30px;
+							background-color: transparent;
+							border: none;
+
+							&.button-tick
+							{
+								color: #55D94D;
+
+								&:hover
+								{
+									color: lighten(#55D94D,5%);
+								}
+
+								&:active
+								{
+									color: darken(#55D94D,5%);
+								}
+							}
+
+							&.button-cross
+							{
+								color: #D94D4D;
+								margin-left: auto;
+
+								&:hover
+								{
+									color: lighten(#D94D4D,5%);
+								}
+
+								&:active
+								{
+									color: darken(#D94D4D,5%);
+								}
+							}
+
+
+
+
+							> svg
+							{
+								width: 100%;
+								height: 100%;
+							}
+						}
+					}
+				}
+			}
+
+			> .invoice-addishanal-details
+			{
+				> header
+				{
+					background-color: #001E3A;
+					height: 2px;
+				}
+
+				&.show
+				{
+					display: block;
+					//height: auto;
+					max-height: 600px;
+					transition: max-height 0.5s ease-in-out;
+					background-color: #024787;
+					grid-column: 1 / span 7;
+					overflow-y: auto;
+				}
+
+				&.hide
+				{
+					//display: none;
+					max-height: 0;
+					// this will not work because in the c# razor file we remove all the html controls
+					// from the dom as soon as the hide cass is assigned. This means the height jumps to
+					// zero before any animation can take effect.
+					transition: max-height 1s ease-out;
+				}
+
+				> .addishanal-details-inner-container
+				{
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					margin: 20px;
+
+
+
+					> div.addishanal-details-left-column
+					{
+						display: grid;
+						grid-template-columns: 1fr;
+						row-gap: 30px;
+
+						> .row
+						{
+							display: grid;
+							grid-template-columns: 1fr;
+							row-gap: 5px;
+
+							&.one-row
+							{
+								grid-template-columns: 2fr 1fr;
+							}
+
+
+							> label
+							{
+								color: white;
+								font-size: 14pt;
+							}
+
+							input, select
+							{
+								font-size: 1.2rem;
+							}
+
+
+
+							> .add-visited-address-container
+							{
+								display: grid;
+								grid-template-columns: 1fr;
+								row-gap: 5px;
+
+								> div
+								{
+									display: grid;
+									grid-template-columns: 1fr 1fr;
+									column-gap: 5px;
+
+
+
+									> label, > input, > select
+									{
+										font-size: 1.2rem;
+									}
+
+									> input, > select
+									{
+										width: 100%;
+										border: 0;
+										border-radius: 5px;
+									}
+
+									> input, select
+									{
+										color: black;
+									}
+
+									> label
+									{
+										justify-self: end;
+										color: #c6edd4;
+									}
+								}
+
+								> button
+								{
+									width: 50%;
+									justify-self: end;
+									background-color: #0e3a6c;
+									border: 1px solid #506c97;
+									padding: 5px;
+									border-radius: 5px;
+									color: white;
+									font-size: 1.2rem;
+									cursor: pointer;
+								}
+
+								> button[disabled]
+								{
+									opacity: 0.5;
+								}
+							}
+
+
+
+							> .list-visited-addressess-container
+							{
+								border-spacing: 0;
+								margin-left: 60px;
+
+								> thead
+								{
+									> tr
+									{
+										> td
+										{
+											color: #e8e5c4;
+											border-bottom: 1px solid #5184b9;
+											font-weight: bold;
+											padding: 5px;
+										}
+									}
+								}
+
+								> tr
+								{
+									> td
+									{
+										color: white;
+										padding-top: 5px;
+										padding-bottom: 5px;
+
+										> button
+										{
+											background-color: transparent;
+											text-decoration: underline;
+											color: white;
+											cursor: pointer;
+											border: none;
+										}
+
+										> button[disabled]
+										{
+											opacity: 0.5;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					> div.addishanal-details-right-column
+					{
+					}
+				}
+			}
+		}
+	}
+}

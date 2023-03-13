@@ -1,0 +1,134 @@
+﻿@using InvoiceAssistantV2.Client.ViewModels.Invoices.Add;
+@using InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults;
+@using InvoiceAssistantV2.Shared.Models.Database.Company;
+
+
+@if(ViewModel != null)
+{
+	<div class="row">
+		<header class="left-column-header">
+			Additional Details
+		</header>
+	</div>
+	
+	@if (ViewModel.IsAddressInvoiceMadeOutToBeingEdited == true)
+	{
+		<!-- row -->
+		<div class="row address-invoice-madeout-too-edit">
+
+			<button @onclick="() => ViewModel.IsAddressInvoiceMadeOutToBeingEdited = !ViewModel.IsAddressInvoiceMadeOutToBeingEdited">Finish Edit</button>
+			<label for="ddlCompanyList">Company To Invoice</label>
+			<select id="ddlCompanyList" @bind="ViewModel.SelectedCompanyId"
+		   disabled="@ViewModel.IsAddishanlDetailsInSubmitState">
+				@foreach (CompanyDetails aCompany in ViewModel.Parent.Parent.Parent.ListOfCompanies)
+				{
+					<option value="@aCompany.Id">@aCompany.FriendlyName</option>
+				}
+			</select>
+
+			<label for="ddlCompanyAddressList">Address To Invoice</label>
+			<select id="ddlCompanyAddressList" @bind="ViewModel.AddressToMakeInvoiceOutToId"
+		   disabled="@ViewModel.IsAddishanlDetailsInSubmitState">
+				<option value="0" disabled>Select an address</option>
+				@foreach (CompanyAddress anAddress in ViewModel.AddressessThatSelectedCompanyHas)
+				{
+					<option value="@anAddress.Id">@anAddress.FriendlyName</option>
+				}
+			</select>
+
+		</div>
+
+	}
+	else
+	{
+		<!-- row -->
+		<div class="row invoice-madeout-too-read-only">
+			<div class="button-container">
+				<button @onclick="() => ViewModel.IsAddressInvoiceMadeOutToBeingEdited = !ViewModel.IsAddressInvoiceMadeOutToBeingEdited">Edit Address Invoice Made out too</button>
+			</div>
+			@if (ViewModel.AddressToMakeInvoiceOutTo == null)
+			{// if address to make invoice out to is blank
+				<div>No Address set</div>
+			}
+			else
+			{// we have an address to make invoice out to
+				<div class="text-container">
+					<header>Company To Invoice</header>
+					<div>@ViewModel.SelectedCompany?.FriendlyName</div>
+				</div>
+
+				<div class="text-container">
+					<header>Address To Invoice</header>
+					<div>@ViewModel.AddressToMakeInvoiceOutTo?.FriendlyName</div>
+				</div>
+			}
+		</div>
+
+
+	}
+
+	<!-- row-->
+	<div class="row one-row">
+		<label for="cbIncludeMiles">Include Miles</label>
+		<div class="checkbox-container">
+			<input id="cbIncludeMiles" type="checkbox" @bind="ViewModel.IncludeMiles" />
+			<span></span>
+		</div>
+	</div>
+
+	<!-- row -->
+	<div class='row border @(ViewModel.IncludeMiles == true ? "show-visited-addressess-row" : "hide-visited-addressess-row")'>
+		<label>Addresses Visited</label>
+		<div class="add-visited-address-container">
+			<div>
+				<label>Address</label>
+				<select @bind="ViewModel.Combobox_VisitedAddress_SelectedId"
+		 disabled='@(!ViewModel.IncludeMiles)'>
+					@foreach (CompanyAddress anAddress in ViewModel.Combobox_AddressesCouldVisit)
+					{
+						<option value="@anAddress.Id">@anAddress.FriendlyName</option>
+					}
+				</select>
+			</div>
+			<div>
+				<label for="txtNoTimeVisited">Number Times visited</label>
+				<input id="txtNoTimeVisited" type="number" @bind-value="ViewModel.NewPlaceVisited_NoTimesVisited"
+		   disabled='@(!ViewModel.IncludeMiles)' />
+			</div>
+			<button @onclick="async () => await ViewModel.AddAddressUserVisited()">
+				Add
+			</button>
+		</div>
+		<table class="list-visited-addressess-container">
+
+			@if (ViewModel.CompanyAddressessVisitedVM.Count > 0)
+			{
+				<thead>
+					<tr>
+						<td>Place Visited</td>
+						<td>No. Times visited</td>
+						<td></td>
+					</tr>
+				</thead>
+			}
+			@foreach (AddInvoicePlaceVisitedInInvoiceVM anAddress in ViewModel.CompanyAddressessVisitedVM)
+			{
+
+				<tr>
+					<td>@anAddress.PlaceVisited.FriendlyName</td>
+					<td>@anAddress.NumberOfTimesVisited.ToString()</td>
+					<td>
+						<button @onclick="async () => await ViewModel.RemoveAdressUserVisited(anAddress.PlaceVisited.Id)">
+							Remove
+						</button>
+					</td>
+				</tr>
+			}
+		</table>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public ListInvoiceRowAdditionalInfo_LeftColumnViewModel? ViewModel { get; set; }
+}

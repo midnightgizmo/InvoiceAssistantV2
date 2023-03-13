@@ -1,0 +1,36 @@
+﻿@using InvoiceAssistantV2.Client.ViewModels.Invoices.Add;
+@using InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults;
+@using InvoiceAssistantV2.Shared.Models.Database.Company;
+
+@if (InvoiceRowAdditionalInfoVM != null)
+{
+	<div class='invoice-addishanal-details @(InvoiceRowAdditionalInfoVM.IsRowSelected == true ? "show" : "hide")'>
+
+
+		@if (InvoiceRowAdditionalInfoVM.IsRowSelected)
+		{
+			<header>
+			</header>
+
+			<div class="addishanal-details-inner-container">
+
+				<div class="addishanal-details-left-column">
+					<ListInvoiceRowAdditionalInfo_LeftColumnComponent ViewModel="this.InvoiceRowAdditionalInfoVM.LeftColumnViewModel" />
+				</div>
+
+				<div class="addishanal-details-right-column">
+					<ListInvoiceRowAdditionalInfo_RightColumnComponent ViewModel="this.InvoiceRowAdditionalInfoVM.RightColumnViewModel"/>
+				</div>
+
+
+			</div>
+
+		}
+
+	</div>
+}
+@code 
+{
+	[Parameter]
+	public ListInvoiceRowAdditionalInfoViewModel? InvoiceRowAdditionalInfoVM { get; set; }
+}

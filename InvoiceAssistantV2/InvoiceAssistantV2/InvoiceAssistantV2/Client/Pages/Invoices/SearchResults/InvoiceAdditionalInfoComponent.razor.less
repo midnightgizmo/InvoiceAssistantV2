@@ -1,0 +1,55 @@
+﻿.invoice-addishanal-details
+{
+
+
+    > header
+    {
+        background-color: #001E3A;
+        height: 2px;
+    }
+
+    &.show
+    {
+        display: block;
+        //height: auto;
+        max-height: 600px;
+        transition: max-height 0.5s ease-in-out;
+        background-color: #024787;
+        grid-column: 1 / span 7;
+        overflow-y: auto;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    &.hide
+    {
+        //display: none;
+        max-height: 0;
+        // this will not work because in the c# razor file we remove all the html controls
+        // from the dom as soon as the hide cass is assigned. This means the height jumps to
+        // zero before any animation can take effect.
+        transition: max-height 1s ease-out;
+    }
+
+    > .addishanal-details-inner-container
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 20px;
+        align-items: start;
+        column-gap:20px;
+
+
+        > div.addishanal-details-left-column
+        {
+            display: grid;
+            grid-template-columns: 1fr;
+            row-gap: 30px;
+        }
+
+        > div.addishanal-details-right-column
+        {
+        }
+    }
+}
