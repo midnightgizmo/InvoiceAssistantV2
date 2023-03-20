@@ -169,7 +169,17 @@
 
 	protected override void OnParametersSet()
 	{
-		this.ViewModel = new SearchInvoiceVM(httpClient, appSettings);
+		// if this is the first time this page has been visted
+		if (SharedData.vmSearch != null)
+			this.ViewModel = SharedData.vmSearch; // create a new view model
+		// if this page has been visted before
+		else
+		{
+			// load the page the way it was last visited (keep any data in the search boxes that were there on last visit to the page)
+			SharedData.vmSearch = new SearchInvoiceVM(httpClient, appSettings);
+			this.ViewModel = SharedData.vmSearch;
+
+		}
 		this.ViewModel.FormModel.TypeOfPaymentId = -1;
 		// load all the payment types and list of companys from the server.
 		// and when we have them call state change to make them show up in the UI
