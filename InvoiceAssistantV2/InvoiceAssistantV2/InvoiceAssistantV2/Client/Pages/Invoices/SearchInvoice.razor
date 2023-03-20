@@ -109,7 +109,7 @@
 			<div class="company-container">
 				<header>Company</header>
 				<div>
-					<select>
+					<select @bind="ViewModel.FormModel.AddressToMakePaymentOutToId">
 						<!-- A blank option, which is used to indicate we don't want to search by Company -->
 						<option value="-1"></option>
 						@if (ViewModel?.CompanyDetails != null)
