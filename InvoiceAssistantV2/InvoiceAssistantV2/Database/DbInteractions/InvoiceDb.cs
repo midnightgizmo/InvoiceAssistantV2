@@ -1,4 +1,5 @@
 ﻿using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,9 +60,10 @@ namespace Database.DbInteractions
             if(AddressToMakePaymentOutToId != null)
                 query = query.Where(I => I.AddressToMakeInvoiceOutToId == AddressToMakePaymentOutToId);
 
-            if(Description != null)
-                query = query.Where(I => I.Description.Contains(Description,StringComparison.OrdinalIgnoreCase));
-
+            if (Description != null)
+                //query = query.Where(I => I.Description.Contains(Description, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(I => EF.Functions.Like(I.Description, $"%{Description}%"));
+            
             return query.ToList();
 
         }
