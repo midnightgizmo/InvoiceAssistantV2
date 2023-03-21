@@ -37,6 +37,34 @@
 	<div class="search-outer-container">
 		<EditForm Model="ViewModel.FormModel" class="search-container" OnValidSubmit="async () => await Form_ValidSubmit()">
 
+			<!-- Reset search-->
+			<div class="reset-search-container">
+				<button type="button" @onclick="ViewModel.FormModel.ResetAllProperties">
+					<div>Reset Search</div>
+				</button>
+			</div>
+
+			<!-- Search-->
+			<div class="search-top-container">
+				<button type="submit">
+					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.27 19.02">
+						<defs>
+							<style>
+								.cls-3 {
+									fill: #fff;
+									stroke: #000;
+									stroke-miterlimit: 10;
+									stroke-width: 0.1px;
+									fill-rule: evenodd;
+								}</style>
+						</defs>
+						<path class="cls-3" d="M7.39,2.6A4.54,4.54,0,1,1,2.85,7.14,4.54,4.54,0,0,1,7.39,2.6Zm4,10.9a7.24,7.24,0,1,1,2.34-2.45l5.37,5.35a.68.68,0,0,1,.16,1A5.51,5.51,0,0,1,17.61,19a.67.67,0,0,1-1-.15l-5.31-5.31" transform="translate(-0.12 -0.12)" />
+					</svg>
+
+					<div>Search</div>
+				</button>
+			</div>
+
 			<!-- Date -->
 			<div class="date-container">
 				<header>Date of Invoice</header>

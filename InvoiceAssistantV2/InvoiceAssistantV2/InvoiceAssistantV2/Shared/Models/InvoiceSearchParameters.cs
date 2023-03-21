@@ -22,5 +22,21 @@ namespace InvoiceAssistantV2.Shared.Models
         public int? AddressToMakePaymentOutToId { get; set; }
         public string? Description { get; set; }
 
+
+        public void ResetAllProperties()
+        {
+            this.StartDate = null;
+            this.EndDate = null;
+            this.StartAmmount = null;
+            this.EndAmmount = null;
+            this.DateRecievedMoneyStart = null;
+            this.DateRecievedMoneyEnd = null;
+            this.ReferenceNumber = null;
+            this.TypeOfPaymentId = null;
+            this.TypeOfPaymentId = null;
+            this.AddressToMakePaymentOutToId = null;
+            this.Description = null;
+        }
+
     }
 }
