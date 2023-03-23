@@ -1,0 +1,169 @@
+﻿@page "/CreatePrintableInvoicePage";
+@using InvoiceAssistantV2.Client.Models.Printer;
+@using InvoiceAssistantV2.Client.Models;
+
+@inject NavigationManager NavManager;
+@inject ApplicationSharedData SharedData;
+
+<section class="main-container">
+	
+	<header class="page-header">
+		<div>
+			<div>
+				<button @onclick='() => NavManager.NavigateTo("/")'>
+					<!-- Back Arrow -->
+					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.48 37.48">
+						<defs>
+							<style>
+								.cls-1 {
+									fill: none;
+									stroke: currentColor;
+									stroke-linejoin: round;
+									stroke-width: 3px;
+								}
+
+								.cls-2 {
+									fill: currentColor;
+								}</style>
+						</defs>
+						<circle class="cls-1" cx="18.74" cy="18.74" r="17.24" />
+						<path class="cls-2" d="M17.77,30.73a3.11,3.11,0,0,0,2.17,0,4.78,4.78,0,0,0,1.68-1.79,2,2,0,0,0,.32-1.21,9.46,9.46,0,0,0,0-1.06,8,8,0,0,0-.2-1L18.32,22H30.09a2.86,2.86,0,0,0,1.39-.69,6.88,6.88,0,0,0,1-1.86l0-2.19a5.72,5.72,0,0,0-1-1.69,3.36,3.36,0,0,0-1.49-.7l-11.74,0,3.46-3.74a3.39,3.39,0,0,0,.16-2.5A6,6,0,0,0,19.76,6.1,1.74,1.74,0,0,0,18,6L6.41,17a3.25,3.25,0,0,0-.35,1.19,3.76,3.76,0,0,0,.29,1.27L17.77,30.73" />
+					</svg>
+				</button>
+			</div>
+
+			<div><span>Search Invoices</span></div>
+
+			<div class="glasses-container">
+				<img src="/images/svg/Glasses.svg" />
+			</div>
+
+		</div>
+	</header>
+
+	<!-- print options-->
+	<div class="print-options-container">
+		<!-- create pdf-->
+		<div>
+			<!-- create downloadable pdf document based in data from this page-->
+		</div>
+		<!-- print this web page using media query print -->
+		<div>
+			<!-- create a button that simlates ctrl p-->
+		</div>
+	</div>
+
+	<div class="invoice-template">
+		<header class="full-width">
+			<div class="full-width border-bottom border-thickness-normal">
+				<span class="full-width">@ViewModel.NameOfPersonFillingOutInvoiceFirst</span>
+			</div>
+		</header>
+
+		<div class="invoice-template-main-content">
+			<div class="left-side">
+				<header>
+					<div>Invoice</div>
+				</header>
+				<div class="left-side-3-column-grid border-bottom border-thickness-thick">
+					<div></div>
+					<div class="font-centre font-bold">Date</div>
+					<div class="font-centre font-bold">20/10/2023</div>
+				</div>
+
+				<div class="left-side-data-with-left-border">
+					
+					<!-- service from --><div class="left-side-2-column-grid border-bottom border-thickness-normal">
+						<div><span>Services From</span></div>
+						<div></div>
+					</div>
+					<div class="left-side-2-column-grid">
+						<div class="font-italic"><span>Name</span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><span>@ViewModel.NameOfPersonFillingOutInvoiceSecond</span></div>
+					</div>
+					<div class="left-side-2-column-grid" style="margin-top:15px;">
+						@for(int eachLine = 0; eachLine < 7; eachLine++)
+						{
+							// make the first column blank unless its the first row 
+							if(eachLine > 0)
+							{
+								<div></div>
+							}
+							// its the first row, write out address
+							else
+							{
+								<div><span>Address</span></div>
+							}
+							if (ViewModel.AddressOfPersonFillingOutInvoice.Count - 1 >= eachLine)
+							{
+								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'><span>@ViewModel.AddressOfPersonFillingOutInvoice[eachLine]</span></div>
+							}
+							else
+							{
+								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'></div>
+							}
+						}
+					</div>
+					<!-- Bill To-->
+					<div class="left-side-2-column-grid border-bottom border-top border-bottom-thickness-normal border-top-thickness-thick">
+						<div><span>Bill To</span></div>
+						<div></div>
+					</div>
+					<div class="left-side-2-column-grid">
+						<div class="font-italic"><span>Name</span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey">@ViewModel.NameOfCompanyInvoiceMadeOutTo</div>
+					</div>
+					<div class="left-side-2-column-grid" style="margin-top:15px;">
+						@for (int eachLine = 0; eachLine < 7; eachLine++)
+						{
+							// make the first column blank unless its the first row
+							if (eachLine > 0)
+							{
+								<div></div>
+							}
+							// its the first row, write out address
+							else
+							{
+								<div><span>Address</span></div>
+							}
+							if (ViewModel.AddressOfCompanyInvoiceMadeOutTo.Count - 1 >= eachLine)
+							{
+								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'><span>@ViewModel.AddressOfCompanyInvoiceMadeOutTo[eachLine]</span></div>
+							}
+							else
+							{
+								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'></div>
+							}
+						}
+					</div>
+
+					<!-- Payment options -->
+				</div>
+			</div>
+			
+			<div class="right-side">
+				
+			</div>
+		</div>
+	</div>
+
+
+</section>
+
+
+@code {
+
+	public InvoicePrinterModel ViewModel { get; set; }
+
+	public CreatePrintableInvoicePage()
+	{
+		this.ViewModel = new InvoicePrinterModel();
+
+	}
+
+	protected override void OnParametersSet()
+	{
+		InvoicePrinterModel.CreateModel(this.ViewModel,SharedData.vmInvoiceSelectedToPrint);
+	}
+
+}

@@ -62,5 +62,9 @@
   {
     "outputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_RightColumnComponent.razor.css",
     "inputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_RightColumnComponent.razor.less"
+  },
+  {
+    "outputFile": "Pages/Print/CreatePrintableInvoicePage.razor.css",
+    "inputFile": "Pages/Print/CreatePrintableInvoicePage.razor.less"
   }
 ]

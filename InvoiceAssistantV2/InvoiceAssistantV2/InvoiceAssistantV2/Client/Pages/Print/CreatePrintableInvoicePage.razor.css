@@ -1,0 +1,187 @@
+﻿.main-container .page-header {
+  width: 100%;
+  height: 100px;
+  background-color: #C06F00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media only screen and (max-width: 900px) {
+  .main-container .page-header {
+    height: 70px;
+  }
+}
+@media print {
+  .main-container .page-header {
+    display: none;
+  }
+}
+.main-container .page-header > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  height: 100%;
+}
+.main-container .page-header > div > div {
+  display: flex;
+  color: white;
+  font-weight: bold;
+  font-size: 30pt;
+}
+@media only screen and (max-width: 900px) {
+  .main-container .page-header > div > div {
+    font-size: 20pt;
+  }
+}
+.main-container .page-header > div > div > button {
+  align-self: center;
+  background-color: transparent;
+  border: none;
+  color: white;
+  height: 80px;
+  aspect-ratio: 1/1;
+  margin-left: 10px;
+}
+@media only screen and (max-width: 900px) {
+  .main-container .page-header > div > div > button {
+    height: 60px;
+  }
+}
+.main-container .page-header > div > div > button:hover {
+  color: yellow;
+}
+.main-container .page-header > div > div > button:active {
+  color: #e5e600;
+}
+.main-container .page-header > div > div > button > img {
+  height: 9vh;
+}
+.main-container .page-header > div > div > span {
+  align-self: center;
+  text-align: center;
+  width: 100%;
+}
+.main-container .page-header > div > div > img {
+  height: 80px;
+  aspect-ratio: 2/1;
+  margin-right: 10px;
+}
+@media only screen and (max-width: 900px) {
+  .main-container .page-header > div > div > img {
+    height: 60px;
+  }
+}
+.main-container .page-header > div > div.glasses-container {
+  justify-content: flex-end;
+  align-items: center;
+}
+.main-container .invoice-template > .invoice-template-main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > header > div {
+  font-size: 3rem;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > .left-side-3-column-grid {
+  display: grid;
+  grid-template-columns: 5px 1fr 1fr;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > .left-side-data-with-left-border {
+  border-left: 10px solid black;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > .left-side-data-with-left-border > .left-side-2-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-left: 3px;
+  align-items: start;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > .left-side-data-with-left-border > .left-side-2-column-grid > div {
+  height: 25px;
+  display: flex;
+}
+.main-container .invoice-template > .invoice-template-main-content > .left-side > .left-side-data-with-left-border > .left-side-2-column-grid > div > span {
+  align-self: end;
+  margin-left: 5px;
+  font-size: 0.8rem;
+}
+/*
+	Border Thickness
+*/
+.border-thickness-thin {
+  border-width: 1px;
+}
+.border-thickness-normal {
+  border-width: 2px;
+}
+.border-thickness-thick {
+  border-width: 5px;
+}
+.border-top-thickness-thin {
+  border-top-width: 1px;
+}
+.border-top-thickness-normal {
+  border-top-width: 2px;
+}
+.border-top-thickness-thick {
+  border-top-width: 5px;
+}
+.border-bottom-thickness-thin {
+  border-bottom-width: 1px;
+}
+.border-bottom-thickness-normal {
+  border-bottom-width: 2px;
+}
+.border-bottom-thickness-thick {
+  border-bottom-width: 5px;
+}
+/*
+	Border Color
+*/
+.border-color-black {
+  border-color: black;
+}
+.border-color-grey {
+  border-color: gray;
+}
+/* 
+	Border 
+*/
+.border-top {
+  border-top-style: solid;
+}
+.border-bottom {
+  border-bottom-style: solid;
+}
+/*
+	Font Size
+*/
+.font-size-normal {
+  font-size: 1rem;
+}
+.font-centre {
+  text-align: center;
+}
+.font-bold {
+  font-weight: bold;
+}
+.font-italic {
+  font-style: italic;
+}
+/*
+	Misc
+*/
+.full-width {
+  width: 100%;
+}
+/*
+	Background color
+*/
+.background-color-black {
+  background-color: black;
+}

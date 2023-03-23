@@ -1,4 +1,5 @@
 ﻿using InvoiceAssistantV2.Client.ViewModels.Invoices;
+using InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults;
 using InvoiceAssistantV2.Shared.Models.Database.Invoice;
 
 namespace InvoiceAssistantV2.Client.Models
@@ -22,5 +23,12 @@ namespace InvoiceAssistantV2.Client.Models
 		/// all the search parameters again.
 		/// </summary>
 		public SearchInvoiceVM? vmSearch { get; set; }
+
+
+		/// <summary>
+		/// Will be set in ListInvoice.razor file when the user clicks the print button
+		/// Will be accessed in the CreatePrintableInvoicePage.razor file
+		/// </summary>
+		public ListInvoiceRowViewModel? vmInvoiceSelectedToPrint { get; set; }
 	}
 }

@@ -10,6 +10,7 @@
 @inject NavigationManager NavManager;
 @inject HttpClient httpClient;
 @inject AppSettings appSettings;
+@inject ApplicationSharedData SharedData;
 
 <section class="invoice-list-page">
 
@@ -385,7 +386,7 @@
 				<div class="invoice-main-details">
 					<div class='read-only @(anInvoiceRowViewModel.ShouldShow_Print_Info_Delete == true ? "show" : "hide")'>
 						<div class="print-info-delete-container">
-							<button>
+								<button @onclick="() => {NavigateToPrintPage(anInvoiceRowViewModel);}">
 								<svg>
 									<use href="#printer-icon-svg"/>
 								</svg>
@@ -517,5 +518,14 @@
 	public void UpdateUI()
 	{
 		this.StateHasChanged();
+	}
+
+	public void NavigateToPrintPage(ListInvoiceRowViewModel vmRow)
+	{
+		// the next page we navigate too will need to know which invoice the user wants to print.
+		// they can access that via the SharedData class
+		SharedData.vmInvoiceSelectedToPrint = vmRow;
+
+		NavManager.NavigateTo("CreatePrintableInvoicePage");
 	}
 }
