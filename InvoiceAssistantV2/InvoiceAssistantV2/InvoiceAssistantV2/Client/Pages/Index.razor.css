@@ -40,12 +40,13 @@
   row-gap: 5vw;
   padding-top: 10vh;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1200px) {
   .page-container > .menu-container > .menu-inner-container {
     grid-template-columns: 1fr;
   }
 }
-.page-container > .menu-container > .menu-inner-container > .menu-item > button {
+.page-container > .menu-container > .menu-inner-container > .menu-item > button,
+.page-container > .menu-container > .menu-inner-container > .merge-columns > button {
   width: 100%;
   height: 25vh;
   padding: 3vw;
@@ -55,17 +56,31 @@
   cursor: pointer;
 }
 @media only screen and (max-width: 800px) {
-  .page-container > .menu-container > .menu-inner-container > .menu-item > button {
+  .page-container > .menu-container > .menu-inner-container > .menu-item > button,
+  .page-container > .menu-container > .menu-inner-container > .merge-columns > button {
     height: 15vh;
   }
 }
-.page-container > .menu-container > .menu-inner-container > .menu-item > button > img {
+.page-container > .menu-container > .menu-inner-container > .menu-item > button > img,
+.page-container > .menu-container > .menu-inner-container > .merge-columns > button > img {
   height: 100%;
 }
-.page-container > .menu-container > .menu-inner-container > .menu-item > button:hover {
+.page-container > .menu-container > .menu-inner-container > .menu-item > button:hover,
+.page-container > .menu-container > .menu-inner-container > .merge-columns > button:hover {
   border: 2px solid yellow;
 }
-.page-container > .menu-container > .menu-inner-container > .menu-item > button:active {
+.page-container > .menu-container > .menu-inner-container > .menu-item > button:active,
+.page-container > .menu-container > .menu-inner-container > .merge-columns > button:active {
   border: 2px solid yellow;
   background-color: #183147;
+}
+@media only screen and (min-width: 1200px) {
+  .page-container > .menu-container > .menu-inner-container > .merge-columns {
+    grid-column: 1 / 3;
+    justify-self: center;
+  }
+  .page-container > .menu-container > .menu-inner-container > .merge-columns > button {
+    width: 30vw;
+    min-width: 300px;
+  }
 }
