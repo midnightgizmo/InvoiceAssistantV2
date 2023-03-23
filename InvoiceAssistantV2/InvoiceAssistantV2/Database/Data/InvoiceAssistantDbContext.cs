@@ -1,5 +1,6 @@
 ﻿using InvoiceAssistantV2.Shared.Models.Database.Company;
 using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+using InvoiceAssistantV2.Shared.Models.Database.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -27,6 +28,10 @@ namespace Database.Data
         public DbSet<InvoicePaymentBreakDown> InvoicesPaymentBreakDown { get; set; } = null!;
         public DbSet<PlacesVisitedForInvoice> PlacesVisitedForInvoice { get; set; } = null!;
         public DbSet<PaymentType> PaymentTypes { get; set; } = null!;
+
+        public DbSet<UserDetails> UserDetails { get; set; } = null!;
+        public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
+        public DbSet<PaymetDetail> PaymentDetails { get; set; } = null!;
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder OptionsBuilder)
