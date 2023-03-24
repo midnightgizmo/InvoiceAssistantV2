@@ -25,6 +25,16 @@ namespace Database.DbInteractions
 		}
 
 		/// <summary>
+		/// Get all payment methods linked to user
+		/// </summary>
+		/// <param name="UserDetailsId">The Id of the user the payments are linked too</param>
+		/// <returns>List of payments linked to user</returns>
+		public List<PaymentMethod> SelectAllPaymentMethodsLinkedToUser(int UserDetailsId)
+		{
+			return this._DbContext.PaymentMethods.Where(p => p.UserDetailsId == UserDetailsId).ToList();
+		}
+
+		/// <summary>
 		/// Selects the payment method row in the database that matches the passed in Id
 		/// </summary>
 		/// <param name="PaymentMethodId">The row to look for</param>
