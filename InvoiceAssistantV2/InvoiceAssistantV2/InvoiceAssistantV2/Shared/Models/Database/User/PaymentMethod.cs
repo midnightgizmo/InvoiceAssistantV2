@@ -9,6 +9,10 @@ namespace InvoiceAssistantV2.Shared.Models.Database.User
 	{
 		[Key]
         public int Id { get; set; }
+		/// <summary>
+		/// Foreign key link to <see cref="UserDetails"/>
+		/// </summary>
+		public int UserDetailsId { get; set; }
 		
 		/// <summary>
 		/// The name of this payment method e.g. Bank transfer
