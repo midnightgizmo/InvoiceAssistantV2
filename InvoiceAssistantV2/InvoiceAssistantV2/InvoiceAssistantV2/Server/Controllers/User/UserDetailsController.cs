@@ -31,11 +31,11 @@ namespace InvoiceAssistantV2.Server.Controllers.User
 		[HttpPost]
 		[Route("UpdateUsersDetails")]
 		[Produces("application/json")]
-		public ControllerLogicReturnValue UpdateUsersDetails([FromForm]int id, [FromForm]string usersName) 
+		public ControllerLogicReturnValue UpdateUsersDetails([FromForm]int Id, [FromForm]string UsersName) 
 		{
 			UpdateUserDetailsControllerLogic controllerLogic = new UpdateUserDetailsControllerLogic();
 
-			return controllerLogic.Process(id,usersName,this.Response);
+			return controllerLogic.Process(Id, UsersName, this.Response);
 		}
 	}
 }
