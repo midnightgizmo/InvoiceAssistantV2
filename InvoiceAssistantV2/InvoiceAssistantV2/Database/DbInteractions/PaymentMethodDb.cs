@@ -25,6 +25,16 @@ namespace Database.DbInteractions
 		}
 
 		/// <summary>
+		/// Finds the payment method that has the passed in name
+		/// </summary>
+		/// <param name="PaymentMethodName">payment method name to look for</param>
+		/// <returns>found payment method or null if not found</returns>
+		public PaymentMethod? SelectPaymentMethod(string PaymentMethodName)
+		{
+			return _DbContext.PaymentMethods.Where(p => p.Name == PaymentMethodName).FirstOrDefault();
+		}
+
+		/// <summary>
 		/// Get all payment methods linked to user
 		/// </summary>
 		/// <param name="UserDetailsId">The Id of the user the payments are linked too</param>
@@ -58,10 +68,13 @@ namespace Database.DbInteractions
 		/// Updates corisponding row in the datebase with the passed in payment method.
 		/// </summary>
 		/// <param name="paymentMethod">updates to apply</param>
-		public void UpdatePaymentMethod(PaymentMethod paymentMethod) 
+		public bool UpdatePaymentMethod(PaymentMethod paymentMethod) 
 		{
 			this._DbContext.Update(paymentMethod);
-			this._DbContext.SaveChanges();
+			if (this._DbContext.SaveChanges() > 0)
+				return true;
+			else
+				return false;
 		}
 
 		/// <summary>

@@ -1,5 +1,6 @@
 ﻿using InvoiceAssistantV2.Client.ViewModels.Invoices;
 using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+using InvoiceAssistantV2.Shared.Models.Database.User;
 
 namespace InvoiceAssistantV2.Client.Models
 {
@@ -22,5 +23,12 @@ namespace InvoiceAssistantV2.Client.Models
 		/// all the search parameters again.
 		/// </summary>
 		public SearchInvoiceVM? vmSearch { get; set; }
+
+		/// <summary>
+		/// Should be set from the UsersDetails.razor page. Will be set when a new payment method is made or
+		/// a payment method is set to be edited. The page will then navigate to the PaymentDetails.razor
+		/// page who will then access the use the below property for editing it.
+		/// </summary>
+		public PaymentMethod? PaymentMethodToEdit { get; set; }
 	}
 }

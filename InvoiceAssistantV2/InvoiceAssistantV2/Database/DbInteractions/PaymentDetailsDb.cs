@@ -25,21 +25,31 @@ namespace Database.DbInteractions
 			return this._DbContext.PaymentDetails.Where(p => p.PaymentMethodId == PaymentMethodId).ToList();
 		}
 
-		public void UpdatePaymentDetails(PaymetDetail paymentDetails) 
+		public bool UpdatePaymentDetails(PaymetDetail paymentDetails) 
 		{
 			this._DbContext.PaymentDetails.Update(paymentDetails);
-			this._DbContext.SaveChanges();
+			if (this._DbContext.SaveChanges() > 0)
+				return true;
+			else
+				return false;
 		}
 
-		public void InsertPaymentDetails(PaymetDetail paymetDetail)
+		public bool InsertPaymentDetails(PaymetDetail paymetDetail)
 		{
 			this._DbContext.PaymentDetails.Add(paymetDetail);
-			this._DbContext.SaveChanges();
+			if (this._DbContext.SaveChanges() > 0)
+				return true;
+			else 
+				return false;
 		}
 
-		public void DeletePaymentDetails(PaymetDetail paymentDetail)
+		public bool DeletePaymentDetails(PaymetDetail paymentDetail)
 		{
 			this._DbContext.PaymentDetails.Remove(paymentDetail);
+			if (this._DbContext.SaveChanges() > 0)
+				return true;
+			else
+				return false;
 		}
 	}
 }

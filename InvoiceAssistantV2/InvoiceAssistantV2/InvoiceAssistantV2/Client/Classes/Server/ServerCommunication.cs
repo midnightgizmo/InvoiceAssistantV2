@@ -224,7 +224,15 @@ namespace InvoiceAssistantV2.Client.Classes.Server
                 // see if the server has given us any information about the error
                 if (ResponseMessage.ResponseMessage != null && ResponseMessage.ResponseMessage.Length > 0)
                 {
-                    ResponseData = JsonSerializer.Deserialize<T>(ResponseMessage.ResponseMessage, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    try
+                    {
+                        ResponseData = JsonSerializer.Deserialize<T>(ResponseMessage.ResponseMessage, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    }
+                    catch
+                    {
+                        ResponseData = new T();
+                        ResponseData.Errors.Add("Unable to parse server response message");
+                    }
                 }
                 // no information from the server, don't know whats happend
                 else

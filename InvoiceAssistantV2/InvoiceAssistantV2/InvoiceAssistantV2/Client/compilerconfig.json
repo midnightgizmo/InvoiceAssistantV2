@@ -62,5 +62,13 @@
   {
     "outputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_RightColumnComponent.razor.css",
     "inputFile": "Pages/Invoices/SearchResults/ListInvoiceRowAdditionalInfo_RightColumnComponent.razor.less"
+  },
+  {
+    "outputFile": "Pages/UserDetails/UsersDetails.razor.css",
+    "inputFile": "Pages/UserDetails/UsersDetails.razor.less"
+  },
+  {
+    "outputFile": "Pages/UserDetails/PaymentDetails.razor.css",
+    "inputFile": "Pages/UserDetails/PaymentDetails.razor.less"
   }
 ]

@@ -1,0 +1,273 @@
+﻿.container .background-wallpaper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: #065c9e;
+}
+.container .page-header {
+  width: 100%;
+  height: 100px;
+  background-color: #a55050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media only screen and (max-width: 900px) {
+  .container .page-header {
+    height: 70px;
+  }
+}
+.container .page-header > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  height: 100%;
+}
+.container .page-header > div > div {
+  display: flex;
+  color: white;
+  font-weight: bold;
+  font-size: 30pt;
+}
+@media only screen and (max-width: 900px) {
+  .container .page-header > div > div {
+    font-size: 20pt;
+  }
+}
+.container .page-header > div > div > button {
+  align-self: center;
+  background-color: transparent;
+  border: none;
+  color: white;
+  height: 80px;
+  aspect-ratio: 1;
+  margin-left: 10px;
+}
+@media only screen and (max-width: 900px) {
+  .container .page-header > div > div > button {
+    height: 60px;
+  }
+}
+.container .page-header > div > div > button:hover {
+  color: yellow;
+}
+.container .page-header > div > div > button:active {
+  color: #e5e600;
+}
+.container .page-header > div > div > button > img {
+  height: 9vh;
+}
+.container .page-header > div > div > span {
+  align-self: center;
+  text-align: center;
+  width: 100%;
+}
+.container .page-header > div > div > img {
+  height: 80px;
+  aspect-ratio: 2;
+  margin-right: 10px;
+}
+@media only screen and (max-width: 900px) {
+  .container .page-header > div > div > img {
+    height: 60px;
+  }
+}
+.container .page-header > div > div.usericon-container {
+  justify-content: flex-end;
+  align-items: center;
+}
+.container .page-header > div > div.usericon-container img {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.payment-details > form > fieldset {
+  background-color: #005185;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 30px;
+  border: 1px solid #2d619f;
+}
+.payment-details > form > fieldset > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+.payment-details > form > fieldset > div > div > label {
+  font-size: 1.5rem;
+  color: white;
+}
+.payment-details > form > fieldset > div > div > div.readonly {
+  display: flex;
+}
+.payment-details > form > fieldset > div > div > div.readonly > span {
+  font-size: 1.5rem;
+  color: orange;
+}
+.payment-details > form > fieldset > div > div > div.readonly > button {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.payment-details > form > fieldset > div > div:has(button) {
+  display: flex;
+  height: 40px;
+  column-gap: 25px;
+}
+.payment-details > form > fieldset > div > div > button {
+  border: 1px solid white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 1.5rem;
+}
+.payment-details > form > fieldset > div > div > button:nth-child(1) {
+  background-color: #4bbd20;
+}
+.payment-details > form > fieldset > div > div > button:nth-child(1):hover {
+  background-color: #62dd33;
+}
+.payment-details > form > fieldset > div > div > button:nth-child(2) {
+  background-color: #770909;
+}
+.payment-details > form > fieldset > div > div > button:nth-child(2):hover {
+  background-color: #a60d0d;
+}
+.list-of-payments-details-container {
+  background-color: #005185;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 30px;
+  border: 1px solid #2d619f;
+}
+.list-of-payments-details-container > header {
+  text-align: center;
+}
+.list-of-payments-details-container > header > h2 {
+  font-size: 2rem;
+  color: orange;
+}
+.list-of-payments-details-container > .new-payment-details-container {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  column-gap: 0;
+}
+@media only screen and (max-width: 1000px) {
+  .list-of-payments-details-container > .new-payment-details-container {
+    max-width: auto;
+    margin-right: 40px;
+    grid-template-columns: 1fr;
+  }
+}
+.list-of-payments-details-container > .new-payment-details-container > div {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  column-gap: 5px;
+  margin-top: 20px;
+}
+@media only screen and (max-width: 1000px) {
+  .list-of-payments-details-container > .new-payment-details-container > div {
+    column-gap: 20px;
+  }
+}
+.list-of-payments-details-container > .new-payment-details-container > div > label {
+  color: white;
+  justify-self: end;
+  align-self: center;
+}
+.list-of-payments-details-container > .new-payment-details-container > div > button {
+  grid-column-start: 2;
+  border: 1px solid white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  width: 120px;
+  height: 100%;
+  color: white;
+  font-size: 1.5rem;
+  background-color: #4bbd20;
+}
+.list-of-payments-details-container > .new-payment-details-container > div > button:hover {
+  background-color: #62dd33;
+}
+.list-of-payments-details-container > .table {
+  margin-top: 40px;
+}
+.list-of-payments-details-container > .table > .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 100px;
+  column-gap: 20px;
+  height: 40px;
+}
+.list-of-payments-details-container > .table > .row:nth-child(even) {
+  background-color: #055f99;
+}
+.list-of-payments-details-container > .table > .row:nth-child(odd) {
+  background-color: #0168ab;
+}
+.list-of-payments-details-container > .table > .row > .cell {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+.list-of-payments-details-container > .table > .row > .cell.read-only-text {
+  justify-content: center;
+}
+.list-of-payments-details-container > .table > .row > .cell > span {
+  font-size: 1.2rem;
+  color: white;
+}
+.list-of-payments-details-container > .table > .row > .cell button {
+  border: none;
+  background-color: transparent;
+  height: 100%;
+  cursor: pointer;
+}
+.list-of-payments-details-container > .table > .row > .cell button > svg {
+  height: 25px;
+  width: 25px;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit {
+  color: white;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit svg {
+  color: white;
+  height: 20px;
+  width: 20px;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit_Tick {
+  color: #55D94D;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit_Tick:hover {
+  color: #71df6a;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit_Tick:active {
+  color: #39d330;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit_Cross {
+  color: #D94D4D;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit_Cross:hover {
+  color: #df6a6a;
+}
+.list-of-payments-details-container > .table > .row > .cell > div > button#cmdEdit_Cross:active {
+  color: #d33030;
+}
