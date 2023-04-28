@@ -35,6 +35,18 @@ namespace InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults
 			this.ListOfPayments.Clear();
 			this.ListOfPayments.AddRange(await this.LoadInoicePaymentsFromServer(this.Parent.Parent.InvoiceData.Id));
 
+			// add the invoice payments we just recieved from the server to the InvoiceData Model
+			// This will allow us to access it if/when we want to print the invoice
+			if (this.Parent.Parent.InvoiceData.InvoicePayments == null)
+				this.Parent.Parent.InvoiceData.InvoicePayments = new List<InvoicePaymentBreakDown>();
+			else
+				this.Parent.Parent.InvoiceData.InvoicePayments.Clear();
+
+			this.Parent.Parent.InvoiceData.InvoicePayments.AddRange(this.ListOfPayments);
+
+
+
+
 			// get the new blance after payment was removed
 			this.Balance = this.CaculateSumOfAllPayments();
 		}
