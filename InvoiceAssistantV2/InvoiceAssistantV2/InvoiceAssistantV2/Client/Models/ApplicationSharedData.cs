@@ -38,5 +38,12 @@ namespace InvoiceAssistantV2.Client.Models
 		/// </summary>
 		public PaymentMethod? PaymentMethodToEdit { get; set; }
 
+		/// <summary>
+		/// Contains details about this user. There name, and payment details.
+		/// There are 2 places where this can be set. The one is on the
+		/// UsersDetails.razor page/view model and the other is the CreatePrintableInvoicePage.razor page/view model
+		/// </summary>
+		public UserDetails? UsersDetails;
+
 	}
 }
