@@ -181,6 +181,11 @@ namespace InvoiceAssistantV2.Client.ViewModels.UserDetails
 				return;
 			}
 
+			// make the users details (name, payment methods etc) avalable to all pages.
+			// this will allow the printing page access to the users details so they dont
+			// have to go off to the server and fetch them again.
+			this._SharedData.UsersDetails = response.ReturnValue;
+
 			this.UsersDetails = response.ReturnValue;
 			this.IsViewModelEditable = true;
 			this.HaveRecievedUsersDataFromServer = true;
