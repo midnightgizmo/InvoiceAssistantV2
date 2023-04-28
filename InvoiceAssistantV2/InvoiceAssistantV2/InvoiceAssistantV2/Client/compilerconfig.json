@@ -66,5 +66,13 @@
   {
     "outputFile": "Pages/Print/CreatePrintableInvoicePage.razor.css",
     "inputFile": "Pages/Print/CreatePrintableInvoicePage.razor.less"
+  },
+  {
+    "outputFile": "Pages/UserDetails/UsersDetails.razor.css",
+    "inputFile": "Pages/UserDetails/UsersDetails.razor.less"
+  },
+  {
+    "outputFile": "Pages/UserDetails/PaymentDetails.razor.css",
+    "inputFile": "Pages/UserDetails/PaymentDetails.razor.less"
   }
 ]

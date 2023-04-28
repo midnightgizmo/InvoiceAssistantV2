@@ -1,6 +1,7 @@
 ﻿using InvoiceAssistantV2.Client.ViewModels.Invoices;
 using InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults;
 using InvoiceAssistantV2.Shared.Models.Database.Invoice;
+using InvoiceAssistantV2.Shared.Models.Database.User;
 
 namespace InvoiceAssistantV2.Client.Models
 {
@@ -24,11 +25,18 @@ namespace InvoiceAssistantV2.Client.Models
 		/// </summary>
 		public SearchInvoiceVM? vmSearch { get; set; }
 
-
 		/// <summary>
 		/// Will be set in ListInvoice.razor file when the user clicks the print button
 		/// Will be accessed in the CreatePrintableInvoicePage.razor file
 		/// </summary>
 		public ListInvoiceRowViewModel? vmInvoiceSelectedToPrint { get; set; }
+
+		/// <summary>
+		/// Should be set from the UsersDetails.razor page. Will be set when a new payment method is made or
+		/// a payment method is set to be edited. The page will then navigate to the PaymentDetails.razor
+		/// page who will then access the use the below property for editing it.
+		/// </summary>
+		public PaymentMethod? PaymentMethodToEdit { get; set; }
+
 	}
 }
