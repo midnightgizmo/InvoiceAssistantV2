@@ -89,8 +89,22 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.Invoice
 					returnValue.HasErrors = true;
 					returnValue.Errors.Add("Address allready assigned to invoice, unable to add");
 
-					if (returnValue.HasErrors)
-						this._HttpResponse.StatusCode = 400;
+					this._HttpResponse.StatusCode = 400;
+
+					return returnValue;
+				}
+
+				// get the number of files to the address.
+				int numMilesToAddress = this.getNumMilesToAddress(AddressId, dbContext);
+
+				// if we could not find the number of mils (most likely because we could not find the address)
+				if(numMilesToAddress == -1)
+				{
+					// send back and error so say the address could not be found
+					returnValue.HasErrors = true;
+					returnValue.Errors.Add("AddressId does not exists");
+
+					this._HttpResponse.StatusCode = 400;
 
 					return returnValue;
 				}
@@ -100,7 +114,8 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.Invoice
 				{ 
 					CompanyAddressId= AddressId,
 					InvoiceId= InvoiceId,
-					NumberOfTimesVisited= NoTimesVisited
+					NumberOfTimesVisited= NoTimesVisited,
+					DrivingDistanceToAddress = numMilesToAddress
 				});
 
 				// if we were unabel to add it to the database (somthing went wrong)
@@ -119,6 +134,27 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.Invoice
 
 			}
 
+		}
+
+		/// <summary>
+		/// Get the number of miles we would travel to the passed in address.
+		/// </summary>
+		/// <param name="addressId">The address to look up to find the number of miles</param>
+		/// <param name="dbContext">database connection to use to access the database</param>
+		/// <returns>Num of miles to address or -1 address not found</returns>
+		private int getNumMilesToAddress(int addressId, InvoiceAssistantDbContext dbContext)
+		{
+			CompanyAddressDb companyAddressDb = new CompanyAddressDb(dbContext);
+			// try and find the address using the passed in addressId
+			Shared.Models.Database.Company.CompanyAddress? compnayAddress = companyAddressDb.Select(addressId);
+
+			// if we found the address, return the number of miles
+			if (compnayAddress != null)
+				return compnayAddress.DrivingDistanceToAddress;
+			// could not find the address using the passed in addressId so return -1
+			else
+				return -1;
+			
 		}
 	}
 }

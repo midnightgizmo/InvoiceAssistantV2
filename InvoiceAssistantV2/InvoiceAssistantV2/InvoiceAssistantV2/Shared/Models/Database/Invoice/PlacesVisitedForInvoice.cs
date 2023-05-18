@@ -14,6 +14,14 @@ namespace InvoiceAssistantV2.Shared.Models.Database.Invoice
         /// foreign key for <see cref="Invoice"/>
         /// </summary>
         public int InvoiceId { get; set; }
+
+		/// <summary>
+		/// Keeps a note of the driving distance to the address for the given invoice.
+		/// This allows future changes to CompanyAddress.DrivingDistanceToAddress while
+		/// preserving the changing to previouse invoices that were created
+		/// </summary>
+		public int DrivingDistanceToAddress { get; set; }
+
 		/// <summary>
 		/// The invoice we are linking too
 		/// </summary>
