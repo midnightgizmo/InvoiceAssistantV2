@@ -32,6 +32,7 @@ namespace Database.Data
         public DbSet<UserDetails> UserDetails { get; set; } = null!;
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public DbSet<PaymetDetail> PaymentDetails { get; set; } = null!;
+        public DbSet<UserAddress> UserAddress { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder OptionsBuilder)
