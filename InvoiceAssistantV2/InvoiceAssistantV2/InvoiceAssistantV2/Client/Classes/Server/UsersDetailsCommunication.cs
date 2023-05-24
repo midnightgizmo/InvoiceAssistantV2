@@ -57,5 +57,28 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
 			return responseData;
 		}
+
+		public async Task<ServerResponseSingleUserAddress> UpdateUsersAddressDetailsAsync(UserAddress userAddress)
+		{
+			ServerResponse responseMessage;
+			ServerResponseSingleUserAddress responseData;
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+			DataToSend.Add(nameof(UserAddress.Id), userAddress.Id.ToString());
+			DataToSend.Add(nameof(UserAddress.UserDetailsId),userAddress.UserDetailsId.ToString());
+			DataToSend.Add(nameof(UserAddress.AddressLine1), userAddress.AddressLine1 == null ? string.Empty : userAddress.AddressLine1);
+			DataToSend.Add(nameof(UserAddress.AddressLine2), userAddress.AddressLine2 == null ? string.Empty : userAddress.AddressLine2);
+			DataToSend.Add(nameof(UserAddress.AddressLine3), userAddress.AddressLine3 == null ? string.Empty : userAddress.AddressLine3);
+			DataToSend.Add(nameof(UserAddress.AddressLine4), userAddress.AddressLine4 == null ? string.Empty : userAddress.AddressLine4);
+			DataToSend.Add(nameof(UserAddress.AddressLine5), userAddress.AddressLine5 == null ? string.Empty : userAddress.AddressLine5);
+			DataToSend.Add(nameof(UserAddress.PostCode), userAddress.PostCode == null ? string.Empty : userAddress.PostCode);
+
+			responseMessage = await this._ServerCommunication.SendPostRequestToServer("User/UserAddress/UpdateUsersAddress/", DataToSend);
+			responseData = ServerCommunication.ParseServerResponse<ServerResponseSingleUserAddress>(responseMessage);
+
+			return responseData;
+
+		}
 	}
 }
