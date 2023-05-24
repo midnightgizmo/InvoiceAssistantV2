@@ -1,5 +1,6 @@
 ﻿using Database.Data;
 using Database.DbInteractions;
+using Database.Migrations;
 using InvoiceAssistantV2.Shared.Models.Database.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.User.UserDetails
 		//this will be inishalized when Process method is called
 		// used for setting the status code
 		private HttpResponse _HttpResponse = null!;
-		public ControllerLogicReturnValue Process(bool includePaymentDetails, HttpResponse HttpServerResponse)
+		public ControllerLogicReturnValue Process(bool includePaymentDetails, bool includeAddressDetails, HttpResponse HttpServerResponse)
 		{
 			ControllerLogicReturnValue returnValue;
 
@@ -26,11 +27,16 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.User.UserDetails
 			{
 				this.GetPaymentDetails((Shared.Models.Database.User.UserDetails)returnValue.ReturnValue);
 			}
+			// if the user also wants the User address details, add that to the response
+			if(includeAddressDetails == true) 
+			{
+				this.GetAddressDetails((Shared.Models.Database.User.UserDetails)returnValue.ReturnValue);
+			}
 
 			return returnValue;
 		}
 
-		
+
 
 		/// <summary>
 		/// Get the UserDetails row from the database. If it does not exist,
@@ -78,6 +84,40 @@ namespace InvoiceAssistantV2.Server.ControllersLogic.User.UserDetails
 					// get payment details
 					paymentMethod.PaymetDetails = paymentDetailsDb.SelectAllPaymentDetailsRelatingToPaymentMethod(paymentMethod.Id);
 				}
+			}
+		}
+
+		/// <summary>
+		/// Get the address asoshiated with the user. If one does not exist, and blank empty one is created
+		/// </summary>
+		/// <param name="userDetails"></param>
+		private void GetAddressDetails(Shared.Models.Database.User.UserDetails userDetails)
+		{
+			using(InvoiceAssistantDbContext context = new InvoiceAssistantDbContext()) 
+			{
+				UserAddressDb userAddressDb = new UserAddressDb(context);
+				// attempt to get the address assigned to the user (may not exist if first time we are getting it)
+				Shared.Models.Database.User.UserAddress? address = userAddressDb.SelectByUserDetailsId(userDetails.Id);
+				// if we don't have an address
+				if(address == null)
+				{
+					// create a new blank address and add it to the databse
+					address = new Shared.Models.Database.User.UserAddress()
+					{
+						AddressLine1 = string.Empty,
+						AddressLine2 = string.Empty,
+						AddressLine3 = string.Empty,
+						AddressLine4 = string.Empty,
+						AddressLine5 = string.Empty,
+						PostCode = string.Empty,
+						UserDetailsId = userDetails.Id
+					};
+
+					userAddressDb.Insert(address);
+
+				}
+
+				userDetails.UserAddress = address;
 			}
 		}
 	}

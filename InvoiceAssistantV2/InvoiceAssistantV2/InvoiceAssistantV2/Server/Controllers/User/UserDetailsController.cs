@@ -20,11 +20,11 @@ namespace InvoiceAssistantV2.Server.Controllers.User
 		[HttpPost]
 		[Route("GetUsersDetails")]
 		[Produces("application/json")]
-		public ControllerLogicReturnValue GetUsersDetails([FromForm]bool includePaymentDetails)
+		public ControllerLogicReturnValue GetUsersDetails([FromForm]bool includePaymentDetails, [FromForm]bool includeAddressDetails)
 		{
 			GetUserDetailsControllerLogic controllerLogic = new GetUserDetailsControllerLogic();
 			
-			return controllerLogic.Process(includePaymentDetails, this.Response);
+			return controllerLogic.Process(includePaymentDetails, includeAddressDetails, this.Response);
 		}
 
 
