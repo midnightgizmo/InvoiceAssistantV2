@@ -82,6 +82,46 @@ namespace InvoiceAssistantV2.Client.ViewModels.UserDetails
 			this.IsViewModelEditable = true;
 		}
 
+		/// <summary>
+		/// When the user clicks the update button on the address details to say they want to confirm the
+		/// new address details. Sends request to the server to get details updated. if any errors occur,
+		/// user is left in edit mode
+		/// </summary>
+		/// <returns></returns>
+		public async Task UpdateUsersAddress()
+		{
+			// don't allow any edits to take place while we are talking to the server
+			this.IsViewModelEditable = false;
+
+			UsersDetailsCommunication server = new UsersDetailsCommunication(this._HttpClient, this._AppSettings);
+			ServerResponseSingleUserAddress serverResponse = await server.UpdateUsersAddressDetailsAsync(UsersDetails.UserAddress);
+
+
+			// if we were unable to make the update on the server
+			if (serverResponse.HasErrors == true)
+			{
+				// keep us in edit mode and allow the user to carry on editing
+				// (will reenable the submit button for them to try again)
+				this.IsViewModelEditable = true;
+				return;
+			}
+
+			// details were updated on the server.
+			this.UsersDetails.UserAddress.EndEdit();
+
+			// although details should be the same, use the ones we got back from the server
+			this.UsersDetails.UserAddress.AddressLine1 = serverResponse.ReturnValue.AddressLine1;
+			this.UsersDetails.UserAddress.AddressLine2 = serverResponse.ReturnValue.AddressLine2;
+			this.UsersDetails.UserAddress.AddressLine3 = serverResponse.ReturnValue.AddressLine3;
+			this.UsersDetails.UserAddress.AddressLine4 = serverResponse.ReturnValue.AddressLine4;
+			this.UsersDetails.UserAddress.AddressLine5 = serverResponse.ReturnValue.AddressLine5;
+			this.UsersDetails.UserAddress.PostCode = serverResponse.ReturnValue.PostCode;
+
+			this.IsViewModelEditable = true;
+			
+		}
+
+
 
 
 		#region Add new payment method
