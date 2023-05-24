@@ -27,6 +27,7 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
 
 			DataToSend.Add("includePaymentDetails", "true");
+			DataToSend.Add("includeAddressDetails", "true");
 
 			// request all candidates that match the search criteria
 			responseMessage = await this._ServerCommunication.SendPostRequestToServer("User/UserDetails/GetUsersDetails/", DataToSend);
