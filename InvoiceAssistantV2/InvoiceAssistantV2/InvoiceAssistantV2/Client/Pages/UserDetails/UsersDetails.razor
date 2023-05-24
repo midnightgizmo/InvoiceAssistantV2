@@ -14,6 +14,35 @@
 <section class="container">
 
 
+	<!-- A hidden element. Cross icon that will be referenced further down the page -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.03 8.03"
+		 style="width:0; height:auto; display:none;">
+		<symbol id="cross-icon-svg" viewBox="0 0 8.03 8.03">
+			<defs>
+				<style>
+					.cls-12 {
+						fill: currentColor;
+					}</style>
+			</defs>
+			<path class="cls-12" d="M5.25,4,7.08,5.84c.26.26.52.53.79.79a.46.46,0,0,1,0,.69c-.17.17-.35.33-.51.51a.47.47,0,0,1-.76,0L4.1,5.33,4,5.24a.27.27,0,0,1-.07.08L1.41,7.86a.45.45,0,0,1-.7,0L.16,7.31a.44.44,0,0,1,0-.68L2.72,4.08s0-.08,0-.13L.17,1.41a.46.46,0,0,1,0-.72L.71.16a.46.46,0,0,1,.69,0L4,2.72c0,.06.08,0,.12,0C4.93,1.87,5.78,1,6.62.17A.52.52,0,0,1,7.06,0a.49.49,0,0,1,.27.15L7.87.7a.47.47,0,0,1,0,.7L5.62,3.65,5.25,4" />
+		</symbol>
+	</svg>
+
+	<!-- A hidden elment. Tick icon that will be referenced further down the page -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7.15 7.87"
+		 style="width:0; height:auto; display:none;">
+		<symbol id="tick-icon-svg" viewBox="0 0 7.15 7.87">
+			<defs>
+				<style>
+					.cls-13 {
+						fill: currentColor;
+					}</style>
+			</defs>
+			<path class="cls-13" d="M1.38,4l1.46,2A30.61,30.61,0,0,1,4.91,1.85,6.17,6.17,0,0,1,6.82,0l.33,1.65A14.27,14.27,0,0,0,5.63,3.58c-.72,1-1.75,2.66-2.78,4.29A13.42,13.42,0,0,0,1.57,6.42,15.11,15.11,0,0,0,0,5.17L1.38,4" />
+		</symbol>
+	</svg>
+
+
 	<!-- background color -->
 	<div class="background-wallpaper"></div>
 
@@ -126,9 +155,180 @@
 
 		</div>
 
+		<div class="users-address-container">
+			<header>
+				<h2>Your Address (to put on invoice)</h2>
+			</header>
+			@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == false)
+			{
+				<div class="edit-button-container">
+					
+					<button disabled="@(!ViewModel.IsViewModelEditable)"
+					@onclick="ViewModel.UsersDetails.UserAddress.BeginEdit">
+						<!--<img src="/images/svg/Edit-button-wtih-border.svg" alt="Edit Users Details"/>-->
+						<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.77 15.77">
+							<defs>
+								<style>
+									.border {
+									fill: transparent;
+									stroke: #727475;
+									stroke-miterlimit: 10;
+									stroke-width: 0;
+									}
+
+									.edit-button-2, .edit-button-4 {
+									fill: #727475;
+									}
+
+									.edit-button-3 {
+									fill: #e9e9e9;
+									}
+
+									.edit-button-4 {
+									fill-rule: evenodd;
+									}</style>
+							</defs>
+							<rect class="border" x="0.13" y="0.13" width="15.52" height="15.52" rx="2.97" />
+							<polyline class="edit-button-2" points="2.64 10.42 1.94 14.04 5.64 13.38 2.64 10.42" />
+							<path class="edit-button-3" d="M10.68,3c0-.25.3-.53.58-.81l0,0c.2-.21.41-.41.61-.42s.39.19.58.38l1.33,1.33c.17.17.33.33.33.5s-.16.32-.32.48l-.37.38c-.19.19-.38.38-.56.39s-.34-.15-.51-.32l-1.21-1.2c-.23-.24-.46-.47-.44-.73" />
+							<polyline class="edit-button-3" points="2.82 10.93 2.28 13.71 5.12 13.21 2.82 10.93" />
+							<path class="edit-button-4" d="M3.69,10c0-.26.3-.54.58-.82l4.5-4.5c.21-.21.42-.41.62-.42s.39.18.58.38L11.3,6c.16.16.33.33.33.49s-.16.33-.32.49l-4.9,4.9c-.19.19-.38.38-.56.4s-.34-.16-.51-.32L4.14,10.7c-.24-.23-.47-.47-.45-.72m-.55,0c0-.32.38-.67.73-1L8.64,4.17c.26-.26.52-.52.77-.53s.49.23.74.48l1.67,1.67c.21.21.42.42.42.63s-.2.41-.41.61L6.56,12.3c-.24.24-.48.48-.7.5s-.43-.19-.64-.4L3.7,10.88C3.41,10.58,3.11,10.29,3.14,10Z" />
+							<path class="edit-button-4" d="M10.69,3c0-.26.3-.54.58-.81l0,0c.21-.21.41-.41.61-.42s.39.18.58.38l1.33,1.33c.17.16.34.33.34.49s-.16.33-.33.49l-.37.38c-.19.19-.38.38-.56.39s-.34-.15-.51-.32l-1.2-1.2c-.24-.24-.47-.47-.45-.73m-.37,0c0-.35.4-.72.78-1.09l0,0c.27-.27.55-.55.81-.56s.52.25.78.51l1.45,1.44c.22.22.44.44.44.66s-.21.44-.43.66l-.5.49c-.25.26-.51.51-.74.53s-.46-.2-.68-.42L10.92,4C10.61,3.71,10.29,3.4,10.32,3.06Z" />
+							<path class="edit-button-3" d="M3.69,10c0-.25.3-.53.58-.81L8.8,4.61c.21-.2.41-.41.61-.41s.39.18.59.37L11.33,5.9c.16.17.33.34.33.5s-.16.33-.32.49l-4.93,5c-.19.19-.38.38-.56.39s-.34-.15-.51-.32l-1.21-1.2c-.23-.24-.46-.47-.44-.73" />
+						</svg>
+					</button>
+				</div>
+			}
+			else
+			{
+				<!-- cancel & edit buttons -->
+				<div class="address-edit-confirm-cancel">
+					<button id="cmdAddressEdit_Cross" @onclick="ViewModel.UsersDetails.UserAddress.CancelEdit" >
+						<svg>
+							<use href="#cross-icon-svg" />
+						</svg>
+					</button>
+					<button id="cmdAddressEdit_Tick" @onclick="ViewModel.UpdateUsersAddress">
+						<svg>
+							<use href="#tick-icon-svg" />
+						</svg>
+					</button>
+				</div>
+			}
+
+			<div class="address-table">
+				
+				<!-- row - address line 1 -->
+				<div>
+					<label>Address Line 1</label>
+					<div>
+						@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == true)
+						{
+							<input type="text" @bind=ViewModel.UsersDetails.UserAddress.AddressLine1 autofocus>
+						}
+						else
+						{
+							<div>
+								<span>@ViewModel.UsersDetails.UserAddress.AddressLine1</span>
+							</div>
+						}
+					</div>
+				</div>
+
+				<!-- row - address line 2 -->
+				<div>
+					<label>Address Line 2</label>
+					<div>
+						@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == true)
+						{
+							<input type="text" @bind=ViewModel.UsersDetails.UserAddress.AddressLine2>
+						}
+						else
+						{
+							<div>
+								<span>@ViewModel.UsersDetails.UserAddress.AddressLine2</span>
+							</div>
+						}
+					</div>
+				</div>
+
+				<!-- row - address line 3 -->
+				<div>
+					<label>Address Line 3</label>
+					<div>
+						@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == true)
+						{
+							<input type="text" @bind=ViewModel.UsersDetails.UserAddress.AddressLine3 >
+						}
+						else
+						{
+							<div>
+								<span>@ViewModel.UsersDetails.UserAddress.AddressLine3</span>
+							</div>
+						}
+					</div>
+				</div>
+
+				<!-- row - address line 4 -->
+				<div>
+					<label>Address Line 4</label>
+					<div>
+						@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == true)
+						{
+							<input type="text" @bind=ViewModel.UsersDetails.UserAddress.AddressLine4>
+						}
+						else
+						{
+							<div>
+								<span>@ViewModel.UsersDetails.UserAddress.AddressLine4</span>
+							</div>
+						}
+					</div>
+				</div>
+
+				<!-- row - address line 5 -->
+				<div>
+					<label>Address Line 5</label>
+					<div>
+						@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == true)
+						{
+							<input type="text" @bind=ViewModel.UsersDetails.UserAddress.AddressLine5>
+						}
+						else
+						{
+							<div>
+								<span>@ViewModel.UsersDetails.UserAddress.AddressLine5</span>
+							</div>
+						}
+					</div>
+				</div>
+
+
+				<!-- row - post code -->
+				<div>
+					<label>Post code</label>
+					<div>
+						@if (ViewModel.UsersDetails.UserAddress.IsInEditMode == true)
+						{
+							<input type="text" @bind=ViewModel.UsersDetails.UserAddress.PostCode>
+						}
+						else
+						{
+							<div>
+								<span>@ViewModel.UsersDetails.UserAddress.PostCode</span>
+							</div>
+						}
+					</div>
+				</div>
+
+			</div>
+
+			
+		</div>
+
 		<div class="list-of-payments-container">
 			<header>
-				<h2>List of Payments</h2>
+				<h2>Payment options</h2>
 			</header>
 			<div class="new-payment-container">
 				<label for="txtNewPaymentName">Add New Payment</label>

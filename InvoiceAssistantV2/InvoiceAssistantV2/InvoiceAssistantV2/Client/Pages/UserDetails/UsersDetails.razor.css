@@ -146,6 +146,97 @@
 .user-details > form > fieldset > div > div > button:nth-child(2):hover {
   background-color: #a60d0d;
 }
+.users-address-container {
+  background-color: #005185;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 30px;
+  border: 1px solid #2d619f;
+}
+.users-address-container > header {
+  text-align: center;
+}
+.users-address-container > header > h2 {
+  font-size: 2rem;
+  color: orange;
+}
+.users-address-container > .edit-button-container {
+  display: flex;
+}
+.users-address-container > .edit-button-container > span {
+  font-size: 1.5rem;
+  color: orange;
+}
+.users-address-container > .edit-button-container > button {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.users-address-container > .address-edit-confirm-cancel button {
+  border: none;
+  background-color: transparent;
+  height: 100%;
+  cursor: pointer;
+}
+.users-address-container > .address-edit-confirm-cancel button > svg {
+  height: 25px;
+  width: 25px;
+}
+.users-address-container > .address-edit-confirm-cancel > button#cmdAddressEdit_Tick {
+  color: #55D94D;
+}
+.users-address-container > .address-edit-confirm-cancel > button#cmdAddressEdit_Tick:hover {
+  color: #71df6a;
+}
+.users-address-container > .address-edit-confirm-cancel > button#cmdAddressEdit_Tick:active {
+  color: #39d330;
+}
+.users-address-container > .address-edit-confirm-cancel > button#cmdAddressEdit_Cross {
+  color: #D94D4D;
+}
+.users-address-container > .address-edit-confirm-cancel > button#cmdAddressEdit_Cross:hover {
+  color: #df6a6a;
+}
+.users-address-container > .address-edit-confirm-cancel > button#cmdAddressEdit_Cross:active {
+  color: #d33030;
+}
+.users-address-container > .address-table {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-auto-flow: column;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+@media only screen and (max-width: 800px) {
+  .users-address-container > .address-table {
+    grid-template-columns: 1fr;
+    grid-template-rows: unset;
+    grid-auto-flow: unset;
+  }
+}
+.users-address-container > .address-table > div > label {
+  color: white;
+}
+.users-address-container > .address-table > div > div > div {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+.users-address-container > .address-table > div > div > div > span {
+  display: block;
+  color: orange;
+  padding-left: 5px;
+}
 .list-of-payments-container {
   background-color: #005185;
   border-radius: 5px;

@@ -219,6 +219,144 @@
 	}
 }
 
+.users-address-container
+{
+	background-color: #005185;
+	border-radius: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 20px;
+	padding: 30px;
+	border: 1px solid #2d619f;
+
+	> header
+	{
+		text-align: center;
+
+		> h2
+		{
+			font-size: 2rem;
+			color: orange;
+		}
+	}
+
+	> .edit-button-container
+	{
+		display: flex;
+
+		> span
+		{
+			font-size: 1.5rem;
+			color: orange;
+		}
+
+		> button
+		{
+			display: flex;
+			width: 30px;
+			height: 30px;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+		}
+	}
+
+	> .address-edit-confirm-cancel
+	{
+		// all buttons within the cell
+		button
+		{
+			border: none;
+			background-color: transparent;
+			height: 100%;
+			cursor: pointer;
+
+			> svg
+			{
+				height: 25px;
+				width: 25px;
+			}
+		}
+
+		> button#cmdAddressEdit_Tick
+		{
+			color: #55D94D;
+
+			&:hover
+			{
+				color: lighten(#55D94D, 7%);
+			}
+
+			&:active
+			{
+				color: darken(#55D94D, 7%);
+			}
+		}
+
+		> button#cmdAddressEdit_Cross
+		{
+			color: #D94D4D;
+
+			&:hover
+			{
+				color: lighten(#D94D4D, 7%);
+			}
+
+			&:active
+			{
+				color: darken(#D94D4D, 7%);
+			}
+		}
+	}
+
+	> .address-table
+	{
+		margin-top: 10px;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: auto auto;
+		grid-auto-flow: column;
+		grid-column-gap: 10px;
+		grid-row-gap: 10px;
+
+
+		@media only screen and (max-width: 800px)
+		{
+			grid-template-columns: 1fr;
+			grid-template-rows:unset;
+			grid-auto-flow:unset;
+		}
+		// row
+		> div
+		{
+			> label
+			{
+				color: white;
+			}
+
+			> div
+			{
+				> div
+				{
+					display: flex;
+					align-items: center;
+					min-height: 30px;
+					background-color: rgba(255,255,255,0.03);
+
+					> span
+					{
+						display: block;
+						color: orange;
+						padding-left: 5px;
+					}
+				}
+			}
+		}
+	}
+}
+
 .list-of-payments-container
 {
 	background-color: #005185;
