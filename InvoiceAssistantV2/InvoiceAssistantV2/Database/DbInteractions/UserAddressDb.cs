@@ -40,6 +40,16 @@ namespace Database.DbInteractions
 				return false;
 		}
 
+		public bool Update(UserAddress userAddress) 
+		{
+			this._DbContext.UserAddress.Update(userAddress);
+			if (this._DbContext.SaveChanges() > 0)
+				return true; 
+			else
+				return false;
+
+		}
+
 		public bool Delete(int Id) 
 		{
 			UserAddress? address = this.Select(Id);
