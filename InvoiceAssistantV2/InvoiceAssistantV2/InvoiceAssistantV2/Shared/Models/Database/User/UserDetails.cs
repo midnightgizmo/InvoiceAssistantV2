@@ -24,7 +24,10 @@ namespace InvoiceAssistantV2.Shared.Models.Database.User
 		/// List of payments the user allows for when an invoice is paid
 		/// </summary>
 		public List<PaymentMethod> PaymentMethods { get; set; } = null!;
-
+		/// <summary>
+		/// The address where this user lives.
+		/// </summary>
+		public UserAddress UserAddress { get; set; } = null!;
 
 
 		/// <summary>
