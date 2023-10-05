@@ -24,4 +24,8 @@
     <None Include="compilerconfig.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\BlazorJsInterop\" />
+  </ItemGroup>
+
 </Project>

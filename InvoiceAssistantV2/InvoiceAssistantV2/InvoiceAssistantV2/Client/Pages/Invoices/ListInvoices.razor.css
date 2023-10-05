@@ -43,7 +43,7 @@
   border: none;
   color: white;
   height: 80px;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1;
   margin-left: 10px;
 }
 @media only screen and (max-width: 900px) {
@@ -67,7 +67,7 @@
 }
 .invoice-list-page .page-header > div > div > img {
   height: 80px;
-  aspect-ratio: 2/1;
+  aspect-ratio: 2;
   margin-right: 10px;
 }
 @media only screen and (max-width: 900px) {

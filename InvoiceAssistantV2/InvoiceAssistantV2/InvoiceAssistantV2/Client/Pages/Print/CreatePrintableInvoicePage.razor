@@ -4,6 +4,10 @@
 
 @inject NavigationManager NavManager;
 @inject ApplicationSharedData SharedData;
+@inject HttpClient httpClient;
+@inject AppSettings appSettings;
+@inject IJSRuntime JS
+
 
 <section class="main-container">
 	
@@ -35,7 +39,7 @@
 			<div><span>Search Invoices</span></div>
 
 			<div class="glasses-container">
-				<img src="/images/svg/Glasses.svg" />
+				<img src="/images/svg/Printer.svg" />
 			</div>
 
 		</div>
@@ -50,6 +54,10 @@
 		<!-- print this web page using media query print -->
 		<div>
 			<!-- create a button that simlates ctrl p-->
+			<button class="print-button" @onclick=cmdPrintViaBrowser_Click>
+				<div>Print using Web browser</div>
+				<img src="/images/svg/Printer.svg" alt="printer for webpage" />
+			</button>
 		</div>
 	</div>
 
@@ -71,85 +79,188 @@
 					<div class="font-centre font-bold">20/10/2023</div>
 				</div>
 
-				<div class="left-side-data-with-left-border">
+				<div class="left-side-data-with-left-border font-size-small">
 					
-					<!-- service from --><div class="left-side-2-column-grid border-bottom border-thickness-normal">
-						<div><span>Services From</span></div>
+					<!-- service from -->
+					<div class="left-side-2-column-grid border-bottom border-thickness-normal">
+						<div><span class="font-size-normal font-bold">Services From</span></div>
 						<div></div>
 					</div>
 					<div class="left-side-2-column-grid">
 						<div class="font-italic"><span>Name</span></div>
 						<div class="border-bottom border-thickness-normal border-color-grey"><span>@ViewModel.NameOfPersonFillingOutInvoiceSecond</span></div>
 					</div>
-					<div class="left-side-2-column-grid" style="margin-top:15px;">
-						@for(int eachLine = 0; eachLine < 7; eachLine++)
-						{
-							// make the first column blank unless its the first row 
-							if(eachLine > 0)
-							{
-								<div></div>
-							}
-							// its the first row, write out address
-							else
-							{
-								<div><span>Address</span></div>
-							}
-							if (ViewModel.AddressOfPersonFillingOutInvoice.Count - 1 >= eachLine)
-							{
-								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'><span>@ViewModel.AddressOfPersonFillingOutInvoice[eachLine]</span></div>
-							}
-							else
-							{
-								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'></div>
-							}
-						}
+					<div class="left-side-2-column-grid" style="margin-top:25px;">
+		
+
+						<!-- line 1 -->
+						<div><span>Address</span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfPersonFillingOutInvoice.Line1" /></div>
+
+						<!-- line 2 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfPersonFillingOutInvoice.Line2" /></div>
+
+						<!-- line 3 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfPersonFillingOutInvoice.Line3" /></div>
+
+						<!-- line 4 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfPersonFillingOutInvoice.Line4" /></div>
+
+						<!-- line 5 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfPersonFillingOutInvoice.Line5" /></div>
+
+						<!-- line 6 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey margin-bottom-25"><input @bind-value="ViewModel.AddressOfPersonFillingOutInvoice.Line6" /></div>
+
 					</div>
 					<!-- Bill To-->
 					<div class="left-side-2-column-grid border-bottom border-top border-bottom-thickness-normal border-top-thickness-thick">
-						<div><span>Bill To</span></div>
+						<div><span class="font-size-normal font-bold">Bill To</span></div>
 						<div></div>
 					</div>
 					<div class="left-side-2-column-grid">
 						<div class="font-italic"><span>Name</span></div>
-						<div class="border-bottom border-thickness-normal border-color-grey">@ViewModel.NameOfCompanyInvoiceMadeOutTo</div>
+						<input class="border-bottom border-thickness-normal border-color-grey" @bind-value="ViewModel.NameOfCompanyInvoiceMadeOutTo"/>
 					</div>
-					<div class="left-side-2-column-grid" style="margin-top:15px;">
-						@for (int eachLine = 0; eachLine < 7; eachLine++)
+					<div class="left-side-2-column-grid" style="margin-top:25px;">
+						
+						<!-- line 1 -->
+						<div><span>Address</span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfCompanyInvoiceMadeOutTo.Line1" /></div>
+						
+						<!-- line 2 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfCompanyInvoiceMadeOutTo.Line2" /></div>
+
+						<!-- line 3 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfCompanyInvoiceMadeOutTo.Line3" /></div>
+
+						<!-- line 4 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfCompanyInvoiceMadeOutTo.Line4" /></div>
+
+						<!-- line 5 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfCompanyInvoiceMadeOutTo.Line5" /></div>
+
+						<!-- line 6 -->
+						<div><span></span></div>
+						<div class="border-bottom border-thickness-normal border-color-grey"><input @bind-value="ViewModel.AddressOfCompanyInvoiceMadeOutTo.Line6" /></div>
+					</div>
+
+					<!-- Payment options -->
+					<div class="left-side-2-column-grid border-bottom border-bottom-thickness-normal" style="margin-top:20px;">
+						<div style="grid-column: span 2;">
+							<span class="font-bold" style="font-size:1.2rem; ">Payment Options</span>
+						</div>
+						<!--<div></div>-->
+					</div>
+
+					<div class="left-side-2-column-grid payment-type-container">
+						@foreach(var paymentOption in ViewModel.PaymentOptions)
 						{
-							// make the first column blank unless its the first row
-							if (eachLine > 0)
+							<header>
+								<input class="font-bold font-size-normal" @bind-value="paymentOption.paymentHeaderText">
+							</header>
+							
+
+							@foreach(var paymentData in paymentOption.paymentData)
 							{
-								<div></div>
-							}
-							// its the first row, write out address
-							else
-							{
-								<div><span>Address</span></div>
-							}
-							if (ViewModel.AddressOfCompanyInvoiceMadeOutTo.Count - 1 >= eachLine)
-							{
-								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'><span>@ViewModel.AddressOfCompanyInvoiceMadeOutTo[eachLine]</span></div>
-							}
-							else
-							{
-								<div class='@(eachLine < 6 ? "border-bottom border-thickness-normal border-color-grey" : "" )'></div>
+								<input class='padding-right-10 font-italic @(paymentData.value != string.Empty ? "font-right" : "margin-left-20")' @bind-value="paymentData.key">
+								<input @bind-value="paymentData.value"/>
 							}
 						}
 					</div>
 
-					<!-- Payment options -->
+					<div></div>
+
 				</div>
 			</div>
 			
 			<div class="right-side">
+				<div class="reference-number-container border-bottom border-thickness-thick">
+					<span>Reference Number:</span>
+					<span>@ViewModel.ReferenceNumber</span>
+				</div>
 				
+				<div class="right-side-2-column right-side-2-column-header border-left border-left-thickness-superthick border-right border-right-thickness-normal">
+					<div class="border-bottom border-thickness-normal border-right border-right-thickness-thin border-color-black">
+						<span>DESCRIPTION</span>
+					</div>
+					<div class ="border-bottom border-thickness-normal">
+						<span>TOTAL</span>
+					</div>
+				</div>
+
+				
+				@foreach (var invoicePayment in ViewModel.PaymentData.InvoicePaymentBreakDown)
+				{
+					<div class="right-side-2-column right-side-2-column-body-row border-left border-left-thickness-superthick border-right border-right-thickness-normal">
+						<div class="border-bottom border-bottom-thickness-thin border-color-grey border-right border-right-thickness-thin">
+							<span>
+								<input @bind-value="invoicePayment.Description" />
+							</span>
+						</div>
+
+						<div class="border-bottom border-bottom-thickness-thin border-color-grey">
+							<span>
+								<input @bind-value="invoicePayment.Ammount"
+									   @bind-value:event="oninput"
+									   @onblur="(evt) => InVoicePayment_LostFocus(evt,invoicePayment)"
+									   @onkeypress="(evt) => InvoicePaymentAmmount_KeyPress(evt,invoicePayment.Ammount)" />
+							</span>
+						</div>
+					</div>
+				}
 			</div>
+
 		</div>
+
+		<footer>
+			<div class="left-side">
+				<div style="height:58px;"></div>
+
+
+
+				<div style=""></div>
+			</div>
+
+			<div class="right-side">
+				<div style="height:20px"></div>
+				<div class="right-side-2-column">
+
+
+
+					<!-- a row -->
+					<div></div>
+					<div></div>
+
+					<!-- a row -->
+					<div></div>
+					<div><span>60.00</span></div>
+
+					<!-- a row -->
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		</footer>
+
+
 	</div>
 
 
 </section>
 
+<div class="page-button-padding">
+
+</div>
 
 @code {
 
@@ -161,9 +272,70 @@
 
 	}
 
-	protected override void OnParametersSet()
+	protected override async Task OnParametersSetAsync()
 	{
-		InvoicePrinterModel.CreateModel(this.ViewModel,SharedData.vmInvoiceSelectedToPrint);
+		await InvoicePrinterModel.CreateModel(this.ViewModel,SharedData,this.httpClient,this.appSettings);
 	}
+
+	/// <summary>
+	///  when the textbox looses focus
+	/// </summary>
+	/// <param name="evt"></param>
+	/// <param name="paymentRow"></param>
+	private void InVoicePayment_LostFocus(FocusEventArgs evt, PaymentDataRow paymentRow)
+	{
+		// when the ammount textbox looses focus, we want to check the value inputed looks like a 
+		// number.
+		// it might look like the following
+		// £.1
+		//£1.
+		// the below code will format the string to look like currency
+		// e.g. £.1 will go to £0.10
+		// e.g. £1. will go to £1
+
+		// Note the pound sign gets added by a paymentRow.Ammount Setter property
+
+
+		// get a copy of the string we want to modify, this allows us to modify the string without changing the orignal 
+		// value which would keep firing a changed event in balzor.
+		string inputString = paymentRow.Ammount; // Replace this with your input string
+													// if the string starts with a pound sign, remove it to turn it into just a number
+		if (inputString.StartsWith("£") == true)
+			inputString = inputString.Remove(0, 1);
+
+		// try and parse the string into a number
+		if (decimal.TryParse(inputString, out decimal number))
+		{
+			// if the number containers decimal places, parse the number with 2 decimal places
+			// if the number does not have any decimal plces, parse the number with no decimal places
+			string formattedString = number.ToString(number % 1 == 0 ? "N0" : "N2");
+			// update the model with the formated string
+			paymentRow.Ammount = formattedString;
+		}
+
+
+	}
+
+	private async Task cmdPrintViaBrowser_Click()
+	{
+		
+		// Use JavaScript interop to trigger the print dialog
+		await JS.InvokeVoidAsync("triggerPrintDialog");
+	}
+	private void InvoicePaymentAmmount_KeyPress(KeyboardEventArgs evt, string value)
+	{
+		
+	}
+
+	private void InvoicePaymentAmmount_OnChange(ChangeEventArgs evt)
+	{
+
+	}
+
+	private void oninput(string value)
+	{
+		int i = 0;
+	}
+
 
 }

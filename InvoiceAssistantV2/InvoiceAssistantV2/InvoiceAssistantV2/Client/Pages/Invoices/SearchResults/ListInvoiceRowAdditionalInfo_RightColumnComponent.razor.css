@@ -75,7 +75,7 @@
   pointer-events: none;
 }
 .add-payment-outer-container > .add-payment-inner-container > .submit-container {
-  grid-column: 1 / 2;
+  grid-column: 0.5;
 }
 .add-payment-outer-container > .add-payment-inner-container > .submit-container > button {
   background-color: #c0461f;

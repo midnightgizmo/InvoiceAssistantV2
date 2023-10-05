@@ -1,126 +1,245 @@
+
+// attempt to remove the header and footer from the print menu that displays url page is from and page number
+@media print
+{
+	@page
+	{
+		margin: 0;
+	}
+
+}
+
+// make it so background imags are printed 
+*
+{
+	-webkit-print-color-adjust: exact !important; /* Chrome, Safari 6 – 15.3, Edge */
+	color-adjust: exact !important; /* Firefox 48 – 96 */
+	print-color-adjust: exact !important; /* Firefox 97+, Safari 15.4+ */
+}
+
+
 .main-container
 {
-	.page-header
+	@media print
 	{
-		width: 100%;
-		height: 100px;
-		background-color: #C06F00;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		margin: 0.9cm;
+	}
 
-		@media only screen and (max-width: 900px)
+	@media screen
+	{
+		.page-header
 		{
-			height: 70px;
-		}
-
-		@media print
-		{
-			display: none;
-		}
-
-		> div
-		{
-			display: grid;
-			grid-template-columns: 1fr 1fr 1fr;
 			width: 100%;
-			height: 100%;
+			height: 100px;
+			background-color: #C06F00;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
+			@media only screen and (max-width: 900px)
+			{
+				height: 70px;
+			}
 
+			@media print
+			{
+				display: none;
+			}
 
 			> div
 			{
-				//align-self: center;
-				//text-align: center;
-				display: flex;
-				color: white;
-				font-weight: bold;
-				font-size: 30pt;
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				width: 100%;
+				height: 100%;
 
-				@media only screen and (max-width: 900px)
-				{
-					font-size: 20pt;
-				}
 
-				> button
+
+				> div
 				{
-					align-self: center;
-					background-color: transparent;
-					border: none;
+					//align-self: center;
+					//text-align: center;
+					display: flex;
 					color: white;
-					height: 80px;
-					aspect-ratio: 1/1;
-					margin-left: 10px;
+					font-weight: bold;
+					font-size: 30pt;
 
 					@media only screen and (max-width: 900px)
 					{
-						height: 60px;
+						font-size: 20pt;
 					}
 
-					&:hover
+					> button
 					{
-						//filter: brightness(95%);
-						color: yellow;
+						align-self: center;
+						background-color: transparent;
+						border: none;
+						color: white;
+						height: 80px;
+						aspect-ratio: 1/1;
+						margin-left: 10px;
+
+						@media only screen and (max-width: 900px)
+						{
+							height: 60px;
+						}
+
+						&:hover
+						{
+							//filter: brightness(95%);
+							color: yellow;
+						}
+
+						&:active
+						{
+							color: darken(yellow,5%);
+						}
+
+						> img
+						{
+							height: 9vh;
+						}
 					}
 
-					&:active
+					> span
 					{
-						color: darken(yellow,5%);
+						align-self: center;
+						text-align: center;
+						width: 100%;
 					}
 
 					> img
 					{
-						height: 9vh;
+						height: 80px;
+						aspect-ratio: 2/1;
+						margin-right: 10px;
+
+						@media only screen and (max-width: 900px)
+						{
+							height: 60px;
+						}
 					}
 				}
 
-				> span
+				> div.glasses-container
 				{
-					align-self: center;
-					text-align: center;
-					width: 100%;
+					justify-content: flex-end;
+					align-items: center;
 				}
-
-				> img
-				{
-					height: 80px;
-					aspect-ratio: 2/1;
-					margin-right: 10px;
-
-					@media only screen and (max-width: 900px)
-					{
-						height: 60px;
-					}
-				}
-			}
-
-			> div.glasses-container
-			{
-				justify-content: flex-end;
-				align-items: center;
 			}
 		}
-	}
+		
+		.print-options-container
+		{
 
-	.print-options-container
+			
+				display: flex;
+				justify-content: center;
+				margin-top: 10px;
+
+				> div
+				{
+
+
+					> .print-button
+					{
+						display: grid;
+						grid-template-columns: 7fr 3fr;
+						column-gap: 10px;
+						grid-template-rows: 30px;
+						border-radius: 5px;
+						background-color: #1c89d7;
+						width: 200px;
+						align-items: center;
+						cursor: pointer;
+
+						> div
+						{
+							color: white;
+						}
+
+						> img
+						{
+							height: 100%;
+							aspect-ratio: 1;
+						}
+					}
+				}
+			
+		}
+	}
+	// end of media screen
+	@media print
 	{
+		.page-header
+		{
+			display: none;
+		}
+
+
+
+		.print-options-container
+		{
+
+			display: none;
+			background-color: green;
+
+			> div
+			{
+				display: none;
+
+				> .print-button
+				{
+					display: none;
+
+					> div, > img
+					{
+						display: none;
+					}
+				}
+			}
+			
+		}
 	}
 
 	.invoice-template
 	{
+		max-width: 900px;
+		margin-left: auto;
+		margin-right: auto;
+		font-family: "Arial Narrow", Arial, sans-serif;
+
+		> header
+		{
+			> div
+			{
+				> span
+				{
+					margin-left: 20px;
+					letter-spacing: 1px
+				}
+			}
+		}
+
 		> .invoice-template-main-content
 		{
 			display: grid;
-			grid-template-columns: 1fr 1fr;
+			//grid-template-columns: 11fr 13fr;
+			grid-template-columns: 12fr 12fr;
+			column-gap: 10px;
 
 			> .left-side
 			{
+				display: grid;
+				grid-template-rows: auto auto 1fr;
+
 				> header
 				{
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					height: 200px;
+					//height: 200px;
+					height: 150px;
 
 					> div
 					{
@@ -136,35 +255,261 @@
 
 				> .left-side-data-with-left-border
 				{
-					border-left: 10px solid black;
+					border-left: 15px solid black;
+					//display: grid;
+					//grid-template-rows: auto auto auto auto auto auto 1fr;
 
 					> .left-side-2-column-grid
 					{
 						display: grid;
-						grid-template-columns: 1fr 1fr;
+						//grid-template-columns: 4fr 6fr;
+						grid-template-columns: 31fr 69fr;
 						padding-left: 3px;
 						//grid-auto-rows:20px;
 						align-items: start;
 
-						> div
+						&.payment-type-container
 						{
-							height: 25px;
+							> header
+							{
+								grid-column: span 2;
+								height: 25px;
+								display: flex;
+							}
+						}
+
+						> div, > input
+						{
+							//height: 25px;
+							height: 22px;
 							display: flex;
-							
+
 
 							> span
 							{
-								align-self:end;
-								margin-left:5px;
+								align-self: end;
+								margin-left: 5px;
+								//font-size: 0.8rem;
+							}
+						}
+					}
+				}
+			}
 
-								font-size:0.8rem;
+			> .right-side
+			{
+
+				> .reference-number-container
+				{
+					//margin-top: 160px;
+					margin-top: 110px;
+
+					> span
+					{
+						margin-left: 15px;
+						font-weight: bold;
+
+						&:nth-child(2)
+						{
+							letter-spacing: 1px;
+						}
+					}
+				}
+
+				> .right-side-2-column
+				{
+					display: grid;
+					grid-template-columns: 12fr 3fr;
+
+
+					&.right-side-2-column-header
+					{
+
+
+						> div
+						{
+							display: flex;
+							height: 40px;
+							align-items: center;
+							justify-content: center;
+
+							> span
+							{
+								font-weight: bold;
+							}
+						}
+					}
+
+					&.right-side-2-column-body-row
+					{
+						// the very last row
+						&:last-of-type
+						{
+							// make the bottom border black and thicker instead of grey
+							> div
+							{
+								.border-bottom;
+								.border-color-black;
+								.border-bottom-thickness-normal;
+							}
+						}
+						// the left and right cells in the payment section
+						> div
+						{
+							display: flex;
+							height: 26px;
+							align-items: center;
+
+							> span
+							{
+							}
+							// just the left cell (the description for payment)
+							&:nth-child(1)
+							{
+								// the span that holds the <input /> on for the payment description
+								> span
+								{
+									margin-left: 5px;
+									width: 100%;
+								}
+							}
+							// just the right cell (the cos of this part of the break down of the invoice)
+							&:nth-child(2)
+							{
+								justify-content: flex-end;
+								// the span that holds the < input /> for the payment amount
+								> span
+								{
+									margin-right: 5px;
+									// Invoice amount
+									> input
+									{
+										padding-left: 10px;
+										text-align: right;
+										font-size:1rem;
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+
+
+		> footer
+		{
+			display: grid;
+			grid-template-columns: 107fr 100fr;
+
+			> .left-side
+			{
+				.border-left;
+				.border-color-black;
+				border-left-width: 15px;
+
+				> div
+				{
+					&:nth-child(2)
+					{
+						border-top: 5px solid black;
+						border-bottom: 2px solid black;
+						background-color: black;
+						height: 27px;
+					}
+				}
+			}
+
+			> .right-side
+			{
+				> .right-side-2-column
+				{
+					display: grid;
+					grid-template-columns: 12fr 3fr;
+
+					> div
+					{
+						&:nth-child(1)
+						{
+							height: 20px;
+						}
+
+						&:nth-child(2)
+						{
+							height: 20px;
+						}
+
+						&:nth-child(3), &:nth-child(4)
+						{
+							height: 20px;
+							border-bottom: 2px solid black;
+						}
+
+						&:nth-child(4)
+						{
+							position: relative;
+							border-top: 1px solid black;
+							border-left: 1px solid black;
+							border-right: 1px solid black;
+
+
+							&:before
+							{
+								content: '\00A3';
+								left: 5px;
+								position: absolute;
+								font-size: 10.5pt;
+							}
+
+							> span
+							{
+								display: block;
+								text-align: right;
+								width: 100%;
+								font-size: 10.5pt;
+								padding-right: 5px;
+							}
+						}
+
+						&:nth-child(5), &:nth-child(6)
+						{
+							height: 25px;
+							border-bottom: 2px solid black;
+						}
+
+						&:nth-child(6)
+						{
+							border-right: 2px solid black;
+						}
+					}
+				}
+			}
+		}
 	}
+}
+
+// some padding to add to the bottom of the page.
+// will not show up for printer.
+.page-button-padding
+{
+	height:30px;
+	@media print
+	{
+		display:none;
+	}
+}
+
+input
+{
+	border: none;
+	outline: none;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	font-size: 0.75rem;
+	width: 100%;
+	border-radius: 0;
+	font-family: "Arial Narrow", Arial, sans-serif;
 }
 
 /*
@@ -209,10 +554,36 @@
 	border-bottom-width: 2px;
 }
 
+
 .border-bottom-thickness-thick
 {
 	border-bottom-width: 5px;
 }
+
+
+
+.border-right-thickness-thin
+{
+	border-right-width:1px;
+}
+.border-right-thickness-normal
+{
+	border-right-width:2px;
+}
+
+
+
+
+.border-left-thickness-thick
+{
+	border-left-width:5px;
+}
+.border-left-thickness-superthick
+{
+	border-left-width: 10px;
+}
+
+
 
 
 
@@ -221,7 +592,7 @@
 */
 .border-color-black
 {
-	border-color:black;
+	border-color: black;
 }
 
 .border-color-grey
@@ -241,6 +612,14 @@
 	
 	border-bottom-style:solid;
 }
+.border-left
+{
+	border-left-style:solid;
+}
+.border-right
+{
+	border-right-style:solid;
+}
 
 
 /*
@@ -250,11 +629,21 @@
 {
 	font-size:1rem;
 }
+.font-size-small
+{
+	font-size:0.8rem;
+}
 
 .font-centre
 {
 	text-align:center;
 }
+.font-right
+{
+	text-align:right;
+}
+
+
 
 .font-bold
 {
@@ -279,4 +668,35 @@
 .background-color-black
 {
 	background-color:black;
+}
+
+/*
+	Alignment
+*/
+
+.self-align-right
+{
+	justify-self:right;
+}
+
+.margin-left-20
+{
+	margin-left:20px;
+}
+
+.margin-right-10
+{
+	margin-right:10px;
+}
+
+.margin-bottom-25
+{
+	margin-bottom:30px;
+}
+
+
+
+.padding-right-10
+{
+	padding-right:10px;
 }
