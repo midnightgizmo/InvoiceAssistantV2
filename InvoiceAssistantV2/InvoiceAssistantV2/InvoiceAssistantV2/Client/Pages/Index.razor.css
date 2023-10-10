@@ -49,7 +49,7 @@
 .page-container > .menu-container > .menu-inner-container > .merge-columns > button {
   width: 100%;
   height: 25vh;
-  padding: 3vw;
+  padding: 3vh 3vw;
   background-color: #1f3e5a;
   border: 2px solid white;
   border-radius: 5px;
@@ -64,6 +64,7 @@
 .page-container > .menu-container > .menu-inner-container > .menu-item > button > img,
 .page-container > .menu-container > .menu-inner-container > .merge-columns > button > img {
   height: 100%;
+  aspect-ratio: 2 / 1;
 }
 .page-container > .menu-container > .menu-inner-container > .menu-item > button:hover,
 .page-container > .menu-container > .menu-inner-container > .merge-columns > button:hover {
