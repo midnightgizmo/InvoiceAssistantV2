@@ -24,6 +24,11 @@
   align-items: start;
   column-gap: 20px;
 }
+@media screen and (max-width: 1000px) {
+  .invoice-addishanal-details > .addishanal-details-inner-container {
+    grid-template-columns: 1fr;
+  }
+}
 .invoice-addishanal-details > .addishanal-details-inner-container > div.addishanal-details-left-column {
   display: grid;
   grid-template-columns: 1fr;
