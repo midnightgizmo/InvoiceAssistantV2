@@ -75,7 +75,7 @@
   pointer-events: none;
 }
 .add-payment-outer-container > .add-payment-inner-container > .submit-container {
-  grid-column: 0.5;
+  grid-column: 1 / 2;
 }
 .add-payment-outer-container > .add-payment-inner-container > .submit-container > button {
   background-color: #c0461f;
@@ -101,7 +101,7 @@
 }
 .list-payments-outer-container > .list-payment-inner-container {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
   margin: 30px;
 }
 .list-payments-outer-container > .list-payment-inner-container > .header-cell {
@@ -114,9 +114,13 @@
 }
 .list-payments-outer-container > .list-payment-inner-container > .body-cell {
   padding: 5px;
+  height: 28px;
 }
 .list-payments-outer-container > .list-payment-inner-container > .body-cell > span {
   color: white;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > input {
+  font-size: 1rem;
 }
 .list-payments-outer-container > .list-payment-inner-container > .body-cell > button {
   background-color: transparent;
@@ -124,6 +128,44 @@
   border: none;
   text-decoration: underline;
   color: white;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  height: 100%;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button {
+  height: 100%;
+  width: 28px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button.button-tick {
+  color: #55D94D;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button.button-tick:hover {
+  color: #69dd62;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button.button-tick:active {
+  color: #41d538;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button.button-cross {
+  color: #D94D4D;
+  margin-left: auto;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button.button-cross:hover {
+  color: #dd6262;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button.button-cross:active {
+  color: #d53838;
+}
+.list-payments-outer-container > .list-payment-inner-container > .body-cell > .confirm-cancel-container > button svg {
+  height: 100%;
+  aspect-ratio: 1 / 0.5;
 }
 .list-payments-outer-container > .list-payment-inner-container > .body-footer {
   position: relative;

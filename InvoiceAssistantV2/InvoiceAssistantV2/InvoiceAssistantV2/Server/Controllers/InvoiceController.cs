@@ -97,6 +97,15 @@ namespace InvoiceAssistantV2.Server.Controllers
 
 		}
 
+        [HttpPost]
+        [Route("EditPayment")]
+        [Produces("application/json")]
+        public ControllerLogicReturnValue EditPayment([FromForm]int InvoicePaymentId, [FromForm]string Description, [FromForm]decimal Ammount)
+        {
+            EditPaymentRowControllerLogic ControllerLogic = new EditPaymentRowControllerLogic();
+            return ControllerLogic.Process(InvoicePaymentId, Description, Ammount);
+        }
+
 		[HttpPost]
 		[Route("RemovePayment")]
 		[Produces("application/json")]
@@ -113,6 +122,15 @@ namespace InvoiceAssistantV2.Server.Controllers
 		public ControllerLogicReturnValue ListAllPaymentsForInvoice([FromForm]int InvoiceId)
         {
             ListAllPaymentsForInvoiceControllerLogic ControllerLogic = new ListAllPaymentsForInvoiceControllerLogic();
+            return ControllerLogic.Process(InvoiceId);
+        }
+
+        [HttpPost]
+        [Route("GetInvoiceTotalPaymentAmount")]
+        [Produces("application/json")]
+        public ControllerLogicReturnValue GetInvoiceTotalPaymentAmount([FromForm]int InvoiceId) 
+        {
+            GetInvoiceTotalPaymentAmountControllerLogic ControllerLogic = new GetInvoiceTotalPaymentAmountControllerLogic();
             return ControllerLogic.Process(InvoiceId);
         }
 

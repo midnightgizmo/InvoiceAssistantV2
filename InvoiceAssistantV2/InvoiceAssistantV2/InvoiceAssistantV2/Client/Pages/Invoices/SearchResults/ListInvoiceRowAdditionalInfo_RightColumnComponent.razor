@@ -1,6 +1,36 @@
 ﻿@using InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults;
 @using InvoiceAssistantV2.Shared.Models.Database.Invoice;
 
+
+<!-- A hidden element. Cross icon that will be referenced further down the page -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.03 8.03"
+	 style="width:0; height:auto; display:none;">
+	<symbol id="cross-icon-svg" viewBox="0 0 8.03 8.03">
+		<defs>
+			<style>
+				.cls-12 {
+					fill: currentColor;
+				}</style>
+		</defs>
+		<path class="cls-12" d="M5.25,4,7.08,5.84c.26.26.52.53.79.79a.46.46,0,0,1,0,.69c-.17.17-.35.33-.51.51a.47.47,0,0,1-.76,0L4.1,5.33,4,5.24a.27.27,0,0,1-.07.08L1.41,7.86a.45.45,0,0,1-.7,0L.16,7.31a.44.44,0,0,1,0-.68L2.72,4.08s0-.08,0-.13L.17,1.41a.46.46,0,0,1,0-.72L.71.16a.46.46,0,0,1,.69,0L4,2.72c0,.06.08,0,.12,0C4.93,1.87,5.78,1,6.62.17A.52.52,0,0,1,7.06,0a.49.49,0,0,1,.27.15L7.87.7a.47.47,0,0,1,0,.7L5.62,3.65,5.25,4" />
+	</symbol>
+</svg>
+
+<!-- A hidden elment. Tick icon that will be referenced further down the page -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7.15 7.87"
+	 style="width:0; height:auto; display:none;">
+	<symbol id="tick-icon-svg" viewBox="0 0 7.15 7.87">
+		<defs>
+			<style>
+				.cls-13 {
+					fill: currentColor;
+				}</style>
+		</defs>
+		<path class="cls-13" d="M1.38,4l1.46,2A30.61,30.61,0,0,1,4.91,1.85,6.17,6.17,0,0,1,6.82,0l.33,1.65A14.27,14.27,0,0,0,5.63,3.58c-.72,1-1.75,2.66-2.78,4.29A13.42,13.42,0,0,0,1.57,6.42,15.11,15.11,0,0,0,0,5.17L1.38,4" />
+	</symbol>
+</svg>
+
+
 @if (this.ViewModel != null)
 {
 	<section class='payment-breakdown-container @(this.ViewModel.IsVisable == true ? "" : "disabled")'>
@@ -42,27 +72,73 @@
 			{
 				<div class="list-payment-inner-container">
 					<div class="header-cell">
+					</div>
+
+					<div class="header-cell">
 						<span>Description</span>
 					</div>
+
 					<div class="header-cell">
 						<span>Amount</span>
 					</div>
+
 					<div class="header-cell">
 					</div>
+
 					@foreach (InvoicePaymentBreakDown aPayment in this.ViewModel.ListOfPayments)
 					{
 						<div class="body-cell">
-							<span>@aPayment.Description</span>
+							@if (aPayment.isInEditState == false)
+							{
+								<button @onclick="()=> {aPayment.BeginEdit();}">Edit</button>
+							}
+							else
+							{
+								<div class="confirm-cancel-container" >
+									<button class="button-cross" @onclick="aPayment.CancelEdit">
+										<svg>
+											<use href="#cross-icon-svg"></use>
+										</svg>
+									</button>
+
+									<button class="button-tick" @onclick="async () => {await this.ViewModel.UpdatePaymentRow(aPayment);}">
+										<svg class="button-tick">
+											<use href="#tick-icon-svg"></use>
+										</svg>
+									</button>
+								</div>
+							}
 						</div>
 
 						<div class="body-cell">
-							<span>£@aPayment.Ammount.ToString("F2")</span>
+							@if(aPayment.isInEditState == true)
+							{
+								<input @bind="aPayment.Description" @bind:event="oninput" @onkeydown="async (e) => {await this.ShouldUpdatePaymentRow(e,aPayment);}">
+							}
+							else
+							{
+								<span>@aPayment.Description</span>
+							}
+						</div>
+
+						<div class="body-cell">
+							@if(aPayment.isInEditState == true)
+							{
+								<input @bind="aPayment.Ammount" @bind:event="oninput" type="number" @onkeydown="async (e) => {await this.ShouldUpdatePaymentRow(e,aPayment);}">
+							}
+							else
+							{
+								<span>£@aPayment.Ammount.ToString("F2")</span>
+							}
 						</div>
 
 						<div class="body-cell">
 							<button @onclick="async () => await this.ViewModel.RemovePayment(aPayment.Id)">Remove</button>
 						</div>
 					}
+
+					<div class="body-footer">
+					</div>
 
 					<div class="body-footer">
 					</div>
@@ -85,4 +161,31 @@
 @code {
 	[Parameter]
 	public ListInvoiceRowAdditionalInfo_RightColumnViewModel? ViewModel { get; set; }
+
+	/// <summary>
+	/// Checks if the Enter key or escape key has been pressed to eaither confirm on cancel the dit on a payment row
+	/// (Called in the boave html <input>)
+	/// </summary>
+	/// <param name="evt"></param>
+	/// <param name="paymentRow"></param>
+	/// <returns></returns>
+	private async Task ShouldUpdatePaymentRow(KeyboardEventArgs evt, InvoicePaymentBreakDown paymentRow)
+	{
+
+		switch(evt.Code)
+		{
+			// check for the enter key
+			case "Enter":
+			case "NumpadEnter":
+
+				await this.ViewModel.UpdatePaymentRow(paymentRow);
+				break;
+
+			// check for the escape key
+			case "Esc":
+
+				break;
+
+		}
+	}
 }

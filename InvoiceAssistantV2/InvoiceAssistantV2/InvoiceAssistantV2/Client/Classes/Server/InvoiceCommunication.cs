@@ -289,6 +289,23 @@ namespace InvoiceAssistantV2.Client.Classes.Server
             return ServerCommunication.ParseServerResponse<ServerResponseString>(responseMessage);
         }
 
+        /// <summary>
+        /// Gets the total amount that should be paid for an invoice (sum of all the payments on the invoice)
+        /// </summary>
+        /// <param name="InvoiceId">The invoice to look for</param>
+        /// <returns>total amount to pay</returns>
+        public async Task<ServerResponseDecimal> GetInvoiceTotalPaymentAmount(int InvoiceId)
+        {
+            ServerResponse responseMessage;
+            Dictionary<string,string> DataToSend = new Dictionary<string,string>();
+
+            DataToSend.Add("InvoiceId",InvoiceId.ToString());
+
+            responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/GetInvoiceTotalPaymentAmount", DataToSend);
+
+            return ServerCommunication.ParseServerResponse<ServerResponseDecimal>(responseMessage);
+        }
+
 		public async Task<ServerResponseSinglePlaceVisitedForInvoice> AddPlaceVisited(int InvoiceId, int AddressID, int NoTimesVisited)
 		{
             ServerResponse responseMessage;
@@ -333,6 +350,20 @@ namespace InvoiceAssistantV2.Client.Classes.Server
 
         }
 
-		
+        
+		public async Task<ServerResponseSingleInvoicePayment> UpdateInvoicePaymentRow(int InvoicePaymentId, string Description, decimal Ammount)
+		{
+			ServerResponse responseMessage;
+
+			Dictionary<string, string> DataToSend = new Dictionary<string, string>();
+
+			DataToSend.Add("InvoicePaymentId", InvoicePaymentId.ToString());
+			DataToSend.Add("Description", Description);
+			DataToSend.Add("Ammount", Ammount.ToString());
+
+			responseMessage = await this._ServerCommunication.SendPostRequestToServer("Invoice/EditPayment", DataToSend);
+
+			return ServerCommunication.ParseServerResponse<ServerResponseSingleInvoicePayment>(responseMessage);
+		}
 	}
 }

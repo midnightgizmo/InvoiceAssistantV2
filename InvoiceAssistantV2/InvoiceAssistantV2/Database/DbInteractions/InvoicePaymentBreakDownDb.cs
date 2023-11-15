@@ -77,5 +77,18 @@ namespace Database.DbInteractions
 			return true;
 
 		}
+		/// <summary>
+		/// Updates the database with the passed in payment data
+		/// </summary>
+		/// <param name="updatedPayment">the data to update in the database</param>
+		/// <returns>the updated payment data or null if update is unsuccessful</returns>
+		public InvoicePaymentBreakDown? UpdatePayment(InvoicePaymentBreakDown updatedPayment)
+		{
+			this._DbContext.InvoicesPaymentBreakDown.Update(updatedPayment);
+			if (this._DbContext.SaveChanges() > 0)
+				return updatedPayment;
+			else
+				return null;
+		}
 	}
 }

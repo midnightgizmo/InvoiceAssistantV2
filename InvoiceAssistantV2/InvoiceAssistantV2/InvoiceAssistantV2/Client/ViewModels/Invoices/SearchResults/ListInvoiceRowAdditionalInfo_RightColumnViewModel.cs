@@ -73,5 +73,57 @@ namespace InvoiceAssistantV2.Client.ViewModels.Invoices.SearchResults
 				return ServerResponse.ReturnValue;
 
 		}
+
+		/// <summary>
+		/// When an invoice payment has been updated on the client, this function will be called
+		/// to get the payment updated on the server. If the server confirms the update, the row
+		/// will be updated and taken out of edit mode and the total invoice payment will be updated
+		/// </summary>
+		/// <param name="invoicePaymentBreakDown">The row that is currently in edit mode and wants to be updated with the new values it holds</param>
+		/// <returns></returns>
+		public async Task UpdatePaymentRow(InvoicePaymentBreakDown invoicePaymentBreakDown)
+		{
+			
+			// ask the server to update the payment row
+			InvoiceCommunication invoiceCommunication = new InvoiceCommunication(this._HttpClient, this._AppSettings);
+			ServerResponseSingleInvoicePayment serverResponse  = await invoiceCommunication.UpdateInvoicePaymentRow(invoicePaymentBreakDown.Id, invoicePaymentBreakDown.Description,invoicePaymentBreakDown.Ammount);
+			
+			// if we were unable to apply the changes to the server side
+			if(serverResponse.HasErrors == true)
+			{
+				// undo the changes on the client side 
+				// and take us out of edit mode for this row
+				invoicePaymentBreakDown.CancelEdit();
+				return;
+			}
+			// update was sucsefull
+			// update the total invoice amount
+			// make sure we are using the most upto date values from the server response
+			invoicePaymentBreakDown.Description = serverResponse.ReturnValue.Description;
+			invoicePaymentBreakDown.Ammount = serverResponse.ReturnValue.Ammount;
+
+			// confirm the edit on the client side and bring us out of edit mode
+			invoicePaymentBreakDown.EndEdit();
+			/*
+			// update the total invoice amount (get the value from the server)
+			ServerResponseDecimal serverDecimalResponse = await invoiceCommunication.GetInvoiceTotalPaymentAmount(invoicePaymentBreakDown.InvoiceId);
+
+			if(serverDecimalResponse.HasErrors == true)
+			{
+				// unable to update total invoice amount on client end
+				// (should have updated on the server side though)
+				
+				// may be we should force a page refresh?
+			}
+			else
+			{
+				this.Parent.Parent.InvoiceData.TotalInvoiceAmmount = serverDecimalResponse.ReturnValue;
+			}
+			*/
+			this.Balance = this.CaculateSumOfAllPayments();
+			
+
+
+		}
 	}
 }
